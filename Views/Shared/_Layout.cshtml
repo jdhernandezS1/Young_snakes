@@ -11,22 +11,99 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm"
+             style="background: linear-gradient(90deg, #000000 0%, #2b2b2b 50%, #8B0000 100%);">
+
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Young_snakes</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+
+                <!-- BRAND -->
+                <a class="navbar-brand fw-bold text-danger" asp-controller="Home" asp-action="Index">
+                    Young_snakes
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+
+                    <!-- LEFT MENU -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index">
+                                Home
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-warning" asp-controller="Admin" asp-action="Dashboard">
+                                        Admin Dashboard
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-controller="Team" asp-action="Index">
+                                        Manage Teams
+                                    </a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("TeamUser"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-controller="Team" asp-action="MyTeam">
+                                        My Team
+                                    </a>
+                                </li>
+                            }
+                        }
                     </ul>
+
+                    <!-- RIGHT MENU -->
+                    <ul class="navbar-nav ms-auto">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item d-flex align-items-center me-3">
+                                <span class="text-light fw-semibold">
+                                    👤 @User.Identity.Name
+                                </span>
+                            </li>
+
+                            <li class="nav-item">
+                                <form asp-controller="Auth" asp-action="Logout" method="post">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn btn-sm btn-danger" asp-controller="Auth" asp-action="Register">
+                                        Register
+                                    </a>
+                                </li>
+                            }
+
+                        }
+                        else
+                        {
+                            <li class="nav-item me-2">
+                                <a class="btn btn-sm btn-outline-light" asp-controller="Auth" asp-action="Login">
+                                    Login
+                                </a>
+                            </li>
+
+                        }
+
+                    </ul>
+
                 </div>
             </div>
         </nav>
@@ -47,4 +124,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

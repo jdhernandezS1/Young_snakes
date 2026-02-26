@@ -1,0 +1,51 @@
+@model Young_snakes.ViewModels.RegisterVM
+
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+        <div class="auth-card">
+
+            <h2 class="text-center auth-title mb-4">Create New User</h2>
+
+            <form asp-action="Register" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input asp-for="Username" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Role</label>
+                    <select asp-for="Role" class="form-select form-control">
+                        <option value="TeamUser">TeamUser</option>
+                        <option value="SuperAdmin">SuperAdmin</option>
+                    </select>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-red btn-lg">
+                        Create User
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="text-danger mt-3" asp-validation-summary="All"></div>
+
+        </div>
+    </div>
+</div>
