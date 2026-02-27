@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
 using Young_snakes.Models.Auth;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContextFactory<PostgresContext>(x => x.UseNpgsql(builder.Configuration["DATABASE"]));
+
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
