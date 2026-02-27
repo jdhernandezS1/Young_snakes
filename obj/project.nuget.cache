@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xkjpLOyYZXw=",
+  "dgSpecHash": "yR4I2F7sBOg=",
   "success": true,
-  "projectFilePath": "/home/administrador/Documents/SIG/proyecto/software/Young_snakes/Young_snakes.csproj",
+  "projectFilePath": "/home/administrador/Documents/SIG/proyecto/software/young_snakes/young_snakes.csproj",
   "expectedPackageFiles": [
     "/home/administrador/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/administrador/.nuget/packages/microsoft.aspnetcore.identity.entityframeworkcore/10.0.3/microsoft.aspnetcore.identity.entityframeworkcore.10.0.3.nupkg.sha512",
@@ -20,6 +20,7 @@
     "/home/administrador/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.3/microsoft.entityframeworkcore.relational.10.0.3.nupkg.sha512",
     "/home/administrador/.nuget/packages/microsoft.entityframeworkcore.tools/10.0.3/microsoft.entityframeworkcore.tools.10.0.3.nupkg.sha512",
     "/home/administrador/.nuget/packages/microsoft.extensions.dependencymodel/10.0.3/microsoft.extensions.dependencymodel.10.0.3.nupkg.sha512",
+    "/home/administrador/.nuget/packages/microsoft.visualstudio.azure.containers.tools.targets/1.23.0/microsoft.visualstudio.azure.containers.tools.targets.1.23.0.nupkg.sha512",
     "/home/administrador/.nuget/packages/microsoft.visualstudio.solutionpersistence/1.0.52/microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "/home/administrador/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/home/administrador/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
