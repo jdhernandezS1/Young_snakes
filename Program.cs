@@ -2,14 +2,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
 using Young_snakes.Models.Auth;
+using DotNetEnv;
 
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContextFactory<PostgresContext>(x => x.UseNpgsql(builder.Configuration["DATABASE"]));
+builder.Services.AddDbContextFactory<ApplicationDbContext>(
+    options => options.UseNpgsql(
+        Environment.GetEnvironmentVariable("DATABASE")
+    )
+);
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -46,19 +52,19 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+// using (var scope = app.Services.CreateScope())
+// {
+//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string[] roles = { "SuperAdmin", "TeamUser" };
+//     string[] roles = { "SuperAdmin", "TeamUser" };
 
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-            await roleManager.CreateAsync(new IdentityRole(role));
-    }
-    var services = scope.ServiceProvider;
-    await DataSeeder.SeedAsync(services);
-}
+//     foreach (var role in roles)
+//     {
+//         if (!await roleManager.RoleExistsAsync(role))
+//             await roleManager.CreateAsync(new IdentityRole(role));
+//     }
+//     var services = scope.ServiceProvider;
+//     await DataSeeder.SeedAsync(services);
+// }
 
 app.Run();
