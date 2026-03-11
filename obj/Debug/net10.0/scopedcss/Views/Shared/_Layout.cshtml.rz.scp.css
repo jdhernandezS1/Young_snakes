@@ -46,3 +46,145 @@ button.accept-policy[b-s716724lbq] {
   white-space: nowrap;
   line-height: 60px;
 }
+.brand-logo[b-s716724lbq]{
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Y principal */
+.brand-y[b-s716724lbq]{
+    color: #e10600; /* rojo */
+    font-size: 2rem;
+    font-weight: 900;
+    margin-right: 4px;
+}
+
+/* snakes */
+.brand-snakes[b-s716724lbq]{
+    color: #b3b3b3; /* gris */
+    font-weight: 700;
+}
+
+/* hover effect */
+.brand-logo:hover .brand-y[b-s716724lbq]{
+    color: #ff2a2a;
+    transform: scale(1.1);
+}
+
+.brand-logo:hover .brand-snakes[b-s716724lbq]{
+    color: white;
+}
+
+/* navbar background ideal */
+.navbar[b-s716724lbq]{
+    background-color: #111;
+}
+
+
+/* NAVBAR BACKGROUND */
+
+.navbar-hockey[b-s716724lbq]{
+    background: linear-gradient(90deg,#000000 0%,#1a1a1a 50%,#8B0000 100%);
+    border-bottom:3px solid #8B0000;
+}
+
+
+/* LOGO */
+
+.brand-hockey[b-s716724lbq]{
+    font-size:1.7rem;
+    font-weight:900;
+    letter-spacing:2px;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+}
+
+.brand-y[b-s716724lbq]{
+    color:#ff1e1e;
+    font-size:2rem;
+    margin-right:4px;
+}
+
+.brand-snakes[b-s716724lbq]{
+    color:#e0e0e0;
+}
+
+
+/* MENU LINKS */
+
+.nav-hockey .nav-link[b-s716724lbq]{
+    color:#d0d0d0;
+    font-weight:600;
+    margin-left:10px;
+    position:relative;
+    transition:0.3s;
+}
+
+.nav-hockey .nav-link:hover[b-s716724lbq]{
+    color:white;
+}
+
+
+/* underline effect */
+
+.nav-hockey .nav-link[b-s716724lbq]::after{
+    content:"";
+    position:absolute;
+    bottom:-4px;
+    left:0;
+    width:0%;
+    height:2px;
+    background:#ff1e1e;
+    transition:0.3s;
+}
+
+.nav-hockey .nav-link:hover[b-s716724lbq]::after{
+    width:100%;
+}
+
+
+/* ADMIN LINK */
+
+.admin-link[b-s716724lbq]{
+    color:#ffb300 !important;
+}
+
+
+/* USER TAG */
+
+.user-tag[b-s716724lbq]{
+    color:#e0e0e0;
+    font-weight:600;
+}
+
+
+/* BUTTONS */
+
+.btn-hockey[b-s716724lbq]{
+    background:#8B0000;
+    color:white;
+    border:none;
+    font-weight:600;
+}
+
+.btn-hockey:hover[b-s716724lbq]{
+    background:#b30000;
+}
+
+
+.btn-hockey-outline[b-s716724lbq]{
+    border:1px solid #8B0000;
+    color:#e0e0e0;
+    background:transparent;
+}
+
+.btn-hockey-outline:hover[b-s716724lbq]{
+    background:#8B0000;
+    color:white;
+}

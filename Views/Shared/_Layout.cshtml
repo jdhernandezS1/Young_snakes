@@ -11,14 +11,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm"
-             style="background: linear-gradient(90deg, #000000 0%, #2b2b2b 50%, #8B0000 100%);">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-hockey shadow-sm">
 
             <div class="container-fluid">
 
                 <!-- BRAND -->
-                <a class="navbar-brand fw-bold text-danger" asp-controller="Home" asp-action="Index">
-                    Young_snakes
+                <a class="navbar-brand brand-hockey" asp-controller="Home" asp-action="Index">
+                    <span class="brand-y">Y</span>
+                    <span class="brand-snakes">SNAKES</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
@@ -28,27 +28,21 @@
                 <div class="collapse navbar-collapse" id="mainNavbar">
 
                     <!-- LEFT MENU -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index">
-                                Home
-                            </a>
-                        </li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-hockey">
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (User.IsInRole("SuperAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-warning" asp-controller="Admin" asp-action="Dashboard">
+                                    <a class="nav-link admin-link" asp-controller="Admin" asp-action="Dashboard">
                                         Admin Dashboard
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="Team" asp-action="Index">
-                                        Manage Teams
+                                    <a class="nav-link" asp-controller="Team" asp-action="Index">
+                                        Teams
                                     </a>
                                 </li>
                             }
@@ -56,7 +50,7 @@
                             @if (User.IsInRole("TeamUser"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="Team" asp-action="MyTeam">
+                                    <a class="nav-link" asp-controller="Team" asp-action="MyTeam">
                                         My Team
                                     </a>
                                 </li>
@@ -65,41 +59,40 @@
                     </ul>
 
                     <!-- RIGHT MENU -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto align-items-center">
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item d-flex align-items-center me-3">
-                                <span class="text-light fw-semibold">
+                            <li class="nav-item me-3">
+                                <span class="user-tag">
                                     👤 @User.Identity.Name
                                 </span>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item me-2">
                                 <form asp-controller="Auth" asp-action="Logout" method="post">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <button type="submit" class="btn btn-hockey-outline">
                                         Logout
                                     </button>
                                 </form>
                             </li>
+
                             @if (User.IsInRole("SuperAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="btn btn-sm btn-danger" asp-controller="Auth" asp-action="Register">
+                                    <a class="btn btn-hockey" asp-controller="Auth" asp-action="Register">
                                         Register
                                     </a>
                                 </li>
                             }
-
                         }
                         else
                         {
-                            <li class="nav-item me-2">
-                                <a class="btn btn-sm btn-outline-light" asp-controller="Auth" asp-action="Login">
+                            <li class="nav-item">
+                                <a class="btn btn-hockey-outline" asp-controller="Auth" asp-action="Login">
                                     Login
                                 </a>
                             </li>
-
                         }
 
                     </ul>
