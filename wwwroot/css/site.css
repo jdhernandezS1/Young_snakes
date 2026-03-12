@@ -29,3 +29,32 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.team-header{
+text-align:center;
+margin-bottom:40px;
+}
+
+.team-logo{
+width:140px;
+height:140px;
+border-radius:10px;
+border:3px solid #8B0000;
+margin-bottom:10px;
+}
+
+.btn-hockey{
+background:#8B0000;
+color:white;
+border:none;
+}
+
+.btn-hockey:hover{
+background:#b30000;
+}
+
+.btn-hockey-outline{
+border:1px solid #8B0000;
+color:#8B0000;
+background:transparent;
+}

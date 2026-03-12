@@ -3,13 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
 using Young_snakes.Models.Auth;
 using DotNetEnv;
-
+// using Young_snakes.Services;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// builder.Services.AddSingleton<CloudinaryService>();
 
 builder.Services.AddDbContextFactory<ApplicationDbContext>(
     options => options.UseNpgsql(

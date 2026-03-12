@@ -19,27 +19,21 @@ namespace Young_snakes.Models
         public DateTime? ArrivalDateBellinzona { get; set; }
 
         public string CloudinaryImageUrl { get; set; }
+
         public int IdTournament { get; set; }
         public Tournament Tournament { get; set; }
-
 
         public int? IdMezzo { get; set; }
         public Mezzo Mezzo { get; set; }
 
-
-        public string? IdUser { get; set; }
-
+        public string IdUser { get; set; }
         public ApplicationUser User { get; set; }
-
 
         public int? IdAccommodation { get; set; }
         public Accommodation Accommodation { get; set; }
 
-
-        public ICollection<Person> Persons { get; set; }
-
-        public ICollection<Sponsor> Sponsors { get; set; }
-
-        public ICollection<TeamExpense> Expenses { get; set; }
+        public ICollection<Person> Persons { get; set; } = new List<Person>();
+        public ICollection<Sponsor> Sponsors { get; set; } = new List<Sponsor>();
+        public ICollection<TeamExpense> TeamExpenses { get; set; } = new List<TeamExpense>();
     }
 }
