@@ -8,6 +8,6 @@ namespace Young_snakes.Models
 
         public string RoleName { get; set; }
 
-        public ICollection<Person> Persons { get; set; }
+        public ICollection<Person> Persons { get; set; } = new List<Person>();
     }
 }

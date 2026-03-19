@@ -11,6 +11,6 @@ namespace Young_snakes.Models
 
         public decimal Price { get; set; }
 
-        public ICollection<PersonMeal> Persons { get; set; }
+        public ICollection<PersonMeal> Persons { get; set; } = new List<PersonMeal>();
     }
 }

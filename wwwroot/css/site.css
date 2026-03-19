@@ -1,60 +1,161 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+/* ================================
+   BASE
+================================ */
 
 html {
-  position: relative;
-  min-height: 100%;
+    font-size: 14px;
+}
+
+@media (min-width:768px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    background: #f4f4f4;
+    margin-bottom: 60px;
+    font-family: Segoe UI, Arial, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+html {
+    position: relative;
+    min-height: 100%;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+
+/* ================================
+   NAVBAR
+================================ */
+
+.navbar-hockey {
+    background: #8B0000;
 }
 
-.team-header{
-text-align:center;
-margin-bottom:40px;
+.brand-hockey {
+    font-weight: bold;
+    font-size: 1.4rem;
 }
 
-.team-logo{
-width:140px;
-height:140px;
-border-radius:10px;
-border:3px solid #8B0000;
-margin-bottom:10px;
+.brand-y {
+    color: white;
 }
 
-.btn-hockey{
-background:#8B0000;
-color:white;
-border:none;
+.brand-snakes {
+    color: #d9d9d9;
+    margin-left: 4px;
 }
 
-.btn-hockey:hover{
-background:#b30000;
+/* navigation links */
+
+.nav-hockey .nav-link {
+    color: white;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: 0.2s;
 }
 
-.btn-hockey-outline{
-border:1px solid #8B0000;
-color:#8B0000;
-background:transparent;
+    .nav-hockey .nav-link:hover {
+        color: #e0e0e0;
+    }
+
+/* admin highlight */
+
+.admin-link {
+    font-weight: bold;
+    color: #ffffff !important;
+}
+
+
+/* ================================
+   USER TAG
+================================ */
+
+.user-tag {
+    color: white;
+    background: #4d4d4d;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.btn-hockey {
+    background: #8B0000;
+    color: white;
+    border: none;
+}
+
+    .btn-hockey:hover {
+        background: #a00000;
+        color: white;
+    }
+
+.btn-hockey-outline {
+    border: 1px solid #8B0000;
+    color: #8B0000;
+    background: white;
+}
+
+    .btn-hockey-outline:hover {
+        background: #8B0000;
+        color: white;
+    }
+
+
+/* ================================
+   TEAM HEADER
+================================ */
+
+.team-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.team-logo {
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    border: 3px solid #8B0000;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+
+/* ================================
+   CARDS
+================================ */
+
+.team-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+
+/* ================================
+   TABLES
+================================ */
+
+.table thead {
+    background: #8B0000;
+    color: white;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.footer {
+    background: #e0e0e0;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9rem;
 }

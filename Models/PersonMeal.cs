@@ -1,9 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Young_snakes.Models
 {
     public class PersonMeal
     {
         [Key]
+        public int Id { get; set; } // 👈 SOLUCIÓN SIMPLE
+
         public int IdPerson { get; set; }
         public Person Person { get; set; }
 

@@ -1,0 +1,124 @@
+﻿@model Team
+
+<h2>@Model.TeamName</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        @if (!string.IsNullOrEmpty(Model.TeamImageUrl))
+        {
+            <img src="@Model.TeamImageUrl" class="img-fluid" />
+        }
+
+        <form asp-action="UpdateImage" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="@Model.IdTeam" />
+            <input type="file" name="image" />
+            <button class="btn btn-primary">Actualizar Imagen</button>
+        </form>
+
+    </div>
+
+    <div class="col-md-8">
+
+        <h4>Información</h4>
+
+        <ul>
+            <li>Ciudad: @Model.City</li>
+            <li>País: @Model.Country</li>
+            <li>Colores: @Model.ClubColors</li>
+            <li>Torneo: @Model.Tournament?.TournamentName</li>
+            <li>Llegada: @Model.ArrivalDateBellinzona</li>
+        </ul>
+
+    </div>
+
+</div>
+
+<hr />
+
+<h3>Jugadores / Staff</h3>
+
+<a asp-controller="Person" asp-action="Create" class="btn btn-success">
+    Agregar persona
+</a>
+
+<table class="table">
+
+    <tr>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var p in Model.Persons)
+    {
+        <tr>
+            <td>@p.FirstName @p.LastName</td>
+            <td>@p.Role?.RoleName</td>
+
+            <td>
+                <a asp-controller="Person" asp-action="Edit" asp-route-id="@p.IdPerson">
+                    Editar
+                </a>
+
+                <a asp-controller="Person" asp-action="Delete" asp-route-id="@p.IdPerson">
+                    Eliminar
+                </a>
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<hr />
+
+<h3>Sponsors</h3>
+
+<a asp-controller="Sponsor" asp-action="Create" asp-route-teamId="@Model.IdTeam" class="btn btn-success">
+    Agregar sponsor
+</a>
+
+<ul>
+
+    @foreach (var s in Model.Sponsors)
+    {
+        <li>
+            @s.SponsorName
+
+            <a asp-controller="Sponsor" asp-action="Edit" asp-route-id="@s.IdSponsor">
+                Editar
+            </a>
+        </li>
+    }
+
+</ul>
+
+<hr />
+
+<h3>Gastos</h3>
+
+<a asp-controller="TeamExpense" asp-action="Create" asp-route-teamId="@Model.IdTeam"
+       class="btn btn-success">
+    Agregar gasto
+</a>
+
+<table class="table">
+
+    <tr>
+        <th>Tipo</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+    </tr>
+
+    @foreach (var e in Model.TeamExpenses)
+    {
+        <tr>
+            <td>@e.ExpenseType</td>
+            <td>@e.Amount</td>
+            <td>@e.ExpenseDate</td>
+        </tr>
+    }
+
+</table>

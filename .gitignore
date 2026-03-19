@@ -68,3 +68,5 @@ secrets.json
 # Node (si luego agregas frontend)
 ######################################
 node_modules/
+/.vs
+.vs

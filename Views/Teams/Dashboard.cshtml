@@ -1,0 +1,54 @@
+﻿<h1>🏆 Il Mio Team</h1>
+
+<h2>@Model.TeamName</h2>
+<p><strong>Città:</strong> @Model.City</p>
+<p><strong>Paese:</strong> @Model.Country</p>
+<p><strong>Torneo:</strong> @Model.Tournament?.TournamentName</p>
+
+<hr />
+
+<h3>👥 Giocatori (@Model.Persons.Count)</h3>
+
+<a asp-controller="Persons" asp-action="Create">➕ Aggiungi Giocatore</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Numero</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Persons)
+        {
+            <tr>
+                <td>@p.FirstName</td>
+                <td>@p.LastName</td>
+                <td>@p.Maglia</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>💰 Spese Totali</h3>
+
+<p>
+    Totale:
+    <strong>
+        
+    </strong>
+</p>
+
+<a asp-controller="TeamExpenses" asp-action="Create">➕ Aggiungi Spesa</a>
+
+<hr />
+
+<h3>🏨 Alloggio</h3>
+<p>@Model.Accommodation?.AccommodationName</p>
+
+<hr />
+
+<a asp-action="Edit" asp-route-id="@Model.IdTeam">✏️ Modifica Team</a>

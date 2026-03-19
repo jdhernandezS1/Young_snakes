@@ -1,0 +1,83 @@
+﻿@model Team
+
+@{
+    ViewData["Title"] = "Crea il tuo Team";
+}
+
+<h1>⚽ Crea il tuo Team</h1>
+
+<hr />
+
+<form asp-action="Create" method="post">
+    
+    <div class="form-group">
+        <label asp-for="TeamName" class="control-label">Nome Team</label>
+        <input asp-for="TeamName" class="form-control" />
+        <span asp-validation-for="TeamName" class="text-danger"></span>
+    </div>
+    <div>
+
+        <input type="hidden" asp-for="IdUser" class="form-control"
+        value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+
+    </div>
+    <div class="form-group">
+        <label asp-for="City" class="control-label">Città</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Country" class="control-label">Paese</label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClubColors" class="control-label">Colori</label>
+        <input asp-for="ClubColors" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ArrivalDateBellinzona" class="control-label">Data Arrivo</label>
+        <input asp-for="ArrivalDateBellinzona" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TeamImageUrl" class="control-label">URL Immagine</label>
+        <input asp-for="TeamImageUrl" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <select asp-for="IdTournament" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Tournaments, "IdTournament", "TournamentName"))">
+            <option value="">-- Seleziona Torneo --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdMezzo" class="control-label">Trasporto</label>
+        <select asp-for="IdMezzo" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Mezzos, "IdMezzo", "Veicolo"))">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdAccommodation" class="control-label">Alloggio</label>
+        <select asp-for="IdAccommodation" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Accommodations, "IdAccommodation", "AccommodationName"))">
+        </select>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">✅ Crea Team</button>
+    <a asp-action="MyTeam" class="btn btn-secondary">❌ Annulla</a>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

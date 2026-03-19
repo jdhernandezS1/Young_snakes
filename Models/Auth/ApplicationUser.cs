@@ -5,6 +5,7 @@ namespace Young_snakes.Models.Auth
 {
     public class ApplicationUser : IdentityUser
     {
-        public Team Team { get; set; }
+        public Team? Team { get; set; } 
+
     }
 }

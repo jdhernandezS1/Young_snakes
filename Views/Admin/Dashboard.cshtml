@@ -1,0 +1,23 @@
+﻿<h1>🛠️ Pannello Admin</h1>
+
+<h2>📋 Lista Teams</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>Utente</th>
+            <th>Torneo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.TeamName</td>
+                <td>@t.User?.UserName</td>
+                <td>@t.Tournament?.TournamentName</td>
+            </tr>
+        }
+    </tbody>
+</table>

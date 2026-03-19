@@ -13,6 +13,6 @@ namespace Young_snakes.Models
 
         public decimal PricePerNight { get; set; }
 
-        public ICollection<Team> Teams { get; set; }
+        public ICollection<Team> Teams { get; set; } = new List<Team>();
     }
 }

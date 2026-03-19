@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Young_snakes.Models
 {
     public class DietaryTag
-    {            
+    {
         [Key]
         public int IdTag { get; set; }
 
@@ -11,6 +11,6 @@ namespace Young_snakes.Models
 
         public string TagType { get; set; }
 
-        public ICollection<PersonDietaryTag> Persons { get; set; }
+        public ICollection<PersonDietaryTag> Persons { get; set; } = new List<PersonDietaryTag>();
     }
 }

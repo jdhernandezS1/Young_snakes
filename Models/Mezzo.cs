@@ -9,6 +9,6 @@ namespace Young_snakes.Models
 
         public string Veicolo { get; set; }
 
-        public ICollection<Team> Teams { get; set; }
+        public ICollection<Team> Teams { get; set; } = new List<Team>();
     }
 }
