@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Young_snakes.Models;
 
 public class Person
@@ -27,6 +28,7 @@ public class Person
     public PersonRole? Role { get; set; }
 
     public int? IdTeam { get; set; }
+    [ForeignKey(nameof(IdTeam))] // <-- Agrega esto para asegurar la unión
     public Team? Team { get; set; }
 
     // MANY TO MANY

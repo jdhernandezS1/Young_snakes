@@ -35,8 +35,8 @@
                             @if (User.IsInRole("SuperAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link admin-link" asp-controller="Admin" asp-action="Dashboard">
-                                        Admin Dashboard
+                                    <a class="nav-link admin-link" asp-controller="AdminTeams" asp-action="Index">
+                                        Teams
                                     </a>
                                 </li>
 
@@ -65,7 +65,7 @@
                         {
                             <li class="nav-item me-3">
                                 <span class="user-tag">
-                                    👤 @User.Identity.Name
+                                   @User.Identity.Name
                                 </span>
                             </li>
 

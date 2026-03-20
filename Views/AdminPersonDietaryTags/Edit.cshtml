@@ -1,0 +1,39 @@
+﻿@model Young_snakes.Models.PersonDietaryTag
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PersonDietaryTag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdPerson" class="control-label"></label>
+                <input asp-for="IdPerson" class="form-control" />
+                <span asp-validation-for="IdPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTag" class="control-label"></label>
+                <input asp-for="IdTag" class="form-control" />
+                <span asp-validation-for="IdTag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

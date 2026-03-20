@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Young_snakes.Data;
+
 namespace Young_snakes.Controllers
 {
     [Authorize(Roles = "TeamUser")]
@@ -65,10 +66,10 @@ namespace Young_snakes.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // 🔥 ASIGNAR ANTES
+
             team.IdUser = userId;
 
-            // seguridad
+            // Verify id
             var hasTeam = _context.Teams.Any(t => t.IdUser == userId);
 
             if (hasTeam)
@@ -102,53 +103,56 @@ namespace Young_snakes.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // 🔒 seguridad
+            
             if (team.IdUser != userId)
                 return Forbid();
 
             return View(team);
         }
 
-        // POST: Teams/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTeam,TeamName,City,Country,ClubColors,ArrivalDateBellinzona,TeamImageUrl,TeamImagePublicId,IdTournament,IdMezzo,IdAccommodation")] Team team)
+        public async Task<IActionResult> Edit(Team team)
         {
-            if (id != team.IdTeam)
-                return NotFound();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var existingTeam = await _context.Teams.AsNoTracking().FirstOrDefaultAsync(t => t.IdTeam == id);
+            team.IdUser = userId;
 
-            if (existingTeam == null)
+            if (team.ArrivalDateBellinzona.HasValue)
+            {
+                team.ArrivalDateBellinzona = DateTime.SpecifyKind(
+                    team.ArrivalDateBellinzona.Value,
+                    DateTimeKind.Utc
+                );
+            }
+
+            var dbTeam = await _context.Teams.FirstOrDefaultAsync(t => t.IdTeam == team.IdTeam);
+
+            if (dbTeam == null)
                 return NotFound();
 
-            // 🔒 seguridad
-            if (existingTeam.IdUser != userId)
+            if (dbTeam.IdUser != userId)
                 return Forbid();
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    // mantener FK seguro
-                    team.IdUser = userId;
+                dbTeam.TeamName = team.TeamName;
+                dbTeam.City = team.City;
+                dbTeam.Country = team.Country;
+                dbTeam.ClubColors = team.ClubColors;
+                dbTeam.ArrivalDateBellinzona = team.ArrivalDateBellinzona;
+                dbTeam.TeamImageUrl = team.TeamImageUrl;
+                dbTeam.TeamImagePublicId = team.TeamImagePublicId;
+                dbTeam.IdTournament = team.IdTournament;
+                dbTeam.IdMezzo = team.IdMezzo;
+                dbTeam.IdAccommodation = team.IdAccommodation;
 
-                    _context.Update(team);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Teams.Any(e => e.IdTeam == team.IdTeam))
-                        return NotFound();
-                    else
-                        throw;
-                }
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(MyTeam));
             }
 
+            LoadDropdowns();
             return View(team);
         }
 

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Young_snakes.Models.PersonMeal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMeal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MealDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMeal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MealDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

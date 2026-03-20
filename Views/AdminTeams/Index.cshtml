@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Team>
+
+@{
+    ViewData["Title"] = "Teams Management";
+}
+
+<h1>Teams List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Team</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TeamName)</th>
+            <th>@Html.DisplayNameFor(model => model.City)</th>
+            <th>@Html.DisplayNameFor(model => model.Country)</th>
+            <th style="min-width: 250px;">Team Members</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TeamName)</td>
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+            
+                <td>
+                    @if (item.Persons != null && item.Persons.Any())
+                    {
+                        <ul class="list-group list-group-flush shadow-sm p-1">
+                            @foreach (var person in item.Persons)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-1">
+                                    <span style="font-size: 0.9em;">@person.FirstName @person.LastName</span>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="AdminPeople" asp-action="Edit" asp-route-id="@person.IdPerson"
+                                           class="btn btn-outline-secondary" title="Edit Member">Edit</a>
+                                    
+                                        <a asp-controller="AdminPeople" asp-action="Delete" asp-route-id="@person.IdPerson"
+                                           class="btn btn-outline-danger" title="Delete Member">Del</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span class="text-muted italic">No members assigned</span>
+                    }
+                </td>
+
+                <td>
+                    <div class="btn-group-vertical">
+                        <a asp-action="Edit" asp-route-id="@item.IdTeam" class="btn btn-sm btn-info">Edit Team</a>
+                        <a asp-action="Details" asp-route-id="@item.IdTeam" class="btn btn-sm btn-secondary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.IdTeam" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
