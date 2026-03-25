@@ -28,9 +28,11 @@ public class Team
     // RELACIONES
     [Required]
     public int? IdTournament { get; set; }
+    [ForeignKey("IdAccommodation")] 
     public Tournament? Tournament { get; set; }
 
     public int? IdMezzo { get; set; }
+    [ForeignKey("IdAccommodation")] 
     public Mezzo? Mezzo { get; set; }
 
     [Required]
@@ -40,6 +42,7 @@ public class Team
     public ApplicationUser? User { get; set; }
 
     public int? IdAccommodation { get; set; }
+    [ForeignKey("IdAccommodation")] 
     public Accommodation? Accommodation { get; set; }
 
     // COLECCIONES

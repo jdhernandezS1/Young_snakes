@@ -36,18 +36,29 @@
                         <span>@Model.City, @Model.Country</span>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <small class="form-label d-block">Accommodation</small>
-                        <span class="text-danger fw-bold">@(Model.Accommodation?.AccommodationName ?? "Pending Assignment")</span>
+                        <small class="form-label d-block text-uppercase small text-muted">Accommodation</small>
+                        @if (Model.Accommodation != null)
+                        {
+                            <span class="fw-bold text-dark">@Model.Accommodation.AccommodationName</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">Pending Assignment</span>
+                            <br />
+                            <small class="text-muted">Selected ID: @(Model.IdAccommodation?.ToString() ?? "None")</small>
+                        }
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="stats-card h-100 bg-dark text-white border-0" style="border-left: 4px solid #d90429 !important;">
+            <div class="stats-card h-100 bg-dark text-white border-0"
+                 style="border-left: 4px solid #d90429 !important;">
                 <div class="section-title text-white">
                     <span>Expenses</span>
-                    <a asp-controller="TeamExpenses" asp-action="Create" class="text-danger text-decoration-none small">+ Add</a>
+                    <a asp-controller="TeamExpenses" asp-action="Create"
+                       class="text-danger text-decoration-none small">+ Add</a>
                 </div>
                 <h3 class="display-6 fw-bold mb-0">CHF 0.00</h3>
                 <p class="text-muted small">Total accumulated costs</p>
@@ -80,22 +91,36 @@
                     {
                         <tr>
                             <td class="fw-bold">@p.FirstName</td>
-                            <td>@p.LastName</td>
+                            <td>@p.LastName                            
+                            </td>
+
                             <td class="text-center">
                                 <span class="badge bg-light text-dark border">#@p.Maglia</span>
                             </td>
+
                             <td class="text-end">
-                                @* Assuming you have edit/delete for persons *@
-                                <a href="#" class="text-muted me-2"><i class="bi bi-pencil"></i></a>
-                                <a href="#" class="text-danger"><i class="bi bi-trash"></i></a>
+
+
+                                <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson"
+                                       class="text-info me-3" title="View Details">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+
+                                <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson" class="text-warning"
+                                       title="Edit Player">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
                             </td>
                         </tr>
                     }
+
                     @if (!Model.Persons.Any())
                     {
                         <tr>
                             <td colspan="4" class="text-center py-5 text-muted">
-                                No players registered yet. Start by adding your team members.
+                                🏒 No players registered yet. Start building your roster.
                             </td>
                         </tr>
                     }

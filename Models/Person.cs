@@ -13,7 +13,7 @@ public class Person
     [MaxLength(100)]
     public string? LastName { get; set; }
 
-    public DateTime? BirthDate { get; set; }
+    public DateTimeOffset? BirthDate { get; set; }
 
     public decimal? Height { get; set; }
 

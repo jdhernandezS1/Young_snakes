@@ -1,0 +1,38 @@
+@model Person
+@{
+    ViewData["Title"] = "Player Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4 bg-dark text-white rounded-3">
+
+        <h2 class="mb-3">🏒 Player Profile</h2>
+        <hr class="bg-light"/>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>First Name:</strong> @Model.FirstName</p>
+                <p><strong>Last Name:</strong> @Model.LastName</p>
+                <p><strong>Birth Date:</strong> @Model.BirthDate</p>
+                <p><strong>Height:</strong> @Model.Height cm</p>
+            </div>
+
+            <div class="col-md-6">
+                <p><strong>Phone:</strong> @Model.Phone</p>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Jersey #:</strong> @Model.Maglia</p>
+                <p><strong>Team ID:</strong> @Model.IdTeam</p>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <a asp-action="Edit" asp-route-id="@Model.IdPerson" class="btn btn-outline-light">
+                Edit Player
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                Back
+            </a>
+        </div>
+
+    </div>
+</div>
