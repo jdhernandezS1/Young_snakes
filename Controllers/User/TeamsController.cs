@@ -89,7 +89,7 @@ namespace Young_snakes.Controllers
             return View(team);
         }
 
-
+        
         // GET: Teams/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -102,11 +102,12 @@ namespace Young_snakes.Controllers
                 return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             
             if (team.IdUser != userId)
                 return Forbid();
 
+            // --- CORRECCIÓN AQUÍ: Cargar los datos para los Dropdowns ---
+            LoadDropdowns(); 
             return View(team);
         }
 
@@ -116,46 +117,44 @@ namespace Young_snakes.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            team.IdUser = userId;
-
-            if (team.ArrivalDateBellinzona.HasValue)
-            {
-                team.ArrivalDateBellinzona = DateTime.SpecifyKind(
-                    team.ArrivalDateBellinzona.Value,
-                    DateTimeKind.Utc
-                );
-            }
-
+            // Buscamos el equipo original en la DB
             var dbTeam = await _context.Teams.FirstOrDefaultAsync(t => t.IdTeam == team.IdTeam);
 
-            if (dbTeam == null)
-                return NotFound();
-
-            if (dbTeam.IdUser != userId)
-                return Forbid();
+            if (dbTeam == null) return NotFound();
+            if (dbTeam.IdUser != userId) return Forbid();
 
             if (ModelState.IsValid)
             {
+                // Mapeo de campos
                 dbTeam.TeamName = team.TeamName;
                 dbTeam.City = team.City;
                 dbTeam.Country = team.Country;
                 dbTeam.ClubColors = team.ClubColors;
-                dbTeam.ArrivalDateBellinzona = team.ArrivalDateBellinzona;
+                
+                // Manejo de fecha UTC
+                if (team.ArrivalDateBellinzona.HasValue)
+                {
+                    dbTeam.ArrivalDateBellinzona = DateTime.SpecifyKind(
+                        team.ArrivalDateBellinzona.Value,
+                        DateTimeKind.Utc
+                    );
+                }
+
                 dbTeam.TeamImageUrl = team.TeamImageUrl;
-                dbTeam.TeamImagePublicId = team.TeamImagePublicId;
                 dbTeam.IdTournament = team.IdTournament;
                 dbTeam.IdMezzo = team.IdMezzo;
                 dbTeam.IdAccommodation = team.IdAccommodation;
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(MyTeam));
+                // Sugerencia: Redirigir al Dashboard después de editar
+                return RedirectToAction(nameof(Dashboard));
             }
 
+            // Si el modelo es inválido, recargamos los dropdowns antes de volver a la vista
             LoadDropdowns();
             return View(team);
         }
-
 
         public async Task<IActionResult> Dashboard()
         {

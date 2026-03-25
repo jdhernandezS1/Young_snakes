@@ -1,54 +1,106 @@
-﻿<h1>🏆 Il Mio Team</h1>
+﻿@model Team
 
-<h2>@Model.TeamName</h2>
-<p><strong>Città:</strong> @Model.City</p>
-<p><strong>Paese:</strong> @Model.Country</p>
-<p><strong>Torneo:</strong> @Model.Tournament?.TournamentName</p>
+@{
+    ViewData["Title"] = "Team Dashboard";
+}
 
-<hr />
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+            <h1 class="mb-0 text-uppercase fw-800">Team Dashboard</h1>
+            <p class="text-muted">International Switzerland Hockey Tournament </p>
+        </div>
+        <a asp-action="Edit" asp-route-id="@Model.IdTeam" class="btn btn-warning">
+            Edit Team Details
+        </a>
+    </div>
 
-<h3>👥 Giocatori (@Model.Persons.Count)</h3>
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="stats-card h-100">
+                <div class="section-title">
+                    <span>General Information</span>
+                    <i class="bi bi-info-circle text-muted"></i>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <small class="form-label d-block">Team Name</small>
+                        <span class="fw-bold fs-5">@Model.TeamName</span>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <small class="form-label d-block">Tournament</small>
+                        <span class="badge-hockey">@Model.Tournament?.TournamentName</span>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <small class="form-label d-block">Location</small>
+                        <span>@Model.City, @Model.Country</span>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <small class="form-label d-block">Accommodation</small>
+                        <span class="text-danger fw-bold">@(Model.Accommodation?.AccommodationName ?? "Pending Assignment")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<a asp-controller="Persons" asp-action="Create">➕ Aggiungi Giocatore</a>
+        <div class="col-md-4">
+            <div class="stats-card h-100 bg-dark text-white border-0" style="border-left: 4px solid #d90429 !important;">
+                <div class="section-title text-white">
+                    <span>Expenses</span>
+                    <a asp-controller="TeamExpenses" asp-action="Create" class="text-danger text-decoration-none small">+ Add</a>
+                </div>
+                <h3 class="display-6 fw-bold mb-0">CHF 0.00</h3>
+                <p class="text-muted small">Total accumulated costs</p>
+                <hr class="border-secondary" />
+                <div class="d-grid">
+                    <button class="btn btn-outline-light btn-sm">View Financial Report</button>
+                </div>
+            </div>
+        </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Cognome</th>
-            <th>Numero</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model.Persons)
-        {
-            <tr>
-                <td>@p.FirstName</td>
-                <td>@p.LastName</td>
-                <td>@p.Maglia</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="col-12 mt-4">
+            <div class="section-title">
+                <span>Roster (@Model.Persons.Count Players)</span>
+                <a asp-controller="Persons" asp-action="Create" class="btn btn-sm btn-outline-dark">
+                    + Add New Player
+                </a>
+            </div>
 
-<hr />
-
-<h3>💰 Spese Totali</h3>
-
-<p>
-    Totale:
-    <strong>
-        
-    </strong>
-</p>
-
-<a asp-controller="TeamExpenses" asp-action="Create">➕ Aggiungi Spesa</a>
-
-<hr />
-
-<h3>🏨 Alloggio</h3>
-<p>@Model.Accommodation?.AccommodationName</p>
-
-<hr />
-
-<a asp-action="Edit" asp-route-id="@Model.IdTeam">✏️ Modifica Team</a>
+            <table class="table-minimalist">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th class="text-center">Jersey #</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.Persons)
+                    {
+                        <tr>
+                            <td class="fw-bold">@p.FirstName</td>
+                            <td>@p.LastName</td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark border">#@p.Maglia</span>
+                            </td>
+                            <td class="text-end">
+                                @* Assuming you have edit/delete for persons *@
+                                <a href="#" class="text-muted me-2"><i class="bi bi-pencil"></i></a>
+                                <a href="#" class="text-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Persons.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                No players registered yet. Start by adding your team members.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

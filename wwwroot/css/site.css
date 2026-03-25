@@ -1,9 +1,7 @@
-/* ================================
-   BASE
-================================ */
-
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width:768px) {
@@ -13,17 +11,79 @@ html {
 }
 
 body {
-    background: #f4f4f4;
+    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
     margin-bottom: 60px;
-    font-family: Segoe UI, Arial, sans-serif;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+.registration-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 2rem;
+    border-top: 5px solid #d90429; /* Acento Rojo Hockey */
 }
 
+h1 {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+}
 
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.form-control {
+    border: 2px solid #eee;
+    border-radius: 4px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #d90429;
+    box-shadow: none;
+    outline: 0;
+}
+
+/* Botones */
+.btn-primary-hockey {
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-primary-hockey:hover {
+    background-color: #d90429; /* Cambia a rojo al pasar el mouse */
+    color: white;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 0.8rem 2rem;
+}
+
+.btn-cancel:hover {
+    background-color: #eee;
+}
+
+/* Estilo para los Selects */
+select.form-control {
+    cursor: pointer;
+}
 /* ================================
    NAVBAR
 ================================ */
@@ -158,4 +218,63 @@ html {
     padding: 15px 0;
     text-align: center;
     font-size: 0.9rem;
+}
+
+/* Dashboard Specific Styles */
+.stats-card {
+    border-left: 4px solid #d90429; /* Acento rojo lateral */
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table-minimalist {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.table-minimalist thead th {
+    border: none;
+    color: #888;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+}
+
+.table-minimalist tbody tr {
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.table-minimalist tbody tr:hover {
+    transform: scale(1.01);
+}
+
+.table-minimalist td {
+    padding: 15px;
+    vertical-align: middle;
+    border: none;
+}
+
+.badge-hockey {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
