@@ -72,9 +72,10 @@
         <div class="col-12 mt-4">
             <div class="section-title">
                 <span>Roster (@Model.Persons.Count Players)</span>
-                <a asp-controller="Persons" asp-action="Create" class="btn btn-sm btn-outline-dark">
-                    + Add New Player
-                </a>
+                <!-- Cambia el link de Add New Player -->
+            <a asp-controller="People" asp-action="Create" asp-route-idTeam="@Model.IdTeam" class="btn btn-sm btn-outline-dark">
+                + Add New Player
+            </a>
             </div>
 
             <table class="table-minimalist">

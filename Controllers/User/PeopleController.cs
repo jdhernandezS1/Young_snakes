@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims; 
 
 namespace Young_snakes.Controllers
 {
@@ -17,6 +18,95 @@ namespace Young_snakes.Controllers
         public PeopleController(ApplicationDbContext context)
         {
             _context = context;
+        }
+        
+
+        private void LoadRoles()
+        {
+            ViewBag.Roles = _context.PersonRoles.ToList(); 
+        }
+
+
+        // GET: People/Create
+        public async Task<IActionResult> Create(int idTeam)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var team = await _context.Teams.FirstOrDefaultAsync(t => t.IdTeam == idTeam && t.IdUser == userId);
+            
+            if (team == null) return Forbid();
+
+            LoadRoles(); // Cargar roles para el dropdown
+            var person = new Person { IdTeam = idTeam };
+            return View(person);
+        }
+
+
+        // POST: People/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Person person)
+        {
+            
+            person.IdPerson = 0; 
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(person);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Dashboard", "Teams");
+            }
+            
+            LoadRoles();
+            return View(person);
+        }
+
+
+        // GET: People/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var person = await _context.Persons.FindAsync(id);
+            if (person == null) return NotFound();
+
+            LoadRoles(); // Cargar roles para el dropdown
+            return View(person);
+        }
+
+
+        // POST: People/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Person person)
+        {
+            if (id != person.IdPerson) return NotFound();
+
+            var originalPerson = await _context.Persons
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.IdPerson == id);
+
+            if (originalPerson == null) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    
+                    person.IdTeam = originalPerson.IdTeam; 
+
+                    _context.Update(person);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Persons.Any(e => e.IdPerson == person.IdPerson))
+                        return NotFound();
+                    else
+                        throw;
+                }
+                return RedirectToAction("Dashboard", "Teams");
+            }
+            return View(person);
         }
 
 
@@ -30,64 +120,6 @@ namespace Young_snakes.Controllers
 
             if (person == null) return NotFound();
 
-            return View(person);
-        }
-
-        // GET: TeamPeople/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TeamPeople/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Person person)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(person);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(person);
-        }
-
-        // GET: TeamPeople/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var person = await _context.Persons.FindAsync(id);
-            if (person == null) return NotFound();
-
-            return View(person);
-        }
-
-        // POST: TeamPeople/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Person person)
-        {
-            if (id != person.IdPerson) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(person);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Persons.Any(e => e.IdPerson == person.IdPerson))
-                        return NotFound();
-                    else
-                        throw;
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
             return View(person);
         }
     }

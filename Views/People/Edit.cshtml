@@ -6,13 +6,19 @@
 <div class="container mt-4">
     <div class="card p-4 shadow-sm bg-dark text-white rounded-3">
 
-        <h2>✏️ Edit Player</h2>
+        <h2>Edit Player</h2>
         <hr class="bg-light"/>
 
         <form asp-action="Edit">
             <input type="hidden" asp-for="IdPerson" />
-
+            <input type="hidden" asp-for="IdTeam" /> 
             <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Role</label>
+                    <select asp-for="IdRole" class="form-control bg-secondary text-white border-0"
+                    asp-items="@(new SelectList(ViewBag.Roles, "IdRole", "RoleName"))">
+                    </select>
+                </div>
                 <div class="col-md-6 mb-3">
                     <label>First Name</label>
                     <input asp-for="FirstName" class="form-control bg-secondary text-white border-0" />

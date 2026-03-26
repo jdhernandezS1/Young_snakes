@@ -6,12 +6,20 @@
 <div class="container mt-4">
     <div class="card p-4 shadow-sm bg-dark text-white rounded-3">
 
-        <h2>➕ Add New Player</h2>
+        <h2>Add New Player</h2>
         <hr class="bg-light"/>
 
         <form asp-action="Create">
 
             <div class="row">
+                <input type="hidden" asp-for="IdTeam" />
+                <div class="col-md-6 mb-3">
+                    <label>Role</label>
+                    <select asp-for="IdRole" class="form-control bg-secondary text-white border-0"
+                        asp-items="@(new SelectList(ViewBag.Roles, "IdRole", "RoleName"))">
+                    <option value="">-- Select Role --</option>
+                    </select>
+                </div>
                 <div class="col-md-6 mb-3">
                     <label>First Name</label>
                     <input asp-for="FirstName" class="form-control bg-secondary text-white border-0" />
@@ -46,6 +54,7 @@
                     <label>Jersey #</label>
                     <input asp-for="Maglia" class="form-control bg-secondary text-white border-0" />
                 </div>
+
             </div>
 
             <button type="submit" class="btn btn-outline-light mt-2">

@@ -4,18 +4,19 @@
     ViewData["Title"] = "Crea il tuo Team";
 }
 
-<h1>⚽ Crea il tuo Team</h1>
+<h1>Crea il tuo Team</h1>
 
 <hr />
 
 <form asp-action="Create" method="post">
-    
+    <input type="hidden" asp-for="IdTeam" /> 
     <div class="form-group">
         <label asp-for="TeamName" class="control-label">Nome Team</label>
         <input asp-for="TeamName" class="form-control" />
         <span asp-validation-for="TeamName" class="text-danger"></span>
     </div>
     <div>
+
 
         <input type="hidden" asp-for="IdUser" class="form-control"
         value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
@@ -71,8 +72,8 @@
 
     <br />
 
-    <button type="submit" class="btn btn-primary">✅ Crea Team</button>
-    <a asp-action="MyTeam" class="btn btn-secondary">❌ Annulla</a>
+    <button type="submit" class="btn btn-primary">Crea Team</button>
+    <a asp-action="MyTeam" class="btn btn-secondary"> Annulla</a>
 
 </form>
 
