@@ -5,128 +5,145 @@
 }
 
 <div class="container mt-5">
+    @* --- Header --- *@
     <div class="d-flex justify-content-between align-items-end mb-5">
         <div>
             <h1 class="mb-0 text-uppercase fw-800">Team Dashboard</h1>
-            <p class="text-muted">International Switzerland Hockey Tournament </p>
+            <p class="text-muted">International Switzerland Hockey Tournament</p>
         </div>
         <a asp-action="Edit" asp-route-id="@Model.IdTeam" class="btn btn-warning">
             Edit Team Details
         </a>
     </div>
 
+    @* --- Info Cards --- *@
     <div class="row g-4">
         <div class="col-md-8">
-            <div class="stats-card h-100">
-                <div class="section-title">
-                    <span>General Information</span>
-                    <i class="bi bi-info-circle text-muted"></i>
+            <div class="stats-card h-100 p-4 border rounded shadow-sm">
+                <div class="section-title mb-3">
+                    <span class="fw-bold">General Information</span>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 mb-3">
-                        <small class="form-label d-block">Team Name</small>
+                        <small class="text-muted d-block">Team Name</small>
                         <span class="fw-bold fs-5">@Model.TeamName</span>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <small class="form-label d-block">Tournament</small>
-                        <span class="badge-hockey">@Model.Tournament?.TournamentName</span>
+                        <small class="text-muted d-block">Tournament</small>
+                        <span class="badge bg-danger">@Model.Tournament?.TournamentName</span>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <small class="form-label d-block">Location</small>
+                        <small class="text-muted d-block">Location</small>
                         <span>@Model.City, @Model.Country</span>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <small class="form-label d-block text-uppercase small text-muted">Accommodation</small>
-                        @if (Model.Accommodation != null)
-                        {
-                            <span class="fw-bold text-dark">@Model.Accommodation.AccommodationName</span>
-                        }
-                        else
-                        {
-                            <span class="text-danger fw-bold">Pending Assignment</span>
-                            <br />
-                            <small class="text-muted">Selected ID: @(Model.IdAccommodation?.ToString() ?? "None")</small>
-                        }
+                        <small class="text-muted d-block">Accommodation</small>
+                        <span class="fw-bold">@(Model.Accommodation?.AccommodationName ?? "Pending")</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="stats-card h-100 bg-dark text-white border-0"
-                 style="border-left: 4px solid #d90429 !important;">
-                <div class="section-title text-white">
+            <div class="stats-card h-100 bg-dark text-white p-4 border-0 rounded shadow-sm" style="border-left: 4px solid #d90429 !important;">
+                <div class="section-title text-white mb-3">
                     <span>Expenses</span>
-                    <a asp-controller="TeamExpenses" asp-action="Create"
-                       class="text-danger text-decoration-none small">+ Add</a>
                 </div>
                 <h3 class="display-6 fw-bold mb-0">CHF 0.00</h3>
                 <p class="text-muted small">Total accumulated costs</p>
                 <hr class="border-secondary" />
                 <div class="d-grid">
-                    <button class="btn btn-outline-light btn-sm">View Financial Report</button>
+                    <a asp-controller="TeamExpenses" asp-action="Index" class="btn btn-outline-light btn-sm">View Report</a>
                 </div>
             </div>
         </div>
 
+        @* --- ROSTER TABLE --- *@
         <div class="col-12 mt-4">
-            <div class="section-title">
-                <span>Roster (@Model.Persons.Count Players)</span>
-                <!-- Cambia el link de Add New Player -->
-            <a asp-controller="People" asp-action="Create" asp-route-idTeam="@Model.IdTeam" class="btn btn-sm btn-outline-dark">
-                + Add New Player
-            </a>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Team Structure & Roster</h4>
+                <a asp-controller="People" asp-action="Create" asp-route-idTeam="@Model.IdTeam" class="btn btn-sm btn-dark">
+                    + Add New Member
+                </a>
             </div>
 
-            <table class="table-minimalist">
-                <thead>
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th class="text-center">Jersey #</th>
+                        <th>Role / Type</th>
+                        <th>Full Name</th>
+                        <th class="text-center">Jersey # / Info</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var p in Model.Persons)
-                    {
-                        <tr>
-                            <td class="fw-bold">@p.FirstName</td>
-                            <td>@p.LastName                            
-                            </td>
+                    @* 1. STAFF SECTION *@
+                    @{
+                        var staffRoles = new[] { "Coach", "Assistant", "Manager" };
+                        var staff = Model.Persons
+                            .Where(p => p.Role != null && staffRoles.Contains(p.Role.RoleName))
+                            .OrderBy(p => Array.IndexOf(staffRoles, p.Role.RoleName));
+                    }
 
+                    @foreach (var s in staff)
+                    {
+                        <tr class="table-light" style="border-left: 5px solid #d90429;">
+                            <td class="fw-bold text-danger text-uppercase small">@s.Role?.RoleName</td>
+                            <td class="fw-bold">@s.FirstName @s.LastName</td>
+                            <td class="text-center text-muted"><small>Staff Member</small></td>
+                            <td class="text-end">
+                                <a asp-controller="People" asp-action="Edit" asp-route-id="@s.IdPerson" class="text-warning me-2"><i class="bi bi-pencil"></i></a>
+                                <a asp-controller="People" asp-action="Details" asp-route-id="@s.IdPerson" class="text-info"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                    @* 2. PLAYERS SECTION *@
+                    <tr class="bg-secondary text-white">
+                        <td colspan="4" class="py-1 small fw-bold px-3">PLAYERS</td>
+                    </tr>
+                    @foreach (var p in Model.Persons.Where(p => p.Role?.RoleName == "Player" || p.Role == null))
+                    {
+                        if (staff.Any(s => s.IdPerson == p.IdPerson)) continue; // Evita duplicados
+                        <tr>
+                            <td class="text-muted">Player</td>
+                            <td>@p.FirstName @p.LastName</td>
                             <td class="text-center">
                                 <span class="badge bg-light text-dark border">#@p.Maglia</span>
                             </td>
-
                             <td class="text-end">
-
-
-                                <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson"
-                                       class="text-info me-3" title="View Details">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-
-
-                                <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson" class="text-warning"
-                                       title="Edit Player">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-
+                                <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson" class="text-warning me-2"><i class="bi bi-pencil"></i></a>
+                                <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson" class="text-info"><i class="bi bi-eye"></i></a>
                             </td>
                         </tr>
                     }
 
-                    @if (!Model.Persons.Any())
+                    @* 3. SPONSORS SECTION *@
+                    @if (Model.Sponsors.Any())
                     {
-                        <tr>
-                            <td colspan="4" class="text-center py-5 text-muted">
-                                🏒 No players registered yet. Start building your roster.
-                            </td>
+                        <tr class="bg-dark text-white">
+                            <td colspan="4" class="py-1 small fw-bold px-3">OFFICIAL SPONSORS</td>
                         </tr>
+                        @foreach (var sp in Model.Sponsors)
+                        {
+                            <tr class="table-info">
+                                <td class="fw-bold"><i class="bi bi-star-fill text-warning me-1"></i> Sponsor</td>
+                                <td colspan="2">@sp.SponsorName</td>
+                                <td class="text-end">
+                                    <span class="badge bg-primary">Partner</span>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
+
+            @if (!Model.Persons.Any())
+            {
+                <div class="text-center py-4 border rounded bg-light">
+                    <p class="mb-0 text-muted">No members registered. Start building your team!</p>
+                </div>
+            }
         </div>
     </div>
 </div>

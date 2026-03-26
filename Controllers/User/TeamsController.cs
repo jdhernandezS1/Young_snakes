@@ -157,20 +157,23 @@ namespace Young_snakes.Controllers
         }
 
         public async Task<IActionResult> Dashboard()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        {            
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var team = await _context.Teams
-                .Include(t => t.Persons)
-                .Include(t => t.TeamExpenses)
-                .Include(t => t.Tournament)
-                .Include(t => t.Accommodation)
-                .FirstOrDefaultAsync(t => t.IdUser == userId);
+        var team = await _context.Teams
+            .Include(t => t.Persons)
+                .ThenInclude(p => p.Role) // Carga los nombres de los roles (Coach, etc.)
+            .Include(t => t.Sponsors)     // Carga la lista de sponsors
+            .Include(t => t.TeamExpenses)
+            .Include(t => t.Tournament)
+            .Include(t => t.Accommodation)
+            .FirstOrDefaultAsync(t => t.IdUser == userId);
 
-            if (team == null)
-                return RedirectToAction(nameof(Create));
+        if (team == null)
+            return RedirectToAction(nameof(Create));
 
-            return View(team);
+        return View(team);
+
         }
 
 

@@ -25,10 +25,13 @@ public class Person
 
     // RELACIONES
     public int? IdRole { get; set; }
+
+    [ForeignKey(nameof(IdRole))] 
     public PersonRole? Role { get; set; }
 
     public int? IdTeam { get; set; }
-    [ForeignKey(nameof(IdTeam))] // <-- Agrega esto para asegurar la unión
+    
+    [ForeignKey(nameof(IdTeam))] 
     public Team? Team { get; set; }
 
     // MANY TO MANY
