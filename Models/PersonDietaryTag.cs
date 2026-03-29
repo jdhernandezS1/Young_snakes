@@ -6,12 +6,14 @@ namespace Young_snakes.Models
     public class PersonDietaryTag
     {
         [Key]
-        public int Id { get; set; } // 👈 necesario si no usas Fluent API
+        public int Id { get; set; }
 
         public int IdPerson { get; set; }
+        [ForeignKey(nameof(IdPerson))]
         public Person Person { get; set; }
 
         public int IdTag { get; set; }
+        [ForeignKey(nameof(IdTag))] 
         public DietaryTag Tag { get; set; }
     }
 }

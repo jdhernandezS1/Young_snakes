@@ -114,6 +114,15 @@
                             <td class="text-end">
                                 <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson" class="text-warning me-2"><i class="bi bi-pencil"></i></a>
                                 <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson" class="text-info"><i class="bi bi-eye"></i></a>
+                                
+
+
+                                <a asp-controller="Diets" asp-action="Manage" asp-route-id="@p.IdPerson" 
+                                class="text-success me-3" title="Dietary Restrictions">
+                                <i class="bi bi-egg-fried"></i> 
+                                </a>
+
+
                             </td>
                         </tr>
                     }

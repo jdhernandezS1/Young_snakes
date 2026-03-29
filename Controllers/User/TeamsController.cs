@@ -26,23 +26,6 @@ namespace Young_snakes.Controllers
             ViewBag.Accommodations = _context.Accommodations.ToList();
         }
 
-        // GET: Teams/MyTeam
-        public async Task<IActionResult> MyTeam()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var team = await _context.Teams
-                .Include(t => t.User)
-                .FirstOrDefaultAsync(t => t.IdUser == userId);
-
-            if (team == null)
-            {
-                return RedirectToAction(nameof(Create));
-            }
-
-            return View(team);
-        }
-
         // GET: Teams/Create
         public IActionResult Create()
         {
@@ -52,7 +35,7 @@ namespace Young_snakes.Controllers
 
             if (hasTeam)
             {
-                return RedirectToAction(nameof(MyTeam));
+                return RedirectToAction(nameof(Dashboard));
             }
 
             LoadDropdowns();
@@ -74,7 +57,7 @@ namespace Young_snakes.Controllers
 
             if (hasTeam)
             {
-                return RedirectToAction(nameof(MyTeam));
+                return RedirectToAction(nameof(Dashboard));
             }
 
             if (ModelState.IsValid)
@@ -82,7 +65,7 @@ namespace Young_snakes.Controllers
                 _context.Add(team);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(MyTeam));
+                return RedirectToAction(nameof(Dashboard));
             }
 
             LoadDropdowns();

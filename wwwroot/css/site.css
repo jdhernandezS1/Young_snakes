@@ -198,7 +198,16 @@ select.form-control {
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
-
+/* Dietas */
+.hover-effect:hover {
+    background-color: #343a40;
+    border-color: #ffc107 !important;
+    transition: 0.3s;
+}
+.form-check-input:checked {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
 /* ================================
    TABLES
 ================================ */

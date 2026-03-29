@@ -1,0 +1,44 @@
+@model Person
+@{
+    ViewData["Title"] = "Manage Allergies";
+    var allTags = ViewBag.AllTags as List<Young_snakes.Models.DietaryTag>;
+    var currentTags = ViewBag.CurrentTags as List<int>;
+}
+
+<div class="container mt-5">
+    <div class="card bg-dark text-white shadow-lg p-4">
+        <h2 class="text-uppercase fw-bold">🥗 Dietary Restrictions</h2>
+        <p class="text-muted">Managing allergies for: <strong>@Model.FirstName @Model.LastName</strong></p>
+        <hr class="border-secondary" />
+
+        <form asp-action="UpdateTags" method="post">
+            <input type="hidden" name="idPerson" value="@Model.IdPerson" />
+
+            <div class="row">
+                @foreach (var tag in allTags.OrderBy(t => t.TagType))
+                {
+                    <div class="col-md-4 mb-3">
+                        <div class="form-check p-3 border border-secondary rounded hover-effect">
+                            
+                            <input type="checkbox" 
+                                name="selectedTags"  @* Debe coincidir con el parámetro del controlador *@
+                                value="@tag.IdTag" 
+                                id="tag_@tag.IdTag"
+                                @(currentTags.Contains(tag.IdTag) ? "checked" : "")>
+                                
+                            <label class="form-check-label ms-2" for="tag_@tag.IdTag">
+                                <span class="d-block fw-bold">@tag.TagName</span>
+                                <small class="text-info text-uppercase">@tag.TagType</small>
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-warning px-5 fw-bold">Save Restrictions</button>
+                <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-outline-light ms-2">Back to Dashboard</a>
+            </div>
+        </form>
+    </div>
+</div>
