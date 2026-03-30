@@ -82,3 +82,4 @@ secrets.json
 node_modules/
 /.vs
 .vs
+obj/Debug/net10.0/
