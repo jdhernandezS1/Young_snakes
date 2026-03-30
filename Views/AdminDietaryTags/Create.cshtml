@@ -6,19 +6,19 @@
 
 <h1>Create</h1>
 
-<h4>DietaryTag</h4>
+<h4>alergeni e diete</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TagName" class="control-label"></label>
+                <label asp-for="TagName" class="control-label">DIETA</label>
                 <input asp-for="TagName" class="form-control" />
                 <span asp-validation-for="TagName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TagType" class="control-label"></label>
+                <label asp-for="TagType" class="control-label">TIPO</label>
                 <input asp-for="TagType" class="form-control" />
                 <span asp-validation-for="TagType" class="text-danger"></span>
             </div>
@@ -30,7 +30,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Torna a la lista</a>
 </div>
 
 @section Scripts {
