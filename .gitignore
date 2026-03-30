@@ -1,16 +1,28 @@
-######################################
-# Build results
-######################################
+# .NET Core
 bin/
 obj/
-out/
+publish/
 ######################################
 # User-specific files
 ######################################
 *.user
 *.suo
 *.userprefs
+#
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.sln.doccache
 
+# VS Code
+.vscode/
+# (Opcional: puedes dejar launch.json si quieres compartir la config de debug)
+
+# Archivos de usuario de ReSharper o Rider
+_ReSharper*/
+*.resharper
+*.DotSettings.user
 ######################################
 # Rider
 ######################################
