@@ -23,7 +23,7 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminTeams/
         public async Task<IActionResult> Index(int? id)
         {
-           // Si no llega un ID, podrías redirigir o mostrar todos
+            
             if (id == null)
             {
                 return NotFound();
@@ -32,7 +32,7 @@ namespace Young_snakes.Controllers.Admin
             var teams = await _context.Teams
                 .Include(t => t.User)
                 .Include(t => t.Persons)
-                .Include(t => t.Tournament) 
+                .Include(t => t.Tournament)
                 .Where(t => t.IdTournament == id)
                 .ToListAsync();
 
@@ -69,8 +69,6 @@ namespace Young_snakes.Controllers.Admin
         }
 
         // POST: AdminTeams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdTeam,TeamName,City,Country,ClubColors,ArrivalDateBellinzona,TeamImageUrl,TeamImagePublicId,IdTournament,IdMezzo,IdUser,IdAccommodation")] Team team)
@@ -103,8 +101,6 @@ namespace Young_snakes.Controllers.Admin
         }
 
         // POST: AdminTeams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdTeam,TeamName,City,Country,ClubColors,ArrivalDateBellinzona,TeamImageUrl,TeamImagePublicId,IdTournament,IdMezzo,IdUser,IdAccommodation")] Team team)
