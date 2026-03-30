@@ -34,13 +34,12 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (User.IsInRole("SuperAdmin"))
-                            {
+                            {                           
                                 <li class="nav-item">
-                                    <a class="nav-link admin-link" asp-controller="AdminTeams" asp-action="Index">
-                                        Squadre
+                                    <a class="nav-link" asp-controller="AdminTournaments" asp-action="Index">
+                                        Tornei
                                     </a>
                                 </li>
-
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="AdminDietaryTags" asp-action="Index">
                                         Diete
@@ -62,11 +61,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-controller="AdminDietaryTags" asp-action="Index">
-                                        Diete
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" asp-controller="AdminPersonRoles" asp-action="Index">
                                         Ruoli
                                     </a>
@@ -74,11 +68,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="AdminTeamExpenses" asp-action="Index">
                                         Costi
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="AdminTournaments" asp-action="Index">
-                                        Tornei
                                     </a>
                                 </li>
                                 

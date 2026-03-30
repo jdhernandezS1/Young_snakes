@@ -55,6 +55,7 @@
                 @Html.DisplayFor(modelItem => item.TournamentYear)
             </td>
             <td>
+                <a asp-controller="AdminTeams" asp-action="Index" asp-route-id="@item.IdTournament">Squadre</a> |
                 <a asp-action="Edit" asp-route-id="@item.IdTournament">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdTournament">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdTournament">Delete</a>

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Young_snakes.Controllers.Admin
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class AdminTeamsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,12 +21,25 @@ namespace Young_snakes.Controllers.Admin
         }
 
         // GET: AdminTeams/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var applicationDbContext = _context.Teams
+           // Si no llega un ID, podrías redirigir o mostrar todos
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var teams = await _context.Teams
                 .Include(t => t.User)
-                .Include(t => t.Persons);
-            return View(await applicationDbContext.ToListAsync());
+                .Include(t => t.Persons)
+                .Include(t => t.Tournament) 
+                .Where(t => t.IdTournament == id)
+                .ToListAsync();
+
+            var tournament = await _context.Tournaments.FindAsync(id);
+            ViewBag.TournamentName = tournament?.TournamentName ?? "Tournament";
+
+            return View(teams);
         }
 
         // GET: AdminTeams/Details/5
