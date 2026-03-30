@@ -26,6 +26,7 @@ namespace Young_snakes.Controllers
             ViewBag.Accommodations = _context.Accommodations.ToList();
         }
 
+
         // GET: Teams/Create
         public IActionResult Create()
         {
@@ -41,6 +42,7 @@ namespace Young_snakes.Controllers
             LoadDropdowns();
             return View();
         }
+
 
         // POST: Teams/Create
         [HttpPost]
@@ -94,6 +96,7 @@ namespace Young_snakes.Controllers
             return View(team);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Team team)
@@ -139,6 +142,7 @@ namespace Young_snakes.Controllers
             return View(team);
         }
 
+
         public async Task<IActionResult> Dashboard()
         {            
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -158,7 +162,5 @@ namespace Young_snakes.Controllers
         return View(team);
 
         }
-
-
     }
 }
