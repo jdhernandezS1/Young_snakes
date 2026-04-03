@@ -21,7 +21,11 @@ namespace Young_snakes.Controllers
         }
         private void LoadDropdowns()
         {
-            ViewBag.Tournaments = _context.Tournaments.ToList();
+
+            ViewBag.Tournaments = _context.Tournaments
+                .Where(t => t.IsOpen == true)
+                .ToList();
+
             ViewBag.Mezzos = _context.Mezzos.ToList();
             ViewBag.Accommodations = _context.Accommodations.ToList();
         }
@@ -51,17 +55,19 @@ namespace Young_snakes.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-
             team.IdUser = userId;
 
-            // Verify id
             var hasTeam = _context.Teams.Any(t => t.IdUser == userId);
 
             if (hasTeam)
             {
                 return RedirectToAction(nameof(Dashboard));
             }
-
+            var tournament = await _context.Tournaments.FindAsync(team.IdTournament);
+            if (tournament == null || !tournament.IsOpen)
+            {
+                ModelState.AddModelError("IdTournament", "This tournament is closed for registration.");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(team);
@@ -74,7 +80,7 @@ namespace Young_snakes.Controllers
             return View(team);
         }
 
-        
+
         // GET: Teams/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -87,12 +93,11 @@ namespace Young_snakes.Controllers
                 return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+
             if (team.IdUser != userId)
                 return Forbid();
 
-            // --- CORRECCIÓN AQUÍ: Cargar los datos para los Dropdowns ---
-            LoadDropdowns(); 
+            LoadDropdowns();
             return View(team);
         }
 
@@ -102,64 +107,49 @@ namespace Young_snakes.Controllers
         public async Task<IActionResult> Edit(Team team)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Buscamos el equipo original en la DB
             var dbTeam = await _context.Teams.FirstOrDefaultAsync(t => t.IdTeam == team.IdTeam);
-
             if (dbTeam == null) return NotFound();
             if (dbTeam.IdUser != userId) return Forbid();
-
             if (ModelState.IsValid)
             {
-                // Mapeo de campos
+
                 dbTeam.TeamName = team.TeamName;
                 dbTeam.City = team.City;
                 dbTeam.Country = team.Country;
                 dbTeam.ClubColors = team.ClubColors;
-                
-                // Manejo de fecha UTC
-                if (team.ArrivalDateBellinzona.HasValue)
-                {
-                    dbTeam.ArrivalDateBellinzona = DateTime.SpecifyKind(
-                        team.ArrivalDateBellinzona.Value,
-                        DateTimeKind.Utc
-                    );
-                }
-
+                dbTeam.ArrivalDateBellinzona = team.ArrivalDateBellinzona;
                 dbTeam.TeamImageUrl = team.TeamImageUrl;
-                dbTeam.IdTournament = team.IdTournament;
+                dbTeam.IdTournament = dbTeam.IdTournament;
                 dbTeam.IdMezzo = team.IdMezzo;
                 dbTeam.IdAccommodation = team.IdAccommodation;
 
                 await _context.SaveChangesAsync();
-
-                // Sugerencia: Redirigir al Dashboard después de editar
                 return RedirectToAction(nameof(Dashboard));
             }
 
-            // Si el modelo es inválido, recargamos los dropdowns antes de volver a la vista
+
             LoadDropdowns();
             return View(team);
         }
 
 
         public async Task<IActionResult> Dashboard()
-        {            
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        var team = await _context.Teams
-            .Include(t => t.Persons)
-                .ThenInclude(p => p.Role) // Carga los nombres de los roles (Coach, etc.)
-            .Include(t => t.Sponsors)     // Carga la lista de sponsors
-            .Include(t => t.TeamExpenses)
-            .Include(t => t.Tournament)
-            .Include(t => t.Accommodation)
-            .FirstOrDefaultAsync(t => t.IdUser == userId);
+            var team = await _context.Teams
+                .Include(t => t.Persons)
+                    .ThenInclude(p => p.Role)
+                .Include(t => t.Sponsors)
+                .Include(t => t.TeamExpenses)
+                .Include(t => t.Tournament)
+                .Include(t => t.Accommodation)
+                .FirstOrDefaultAsync(t => t.IdUser == userId);
 
-        if (team == null)
-            return RedirectToAction(nameof(Create));
+            if (team == null)
+                return RedirectToAction(nameof(Create));
 
-        return View(team);
+            return View(team);
 
         }
     }
