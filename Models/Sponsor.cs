@@ -14,6 +14,7 @@ namespace Young_snakes.Models
         public string? LogoUrl { get; set; }
 
         public int IdTeam { get; set; }
-        public Team Team { get; set; }
+        [ForeignKey("IdTeam")]
+        public Team? Team { get; set; }
     }
 }

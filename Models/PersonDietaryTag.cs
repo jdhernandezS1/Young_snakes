@@ -10,7 +10,7 @@ namespace Young_snakes.Models
 
         public int IdPerson { get; set; }
         [ForeignKey(nameof(IdPerson))]
-        public Person Person { get; set; }
+        public Person? Person { get; set; }
 
         public int IdTag { get; set; }
         [ForeignKey(nameof(IdTag))] 

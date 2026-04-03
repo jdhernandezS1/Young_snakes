@@ -11,13 +11,16 @@ public class Tournament
     [Required, MaxLength(100)]
     public string CategoryName { get; set; }
 
-    public int MinPlayers { get; set; }   // ❗ quitado nullable
+    public int MinPlayers { get; set; }   
 
     public int MaxPlayers { get; set; }
 
     public decimal ExtraPlayerFee { get; set; }
 
-    public DateTime TournamentYear { get; set; }
+    public DateTimeOffset TournamentYear { get; set; }
+    
+    [Display(Name = "Registration Open?")]
+    public bool IsOpen { get; set; } = true;
 
     public ICollection<Team> Teams { get; set; } = new List<Team>();
 }

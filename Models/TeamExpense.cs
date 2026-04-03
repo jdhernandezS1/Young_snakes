@@ -10,8 +10,8 @@ namespace Young_snakes.Models
 
         [Required]
         public int IdTeam { get; set; }
-
-        public Team Team { get; set; }
+        [ForeignKey("IdTeam")]
+        public Team? Team { get; set; }
 
         [Required]
         public string ExpenseType { get; set; }
@@ -19,6 +19,6 @@ namespace Young_snakes.Models
         [Required]
         public decimal Amount { get; set; }
 
-        public DateTime ExpenseDate { get; set; } 
+        public DateTimeOffset ExpenseDate { get; set; } 
     }
 }

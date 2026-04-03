@@ -22,8 +22,7 @@ public class Person
     public string? Email { get; set; }
 
     public int? Maglia { get; set; }
-
-    // RELACIONES
+    
     public int? IdRole { get; set; }
 
     [ForeignKey(nameof(IdRole))] 

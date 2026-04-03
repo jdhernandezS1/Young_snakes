@@ -6,15 +6,17 @@ namespace Young_snakes.Models
     public class PersonMeal
     {
         [Key]
-        public int Id { get; set; } // 👈 SOLUCIÓN SIMPLE
-
+        public int Id { get; set; } 
+        [Required]
         public int IdPerson { get; set; }
-        public Person Person { get; set; }
-
+        [ForeignKey("IdPerson")]
+        public Person? Person { get; set; }
+        [Required]
         public int IdMeal { get; set; }
-        public Meal Meal { get; set; }
+        [ForeignKey("IdMeal")]
+        public Meal? Meal { get; set; }
 
-        public DateTime MealDate { get; set; }
+        public DateTimeOffset MealDate { get; set; }
 
         public decimal? Price { get; set; }
     }

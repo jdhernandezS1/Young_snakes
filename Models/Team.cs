@@ -19,8 +19,7 @@ public class Team
 
     public string? ClubColors { get; set; }
 
-    [Column(TypeName = "timestamp without time zone")]
-    public DateTime? ArrivalDateBellinzona { get; set; }
+    public DateTimeOffset? ArrivalDateBellinzona { get; set; }
 
     public string? TeamImageUrl { get; set; }
     public string? TeamImagePublicId { get; set; }
