@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Zv+jP+ESut8=",
+  "dgSpecHash": "WS6lWr5G4Yo=",
   "success": true,
   "projectFilePath": "/workspaces/Young_snakes/young_snakes.csproj",
   "expectedPackageFiles": [
@@ -106,6 +106,7 @@
     "/home/codespace/.nuget/packages/nuget.projectmodel/6.12.1/nuget.projectmodel.6.12.1.nupkg.sha512",
     "/home/codespace/.nuget/packages/nuget.protocol/6.12.1/nuget.protocol.6.12.1.nupkg.sha512",
     "/home/codespace/.nuget/packages/nuget.versioning/6.12.1/nuget.versioning.6.12.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/questpdf/2026.2.4/questpdf.2026.2.4.nupkg.sha512",
     "/home/codespace/.nuget/packages/sprache/2.3.1/sprache.2.3.1.nupkg.sha512",
     "/home/codespace/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/system.composition/9.0.0/system.composition.9.0.0.nupkg.sha512",

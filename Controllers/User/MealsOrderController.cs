@@ -53,7 +53,7 @@ namespace Young_snakes.Controllers
                 if (mealInfo != null && person != null)
                 {
                     mealOrder.Price = mealInfo.Price;
-
+                    mealOrder.Id = 0; // Aseguramos que el ID se genere automáticamente
                     _context.Add(mealOrder);
 
                     var expense = new TeamExpense

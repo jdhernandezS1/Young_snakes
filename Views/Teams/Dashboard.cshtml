@@ -52,116 +52,120 @@
                 </div>
                 <h3 class="display-6 fw-bold mb-0">
                     CHF @Model.TeamExpenses.Sum(e => e.Amount).ToString("N2")
-                    </h3>
+                </h3>
                 <p class="text-muted small">Total accumulated costs</p>
                 <hr class="border-secondary" />
-                <div class="d-grid">
-                    <a asp-controller="TeamExpenses" asp-action="Index" class="btn btn-outline-light btn-sm">View
-                        Report</a>
-                    </div>
-                </div>
-            </div>
-
-            @* --- ROSTER TABLE --- *@
-            <div class="col-12 mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="mb-0">Team Structure & Roster</h4>
-                    <a asp-controller="People" asp-action="Create" asp-route-idTeam="@Model.IdTeam"
-                           class="btn btn-sm btn-dark">
-                        + Add New Member
+                <div class="d-grid gap-2">
+                    @* <a asp-controller="TeamExpenses" asp-action="Index" class="btn btn-outline-light btn-sm">
+                        View List
+                    </a> *@
+                    <a asp-controller="Teams" asp-action="ExportPdf" class="btn btn-danger btn-sm">
+                        <i class="bi bi-file-earmark-pdf"></i> Download PDF Report
                     </a>
                 </div>
-
-                <table class="table table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Role / Type</th>
-                            <th>Full Name</th>
-                            <th class="text-center">Jersey # / Info</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @* 1. STAFF SECTION *@
-                        @{
-                            var staffRoles = new[] { "Coach", "Assistant", "Manager" };
-                            var staff = Model.Persons
-                                .Where(p => p.Role != null && staffRoles.Contains(p.Role.RoleName))
-                                .OrderBy(p => Array.IndexOf(staffRoles, p.Role.RoleName));
-                        }
-
-                        @foreach (var s in staff)
-                        {
-                            <tr class="table-light" style="border-left: 5px solid #d90429;">
-                                <td class="fw-bold text-danger text-uppercase small">@s.Role?.RoleName</td>
-                                <td class="fw-bold">@s.FirstName @s.LastName</td>
-                                <td class="text-center text-muted"><small>Staff Member</small></td>
-                                <td class="text-end">
-                                    <a asp-controller="People" asp-action="Edit" asp-route-id="@s.IdPerson"
-                                       class="text-warning me-2"><i class="bi bi-pencil"></i></a>
-                                    <a asp-controller="People" asp-action="Details" asp-route-id="@s.IdPerson"
-                                       class="text-info"><i class="bi bi-eye"></i></a>
-                                </td>
-                            </tr>
-                        }
-
-                        @* 2. PLAYERS SECTION *@
-                        <tr class="bg-secondary text-white">
-                            <td colspan="4" class="py-1 small fw-bold px-3">PLAYERS</td>
-                        </tr>
-                        @foreach (var p in Model.Persons.Where(p => p.Role?.RoleName == "Player" || p.Role == null))
-                        {
-                            if (staff.Any(s => s.IdPerson == p.IdPerson)) continue; // Evita duplicados
-                            <tr>
-                                <td class="text-muted">Player</td>
-                                <td>@p.FirstName @p.LastName</td>
-                                <td class="text-center">
-                                    <span class="badge bg-light text-dark border">#@p.Maglia</span>
-                                </td>
-                                <td class="text-end">
-                                    <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson"
-                                       class="text-warning me-2"><i class="bi bi-pencil"></i></a>
-                                    <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson"
-                                       class="text-info"><i class="bi bi-eye"></i></a>
-
-                                
-                                    <a asp-controller="Diets" asp-action="Manage" asp-route-id="@p.IdPerson"
-                                           class="text-success me-3" title="Dietary Restrictions">
-                                        <i class="bi bi-egg-fried"></i>
-                                    </a>
-                                    <a asp-controller="MealsOrder" asp-action="Create" asp-route-id="@p.IdPerson"
-                                       class="btn btn-sm btn-primary">Order Meal</a>
-                                    
-                                </td>
-                            </tr>
-                        }
-
-                        @* 3. SPONSORS SECTION *@
-                        @if (Model.Sponsors.Any())
-                        {
-                            <tr class="bg-dark text-white">
-                                <td colspan="4" class="py-1 small fw-bold px-3">OFFICIAL SPONSORS</td>
-                            </tr>
-                            @foreach (var sp in Model.Sponsors)
-                            {
-                                <tr class="table-info">
-                                    <td class="fw-bold"><i class="bi bi-star-fill text-warning me-1"></i> Sponsor</td>
-                                    <td colspan="2">@sp.SponsorName</td>
-                                    <td class="text-end">
-                                        <span class="badge bg-primary">Partner</span>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-
-                @if (!Model.Persons.Any())
-                {
-                    <div class="text-center py-4 border rounded bg-light">
-                        <p class="mb-0 text-muted">No members registered. Start building your team!</p>
-                    </div>
-                }
             </div>
         </div>
+
+        @* --- ROSTER TABLE --- *@
+        <div class="col-12 mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Team Structure & Roster</h4>
+                <a asp-controller="People" asp-action="Create" asp-route-idTeam="@Model.IdTeam"
+                       class="btn btn-sm btn-dark">
+                    + Add New Member
+                </a>
+            </div>
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Role / Type</th>
+                        <th>Full Name</th>
+                        <th class="text-center">Jersey # / Info</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @* 1. STAFF SECTION *@
+                    @{
+                        var staffRoles = new[] { "Coach", "Assistant", "Manager" };
+                        var staff = Model.Persons
+                            .Where(p => p.Role != null && staffRoles.Contains(p.Role.RoleName))
+                            .OrderBy(p => Array.IndexOf(staffRoles, p.Role.RoleName));
+                    }
+
+                    @foreach (var s in staff)
+                    {
+                        <tr class="table-light" style="border-left: 5px solid #d90429;">
+                            <td class="fw-bold text-danger text-uppercase small">@s.Role?.RoleName</td>
+                            <td class="fw-bold">@s.FirstName @s.LastName</td>
+                            <td class="text-center text-muted"><small>Staff Member</small></td>
+                            <td class="text-end">
+                                <a asp-controller="People" asp-action="Edit" asp-route-id="@s.IdPerson"
+                                   class="text-warning me-2"><i class="bi bi-pencil"></i></a>
+                                <a asp-controller="People" asp-action="Details" asp-route-id="@s.IdPerson"
+                                   class="text-info"><i class="bi bi-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                    @* 2. PLAYERS SECTION *@
+                    <tr class="bg-secondary text-white">
+                        <td colspan="4" class="py-1 small fw-bold px-3">PLAYERS</td>
+                    </tr>
+                    @foreach (var p in Model.Persons.Where(p => p.Role?.RoleName == "Player" || p.Role == null))
+                    {
+                        if (staff.Any(s => s.IdPerson == p.IdPerson)) continue; // Evita duplicados
+                        <tr>
+                            <td class="text-muted">Player</td>
+                            <td>@p.FirstName @p.LastName</td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark border">#@p.Maglia</span>
+                            </td>
+                            <td class="text-end">
+                                <a asp-controller="People" asp-action="Edit" asp-route-id="@p.IdPerson"
+                                   class="text-warning me-2"><i class="bi bi-pencil"></i></a>
+                                <a asp-controller="People" asp-action="Details" asp-route-id="@p.IdPerson"
+                                   class="text-info"><i class="bi bi-eye"></i></a>
+
+                                
+                                <a asp-controller="Diets" asp-action="Manage" asp-route-id="@p.IdPerson"
+                                       class="text-success me-3" title="Dietary Restrictions">
+                                    <i class="bi bi-egg-fried"></i>
+                                </a>
+                                <a asp-controller="MealsOrder" asp-action="Create" asp-route-id="@p.IdPerson"
+                                   class="btn btn-sm btn-primary">Order Meal</a>
+                                    
+                            </td>
+                        </tr>
+                    }
+
+                    @* 3. SPONSORS SECTION *@
+                    @if (Model.Sponsors.Any())
+                    {
+                        <tr class="bg-dark text-white">
+                            <td colspan="4" class="py-1 small fw-bold px-3">OFFICIAL SPONSORS</td>
+                        </tr>
+                        @foreach (var sp in Model.Sponsors)
+                        {
+                            <tr class="table-info">
+                                <td class="fw-bold"><i class="bi bi-star-fill text-warning me-1"></i> Sponsor</td>
+                                <td colspan="2">@sp.SponsorName</td>
+                                <td class="text-end">
+                                    <span class="badge bg-primary">Partner</span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            @if (!Model.Persons.Any())
+            {
+                <div class="text-center py-4 border rounded bg-light">
+                    <p class="mb-0 text-muted">No members registered. Start building your team!</p>
+                </div>
+            }
+        </div>
     </div>
+</div>

@@ -6,8 +6,11 @@ using DotNetEnv;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using dotenv.net;
+using QuestPDF.Infrastructure;
 
 // using Young_snakes.Services;
+
+QuestPDF.Settings.License = LicenseType.Community;
 Env.Load();
 
 

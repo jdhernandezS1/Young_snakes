@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Young_snakes.Data;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 
 namespace Young_snakes.Controllers
 {
@@ -151,6 +154,67 @@ namespace Young_snakes.Controllers
 
             return View(team);
 
+        }
+
+        public async Task<IActionResult> ExportPdf()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Traemos el equipo con sus gastos
+            var team = await _context.Teams
+                .Include(t => t.TeamExpenses)
+                .FirstOrDefaultAsync(t => t.IdUser == userId);
+
+            if (team == null) return NotFound();
+
+            // Generamos el documento PDF
+            var document = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Margin(1, Unit.Centimetre);
+                    page.Header().Text($"Expense Report: {team.TeamName}").FontSize(20).SemiBold().FontColor(Colors.Red.Medium);
+
+                    page.Content().PaddingVertical(10).Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn(3); // Descripción
+                            columns.RelativeColumn(2); // Fecha
+                            columns.RelativeColumn(1); // Monto
+                        });
+
+                        // Cabecera de la tabla
+                        table.Header(header =>
+                        {
+                            header.Cell().Element(CellStyle).Text("Description");
+                            header.Cell().Element(CellStyle).Text("Date");
+                            header.Cell().Element(CellStyle).Text("Amount");
+
+                            static IContainer CellStyle(IContainer container) => container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
+                        });
+
+                        // Filas de gastos
+                        foreach (var expense in team.TeamExpenses)
+                        {
+                            table.Cell().Element(CellStyle).Text(expense.ExpenseType);
+                            table.Cell().Element(CellStyle).Text(expense.ExpenseDate.ToString("dd/MM/yyyy"));
+                            table.Cell().Element(CellStyle).Text($"CHF {expense.Amount:N2}");
+
+                            static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Grey.Lighten2);
+                        }
+                    });
+
+                    page.Footer().AlignCenter().Text(x =>
+                    {
+                        x.Span("Total: ").Bold();
+                        x.Span($"CHF {team.TeamExpenses.Sum(e => e.Amount):N2}").Bold().FontColor(Colors.Red.Medium);
+                    });
+                });
+            });
+
+            byte[] pdfData = document.GeneratePdf();
+            return File(pdfData, "application/pdf", $"Report_{team.TeamName}.pdf");
         }
     }
 }
