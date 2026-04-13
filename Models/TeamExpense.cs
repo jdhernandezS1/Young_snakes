@@ -15,6 +15,8 @@ namespace Young_snakes.Models
 
         [Required]
         public string ExpenseType { get; set; }
+                
+        public string Alergies { get; set; }
 
         [Required]
         public decimal Amount { get; set; }

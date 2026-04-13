@@ -33,7 +33,7 @@ namespace Young_snakes.Controllers
             var model = new PersonMeal
             {
                 IdPerson = person.IdPerson,
-                MealDate = DateTimeOffset.Now // 👈 Seteamos la fecha actual por defecto
+                MealDate = DateTimeOffset.Now
             };
 
             return View(model);
@@ -43,30 +43,36 @@ namespace Young_snakes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PersonMeal mealOrder)
         {
-            
+
             // return Json(mealOrder);
             if (ModelState.IsValid)
             {
                 var mealInfo = await _context.Meals.FindAsync(mealOrder.IdMeal);
                 var person = await _context.Persons.FindAsync(mealOrder.IdPerson);
+                var allergiesList = await _context.PersonDietaryTags
+                .Where(pdt => pdt.IdPerson == mealOrder.IdPerson)
+                .Select(pdt => pdt.Tag.TagName)
+                .ToListAsync();
 
+                string allergiesString = string.Join(", ", allergiesList);
+                
                 if (mealInfo != null && person != null)
                 {
                     mealOrder.Price = mealInfo.Price;
-                    mealOrder.Id = 0; // Aseguramos que el ID se genere automáticamente
+                    mealOrder.Id = 0;
                     _context.Add(mealOrder);
 
                     var expense = new TeamExpense
                     {
                         IdTeam = (int)person.IdTeam,
                         ExpenseType = $"Meal: {mealInfo.MealName} - {person.FirstName}",
+                        Alergies = allergiesString,
                         Amount = mealInfo.Price,
                         ExpenseDate = mealOrder.MealDate
                     };
 
                     _context.Add(expense);
                     await _context.SaveChangesAsync();
-
                     return RedirectToAction("Dashboard", "Teams");
                 }
             }

@@ -179,9 +179,10 @@ namespace Young_snakes.Controllers
                     {
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.RelativeColumn(3); // Descripción
-                            columns.RelativeColumn(2); // Fecha
-                            columns.RelativeColumn(1); // Monto
+                            columns.RelativeColumn(4); 
+                            columns.RelativeColumn(3); 
+                            columns.RelativeColumn(2); 
+                            columns.RelativeColumn(1); 
                         });
 
                         // Cabecera de la tabla
@@ -190,6 +191,8 @@ namespace Young_snakes.Controllers
                             header.Cell().Element(CellStyle).Text("Description");
                             header.Cell().Element(CellStyle).Text("Date");
                             header.Cell().Element(CellStyle).Text("Amount");
+                            header.Cell().Element(CellStyle).Text("Extra Info");
+
 
                             static IContainer CellStyle(IContainer container) => container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
                         });
@@ -200,7 +203,7 @@ namespace Young_snakes.Controllers
                             table.Cell().Element(CellStyle).Text(expense.ExpenseType);
                             table.Cell().Element(CellStyle).Text(expense.ExpenseDate.ToString("dd/MM/yyyy"));
                             table.Cell().Element(CellStyle).Text($"CHF {expense.Amount:N2}");
-
+                            table.Cell().Element(CellStyle).Text(expense.Alergies);
                             static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Grey.Lighten2);
                         }
                     });
