@@ -1,66 +1,54 @@
 @model Person
 @{
-    ViewData["Title"] = "Add Player";
+    ViewData["Title"] = "Add Member";
+    var playerRoleId = ((List<Young_snakes.Models.PersonRole>)ViewBag.Roles)
+                        .FirstOrDefault(r => r.RoleName.ToLower() == "player")?.IdRole ?? 1;
 }
 
 <div class="container mt-4">
     <div class="card p-4 shadow-sm bg-dark text-white rounded-3">
-
-        <h2>Add New Player</h2>
+        <h2>Add New Member</h2>
         <hr class="bg-light"/>
-
         <form asp-action="Create">
-
             <div class="row">
                 <input type="hidden" asp-for="IdTeam" />
                 <div class="col-md-6 mb-3">
                     <label>Role</label>
-                    <select asp-for="IdRole" class="form-control bg-secondary text-white border-0"
+                    <select asp-for="IdRole" id="roleSelect" class="form-control bg-secondary text-white border-0"
                         asp-items="@(new SelectList(ViewBag.Roles, "IdRole", "RoleName"))">
-                    <option value="">-- Select Role --</option>
+                        <option value="">-- Select Role --</option>
                     </select>
                 </div>
+                
                 <div class="col-md-6 mb-3">
                     <label>First Name</label>
                     <input asp-for="FirstName" class="form-control bg-secondary text-white border-0" />
                 </div>
-
                 <div class="col-md-6 mb-3">
                     <label>Last Name</label>
                     <input asp-for="LastName" class="form-control bg-secondary text-white border-0" />
                 </div>
-
                 <div class="col-md-6 mb-3">
                     <label>Birth Date</label>
                     <input asp-for="BirthDate" type="date" class="form-control bg-secondary text-white border-0" />
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label>Height (cm)</label>
-                    <input asp-for="Height" class="form-control bg-secondary text-white border-0" />
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Phone</label>
-                    <input asp-for="Phone" class="form-control bg-secondary text-white border-0" />
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Email</label>
-                    <input asp-for="Email" class="form-control bg-secondary text-white border-0" />
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Jersey #</label>
-                    <input asp-for="Maglia" class="form-control bg-secondary text-white border-0" />
-                </div>
-
+                <div class="col-md-6 mb-3 player-fields"><label>Height (cm)</label><input asp-for="Height" class="form-control bg-secondary text-white border-0" /></div>
+                <div class="col-md-6 mb-3 player-fields"><label>Jersey #</label><input asp-for="Maglia" class="form-control bg-secondary text-white border-0" /></div>
+                
+                <div class="col-md-6 mb-3 staff-fields"><label>Phone</label><input asp-for="Phone" class="form-control bg-secondary text-white border-0" /></div>
+                <div class="col-md-6 mb-3 staff-fields"><label>Email</label><input asp-for="Email" class="form-control bg-secondary text-white border-0" /></div>
             </div>
-
-            <button type="submit" class="btn btn-outline-light mt-2">
-                Add Player
-            </button>
+            <button type="submit" class="btn btn-outline-light mt-2">Add Member</button>
         </form>
-
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/person-fields.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            initPersonFields("@playerRoleId");
+        });
+    </script>
+}
