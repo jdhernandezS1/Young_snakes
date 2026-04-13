@@ -21,7 +21,7 @@
                         <div class="form-check p-3 border border-secondary rounded hover-effect">
                             
                             <input type="checkbox" 
-                                name="selectedTags"  @* Debe coincidir con el parámetro del controlador *@
+                                name="selectedTags"  
                                 value="@tag.IdTag" 
                                 id="tag_@tag.IdTag"
                                 @(currentTags.Contains(tag.IdTag) ? "checked" : "")>
@@ -38,6 +38,8 @@
             <div class="mt-4">
                 <button type="submit" class="btn btn-warning px-5 fw-bold">Save Restrictions</button>
                 <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-outline-light ms-2">Back to Dashboard</a>
+                
+                <a asp-controller="DietaryTag" asp-action="Create" class="btn btn-outline-light ms-2">Add New Food Restriction</a>
             </div>
         </form>
     </div>
