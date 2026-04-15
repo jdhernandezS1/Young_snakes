@@ -38,7 +38,7 @@ namespace Young_snakes.Controllers.Admin
 
             var tournament = await _context.Tournaments.FindAsync(id);
             ViewBag.TournamentName = tournament?.TournamentName ?? "Tournament";
-
+            ViewBag.TournamentId = id ?? 0; 
             return View(teams);
         }
 

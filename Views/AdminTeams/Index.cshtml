@@ -2,10 +2,16 @@
 
 @{
     ViewData["Title"] = "Teams Management";
+    
+    int idTorneo = ViewBag.TournamentId;
+    
 }
-
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New Team</a>
+    <a asp-controller="AdminReports" asp-action="TournamentRosterPdf" 
+    asp-route-id="@ViewBag.TournamentId" class="btn btn-success">
+    Download All Teams Report</a>   
+    
 </p>
 
 <table class="table table-striped">
@@ -35,6 +41,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center py-1">
                                     <span style="font-size: 0.9em;">@person.FirstName @person.LastName</span>
                                     <div class="btn-group btn-group-sm">
+                                        
                                         <a asp-controller="AdminPeople" asp-action="Edit" asp-route-id="@person.IdPerson"
                                            class="btn btn-outline-secondary" title="Edit Member">Edit</a>
                                     
@@ -56,6 +63,10 @@
                         <a asp-action="Edit" asp-route-id="@item.IdTeam" class="btn btn-sm btn-info">Edit Team</a>
                         <a asp-action="Details" asp-route-id="@item.IdTeam" class="btn btn-sm btn-secondary">Details</a>
                         <a asp-action="Delete" asp-route-id="@item.IdTeam" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-controller="AdminReports" asp-action="TeamRosterPdf"
+                                               asp-route-id="@item.IdTeam" class="btn btn-danger">
+                                            <i class="bi bi-file-pdf"></i> Download Info
+                                        </a>
                     </div>
                 </td>
             </tr>
