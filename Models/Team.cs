@@ -37,7 +37,7 @@ public class Team
     [Required]
     public string? IdUser { get; set; }
 
-    [ForeignKey(nameof(IdUser))] 
+    [ForeignKey("IdUser")] 
     public ApplicationUser? User { get; set; }
 
     public int? IdAccommodation { get; set; }

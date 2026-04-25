@@ -1,83 +1,118 @@
 ﻿@model Team
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Dettagli Squadra";
 }
 
+<div class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+        <div>
+            <h1 class="display-5 fw-bold text-dark mb-0">@Model.TeamName</h1>
+            <p class="text-muted fs-5 m-0">
+                <i class="bi bi-geo-alt-fill text-danger"></i> @Model.City, @Model.Country
+            </p>
+        </div>
+        <div class="btn-group shadow-sm">
+            <a asp-action="Edit" asp-route-id="@Model?.IdTeam" class="btn btn-dark px-4">
+                <i class="bi bi-pencil-square me-2"></i>Modifica
+            </a>
+            <a asp-action="Index" asp-route-id="@Model?.IdTournament" class="btn btn-outline-secondary px-4">
+                <i class="bi bi-arrow-left me-2"></i>Indietro
+            </a>
+        </div>
+    </div>
 
-<div>
-    <h4>Squadra</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubColors)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubColors)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalDateBellinzona)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalDateBellinzona)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamImagePublicId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamImagePublicId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTournament)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTournament)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdMezzo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdMezzo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdAccommodation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdAccommodation)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdTeam">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white py-3 border-0">
+                    <h5 class="mb-0 fw-bold text-uppercase small tracking-wider text-primary">
+                        <i class="bi bi-info-circle-fill me-2"></i>Informazioni Tecniche
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase fw-bold d-block">Colori Sociali</label>
+                            <div class="d-flex align-items-center mt-1">
+                                <i class="bi bi-palette me-2 text-secondary"></i>
+                                <span class="fs-5 fw-semibold">@Html.DisplayFor(model => model.ClubColors)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase fw-bold d-block">Data Arrivo</label>
+                            <div class="d-flex align-items-center mt-1">
+                                <i class="bi bi-calendar-check me-2 text-secondary"></i>
+                                <span class="fs-5 fw-semibold">@Model.ArrivalDateBellinzona?.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <hr class="opacity-25">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase fw-bold d-block">Responsabile</label>
+                            <div class="p-2 bg-light rounded-3 mt-1">
+                                <i class="bi bi-person-badge me-2"></i> @Model.User?.UserName
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase fw-bold d-block">ID Torneo</label>
+                            <div class="p-2 bg-light rounded-3 mt-1">
+                                <i class="bi bi-trophy me-2"></i> #@Model.IdTournament
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3">
+                        <h6 class="fw-bold mb-3">Logistica</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span class="text-muted">Mezzo di Trasporto</span>
+                                <span class="fw-bold">ID: @Model.IdMezzo</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span class="text-muted">Alloggio</span>
+                                <span class="fw-bold">ID: @Model.IdAccommodation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                @if (!string.IsNullOrEmpty(Model.TeamImageUrl))
+                {
+                    <img src="@Model.TeamImageUrl" class="card-img-top" style="height: 250px; object-fit: cover;" alt="Logo Squadra" />
+                }
+                else
+                {
+                    <div class="bg-light d-flex flex-column align-items-center justify-content-center" style="height: 250px;">
+                        <i class="bi bi-image text-muted display-1"></i>
+                        <p class="text-muted small">Nessuna immagine disponibile</p>
+                    </div>
+                }
+                <div class="card-footer bg-white border-0 text-center pb-3">
+                    <code class="text-muted small">Public ID: @Model.TeamImagePublicId</code>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 bg-dark text-white">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="bi bi-people-fill display-4 text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="mb-0 fw-bold">Stato Squadra</h5>
+                            <small class="text-white-50">Pronta per il Torneo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

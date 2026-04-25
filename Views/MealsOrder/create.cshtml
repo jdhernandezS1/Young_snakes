@@ -6,9 +6,10 @@
             <div class="registration-card shadow-sm">
                 <h2 class="fw-bold text-uppercase">Meal Order</h2>
                 <p class="text-muted small">
-                    Registering meal for: 
+                    Registering meal for:
                     <strong>@ViewBag.PlayerName</strong>
-                    \</p>
+                    \
+                </p>
 
                 <form asp-action="Create" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -26,10 +27,12 @@
 
                     <div class="d-grid gap-2 mt-5">
                         <button type="submit" class="btn btn-primary-hockey py-3">Confirm & Register Expense</button>
-                        <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-light text-muted">Cancel</a>
-                    </div>
-                </form>
+                        <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-outline-light ms-2">Back to
+                            Dashboard</a>
+
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>

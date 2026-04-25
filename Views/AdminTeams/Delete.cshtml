@@ -1,86 +1,51 @@
 ﻿@model Team
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Elimina Squadra";
 }
 
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="bg-danger py-4 text-center text-white">
+                    <i class="bi bi-exclamation-octagon display-4"></i>
+                    <h3 class="mt-2 fw-bold">Sei sicuro?</h3>
+                    <p class="mb-0 opacity-75">Questa azione non può essere annullata.</p>
+                </div>
 
-<h3>Sei sicuro di cancellare questo?</h3>
-<div>
-    <h4>Team</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClubColors)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClubColors)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalDateBellinzona)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalDateBellinzona)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamImagePublicId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamImagePublicId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTournament)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTournament)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdMezzo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdMezzo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdAccommodation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdAccommodation)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdTeam" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <div class="card-body p-4">
+                    <p class="text-center text-muted mb-4">Stai per eliminare definitivamente la squadra:</p>
+                    <h2 class="text-center fw-bold mb-4">@Model.TeamName</h2>
+
+                    <div class="bg-light rounded-3 p-3 mb-4">
+                        <div class="row g-2 small">
+                            <div class="col-6 text-muted">Città:</div>
+                            <div class="col-6 fw-bold text-end">@Model.City</div>
+                            
+                            <div class="col-6 text-muted">Nazione:</div>
+                            <div class="col-6 fw-bold text-end">@Model.Country</div>
+                            
+                            <div class="col-6 text-muted">Responsabile ID:</div>
+                            <div class="col-6 fw-bold text-end text-truncate">@Model.User?.Id</div>
+                        </div>
+                    </div>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="IdTeam" />
+                        <div class="row g-2">
+                            <div class="col-8">
+                                <button type="submit" class="btn btn-danger btn-lg w-100 shadow-sm">
+                                    <i class="bi bi-trash"></i> Sì, Elimina Squadra
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <a asp-action="Index" class="btn btn-outline-secondary btn-lg w-100">No</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

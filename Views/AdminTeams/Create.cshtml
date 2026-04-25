@@ -1,82 +1,76 @@
 ﻿@model Team
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crea Squadra";
 }
 
-<h1>Creare</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-shield-plus display-1 text-primary"></i>
+                        <h2 class="fw-bold">Nuova Squadra</h2>
+                        <p class="text-muted">Inserisci i dettagli per registrare il team nel torneo</p>
+                    </div>
 
-<h4>Squadra</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TeamName" class="control-label"></label>
-                <input asp-for="TeamName" class="form-control" />
-                <span asp-validation-for="TeamName" class="text-danger"></span>
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label asp-for="TeamName" class="form-label fw-semibold">Nome della Squadra</label>
+                                <input asp-for="TeamName" class="form-control form-control-lg bg-light border-0" placeholder="Esempio: AC Milan" />
+                                <span asp-validation-for="TeamName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="City" class="form-label fw-semibold">Città</label>
+                                <input asp-for="City" class="form-control bg-light border-0" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Country" class="form-label fw-semibold">Nazione</label>
+                                <input asp-for="Country" class="form-control bg-light border-0" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="ClubColors" class="form-label fw-semibold">Colori Sociali</label>
+                                <input asp-for="ClubColors" class="form-control bg-light border-0" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="ArrivalDateBellinzona" class="form-label fw-semibold">Data di Arrivo</label>
+                                <input asp-for="ArrivalDateBellinzona" class="form-control bg-light border-0" />
+                            </div>
+
+                            <div class="col-12"><hr class="my-3 opacity-25"></div>
+
+                            <div class="col-md-6">
+                                <label asp-for="IdTournament" class="form-label fw-semibold text-primary">Torneo (ID)</label>
+                                <input asp-for="IdTournament" class="form-control bg-light border-0" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="IdUser" class="form-label fw-semibold text-primary">Responsabile</label>
+                                <select asp-for="IdUser" class="form-select bg-light border-0" asp-items="ViewBag.IdUser"></select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="IdMezzo" class="form-label fw-semibold">ID Mezzo Trasporto</label>
+                                <input asp-for="IdMezzo" class="form-control bg-light border-0" />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="IdAccommodation" class="form-label fw-semibold">ID Alloggio</label>
+                                <input asp-for="IdAccommodation" class="form-control bg-light border-0" />
+                            </div>
+                        </div>
+
+                        <div class="mt-5 d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg shadow">Registra Squadra</button>
+                            <a asp-action="Index" class="btn btn-link text-muted">Torna alla lista</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
-                <input asp-for="Country" class="form-control" />
-                <span asp-validation-for="Country" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClubColors" class="control-label"></label>
-                <input asp-for="ClubColors" class="form-control" />
-                <span asp-validation-for="ClubColors" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ArrivalDateBellinzona" class="control-label"></label>
-                <input asp-for="ArrivalDateBellinzona" class="form-control" />
-                <span asp-validation-for="ArrivalDateBellinzona" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TeamImageUrl" class="control-label"></label>
-                <input asp-for="TeamImageUrl" class="form-control" />
-                <span asp-validation-for="TeamImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TeamImagePublicId" class="control-label"></label>
-                <input asp-for="TeamImagePublicId" class="form-control" />
-                <span asp-validation-for="TeamImagePublicId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdTournament" class="control-label"></label>
-                <input asp-for="IdTournament" class="form-control" />
-                <span asp-validation-for="IdTournament" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdMezzo" class="control-label"></label>
-                <input asp-for="IdMezzo" class="form-control" />
-                <span asp-validation-for="IdMezzo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdUser" class="control-label"></label>
-                <select asp-for="IdUser" class ="form-control" asp-items="ViewBag.IdUser"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdAccommodation" class="control-label"></label>
-                <input asp-for="IdAccommodation" class="form-control" />
-                <span asp-validation-for="IdAccommodation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

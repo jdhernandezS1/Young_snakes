@@ -7,78 +7,83 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="registration-card shadow-sm">
-                <h1 class="text-uppercase fw-bold">Tournament Registration</h1>
-                <p class="text-muted mb-4">Update your team profile for the upcoming season.</p>
+            <div class="registration-card shadow-lg p-4">
+                
+                <h1 class="title-main">Tournament Registration</h1>
+                <p class="subtitle">Update your team profile for the upcoming season.</p>
 
                 <form asp-action="Edit" method="post">
                     <div asp-validation-summary="All" class="text-danger small mb-3"></div>
-                    
-                    @* CRITICAL HIDDEN FIELDS *@
+
                     <input type="hidden" asp-for="IdTeam" />
                     <input type="hidden" asp-for="IdUser" />
 
                     <div class="row">
+
                         <div class="col-md-12 mb-4">
-                            <label asp-for="TeamName" class="form-label text-uppercase small fw-bold">Team Name</label>
-                            <input asp-for="TeamName" class="form-control" placeholder="e.g. Bellinzona Snakes" />
+                            <label asp-for="TeamName" class="form-label custom-label">Team Name</label>
+                            <input asp-for="TeamName" class="form-control custom-input" placeholder="e.g. Bellinzona Snakes" />
                             <span asp-validation-for="TeamName" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label asp-for="City" class="form-label text-uppercase small fw-bold">City</label>
-                            <input asp-for="City" class="form-control" placeholder="City" />
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <label asp-for="City" class="form-label custom-label">City</label>
+                            <input asp-for="City" class="form-control custom-input" placeholder="City" />
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label asp-for="Country" class="form-label text-uppercase small fw-bold">Country</label>
-                            <input asp-for="Country" class="form-control" placeholder="Country" />
-                            <span asp-validation-for="Country" class="text-danger"></span>
+                            <label asp-for="Country" class="form-label custom-label">Country</label>
+                            <input asp-for="Country" class="form-control custom-input" placeholder="Country" />
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label asp-for="ClubColors" class="form-label text-uppercase small fw-bold">Club Colors</label>
-                            <input asp-for="ClubColors" class="form-control" placeholder="Red / White / Black" />
+                            <label asp-for="ClubColors" class="form-label custom-label">Club Colors</label>
+                            <input asp-for="ClubColors" class="form-control custom-input" placeholder="Red / White / Black" />
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label asp-for="ArrivalDateBellinzona" class="form-label text-uppercase small fw-bold">Arrival Date</label>
-                            <input asp-for="ArrivalDateBellinzona" type="date" class="form-control" />
+                            <label asp-for="ArrivalDateBellinzona" class="form-label custom-label">Arrival Date</label>
+                            <input asp-for="ArrivalDateBellinzona" type="date" class="form-control custom-input" />
                         </div>
 
                         <div class="col-md-12 mb-4">
-                            <label class="form-label text-uppercase small fw-bold">Tournament Category</label>
-                            <select asp-for="IdTournament" class="form-control"
+                            <label class="form-label custom-label">Tournament Category</label>
+                            <select asp-for="IdTournament" class="form-control custom-input"
                                     asp-items="@(new SelectList(ViewBag.Tournaments, "IdTournament", "TournamentName"))">
                                 <option value="">-- Choose a Tournament --</option>
                             </select>
-                            <span asp-validation-for="IdTournament" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label class="form-label text-uppercase small fw-bold">Transportation</label>
-                            <select asp-for="IdMezzo" class="form-control"
+                            <label class="form-label custom-label">Transportation</label>
+                            <select asp-for="IdMezzo" class="form-control custom-input"
                                     asp-items="@(new SelectList(ViewBag.Mezzos, "IdMezzo", "Veicolo"))">
                                 <option value="">-- Mode of Transport --</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-4">
-                            <label class="form-label text-uppercase small fw-bold">Accommodation</label>
-                            <select asp-for="IdAccommodation" class="form-control"
+                            <label class="form-label custom-label">Accommodation</label>
+                            <select asp-for="IdAccommodation" class="form-control custom-input"
                                     asp-items="@(new SelectList(ViewBag.Accommodations, "IdAccommodation", "AccommodationName"))">
                                 <option value="">-- Select Hotel/Hostel --</option>
                             </select>
                         </div>
+
                     </div>
 
-                    <hr class="my-4" />
+                    <hr class="divider" />
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <a asp-action="Dashboard" class="btn btn-outline-secondary px-4 text-uppercase fw-bold small">Cancel</a>
-                        <button type="submit" class="btn btn-primary-hockey px-5">Save Changes</button>
+                        <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-outline-light">
+                            Back
+                        </a>
+
+                        <button type="submit" class="btn btn-red px-5">
+                            Save Changes
+                        </button>
                     </div>
+
                 </form>
             </div>
         </div>

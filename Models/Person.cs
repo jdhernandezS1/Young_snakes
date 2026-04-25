@@ -25,12 +25,12 @@ public class Person
     
     public int? IdRole { get; set; }
 
-    [ForeignKey(nameof(IdRole))] 
+    [ForeignKey("IdRole")]
     public PersonRole? Role { get; set; }
 
     public int? IdTeam { get; set; }
     
-    [ForeignKey(nameof(IdTeam))] 
+    [ForeignKey("IdTeam")] 
     public Team? Team { get; set; }
 
     // MANY TO MANY

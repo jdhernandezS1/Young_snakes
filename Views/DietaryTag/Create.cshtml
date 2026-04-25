@@ -3,29 +3,52 @@
 @{
     ViewData["Title"] = "Create";
 }
-<h4>alergeni e diete</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TagName" class="control-label">Ingredient</label>
-                <input asp-for="TagName" class="form-control" />
-                <span asp-validation-for="TagName" class="text-danger"></span>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+
+            <div class="form-card p-4 shadow-sm">
+
+                <h4 class="form-title">Allergies & Diets</h4>
+                <p class="form-subtitle">Add a new dietary restriction or ingredient.</p>
+
+                <form asp-action="Create">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="TagName" class="custom-label">Ingredient or Restriction</label>
+                        <input asp-for="TagName" class="form-control custom-input" placeholder="e.g. Peanuts" />
+                        <span asp-validation-for="TagName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="TagType" class="custom-label">Type</label>
+
+                        <select asp-for="TagType" class="form-control custom-input">
+                            <option value="">-- Select Type --</option>
+                            <option value="Allergy">Allergy</option>
+                            <option value="Diet">Diet</option>
+                        </select>
+
+                        <span asp-validation-for="TagType" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-soft w-100">
+                        Create Tag
+                    </button>
+
+                </form>
+
             </div>
-            <div class="form-group">
-                <label asp-for="TagType" class="control-label">Type</label>
-                <input asp-for="TagType" class="form-control" />
-                <span asp-validation-for="TagType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

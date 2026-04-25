@@ -27,24 +27,21 @@ namespace Young_snakes.Controllers.Admin
             return View(await _context.Persons.ToListAsync());
         }
 
+
         // GET: AdminPeople/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var person = await _context.Persons
+                .Include(p => p.Role) 
+                .Include(p => p.Team) 
                 .FirstOrDefaultAsync(m => m.IdPerson == id);
-            if (person == null)
-            {
-                return NotFound();
-            }
+
+            if (person == null) return NotFound();
 
             return View(person);
         }
-
         // GET: AdminPeople/Create
         public IActionResult Create()
         {

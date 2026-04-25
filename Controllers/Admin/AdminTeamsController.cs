@@ -20,10 +20,9 @@ namespace Young_snakes.Controllers.Admin
             _context = context;
         }
 
-        // GET: AdminTeams/
+        // GET: AdminTeams/Index/5 (donde 5 es el IdTournament)
         public async Task<IActionResult> Index(int? id)
         {
-            
             if (id == null)
             {
                 return NotFound();
@@ -31,14 +30,17 @@ namespace Young_snakes.Controllers.Admin
 
             var teams = await _context.Teams
                 .Include(t => t.User)
-                .Include(t => t.Persons)
                 .Include(t => t.Tournament)
+                .Include(t => t.Persons)
+                    .ThenInclude(p => p.Role)
                 .Where(t => t.IdTournament == id)
                 .ToListAsync();
 
             var tournament = await _context.Tournaments.FindAsync(id);
+
             ViewBag.TournamentName = tournament?.TournamentName ?? "Tournament";
-            ViewBag.TournamentId = id ?? 0; 
+            ViewBag.TournamentId = id.Value;
+
             return View(teams);
         }
 
@@ -86,17 +88,17 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminTeams/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var team = await _context.Teams.FindAsync(id);
-            if (team == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id", team.IdUser);
+
+            var team = await _context.Teams
+                .Include(t => t.Persons)
+                    .ThenInclude(p => p.Role)
+                .FirstOrDefaultAsync(m => m.IdTeam == id);
+
+            if (team == null) return NotFound();
+
+            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName", team.IdUser);
             return View(team);
         }
 
@@ -128,7 +130,8 @@ namespace Young_snakes.Controllers.Admin
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "AdminTournaments", new { area = "" });
+
             }
             ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id", team.IdUser);
             return View(team);
