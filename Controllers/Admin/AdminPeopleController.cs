@@ -34,8 +34,8 @@ namespace Young_snakes.Controllers.Admin
             if (id == null) return NotFound();
 
             var person = await _context.Persons
-                .Include(p => p.Role) 
-                .Include(p => p.Team) 
+                .Include(p => p.Role)
+                .Include(p => p.Team)
                 .FirstOrDefaultAsync(m => m.IdPerson == id);
 
             if (person == null) return NotFound();
@@ -76,7 +76,10 @@ namespace Young_snakes.Controllers.Admin
             if (person == null)
             {
                 return NotFound();
-            }
+            }                        
+
+            ViewData["IdRole"] = new SelectList(await _context.PersonRoles.ToListAsync(),"IdRole","RoleName");
+            
             return View(person);
         }
 
