@@ -1,36 +1,74 @@
 ﻿@model Young_snakes.Models.Meal
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nuovo Pasto";
 }
 
-<h1>Create</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-light m-0">Nuovo <span class="fw-bold">Pasto</span></h2>
+                    <p class="text-muted small">Inserisci i dettagli per il servizio mensa</p>
+                </div>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> Lista Pasti
+                </a>
+            </div>
 
-<h4>Meal</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MealName" class="control-label"></label>
-                <input asp-for="MealName" class="form-control" />
-                <span asp-validation-for="MealName" class="text-danger"></span>
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mx-4 mt-4 border-0 rounded-3 small"></div>
+
+                    <div class="bg-dark p-4 p-md-5 text-white">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-auto d-flex justify-content-center">
+                                <div class="bg-white bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 64px; height: 64px;">
+                                    <i class="bi bi-egg-fried fs-2 text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label asp-for="MealName" class="small text-uppercase fw-bold text-white-50 d-block mb-1">Nome del Pasto</label>
+                                <input asp-for="MealName" class="form-control form-control-lg bg-white border-0 shadow-none" placeholder="Es. Pranzo Completo" />
+                                <span asp-validation-for="MealName" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5 bg-white">
+                        <div class="row g-4">
+                            <div class="col-12 text-dark">
+                                <h6 class="text-primary fw-bold text-uppercase mb-4 border-bottom pb-2">Informazioni Economiche</h6>
+                                
+                                <div class="mb-3">
+                                    <label asp-for="Price" class="form-label small text-muted text-uppercase fw-bold">Prezzo Unitario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-0 text-muted px-3"> </span>
+                                        <input asp-for="Price" class="form-control form-control-lg bg-light border-0 shadow-none fw-bold" placeholder="0.00" />
+                                    </div>
+                                    <span asp-validation-for="Price" class="text-danger small"></span>
+                                </div>
+
+                                <div class="bg-light rounded-4 p-3 mt-4 border-start border-primary border-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
+                                        <span class="small text-muted">Assicurati che il prezzo sia comprensivo di eventuali tasse previste.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-top d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm fw-bold py-2 text-uppercase">
+                                <i class="bi bi-check-lg me-2"></i>Crea Pasto
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
