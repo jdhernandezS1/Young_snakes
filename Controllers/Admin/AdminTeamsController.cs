@@ -53,15 +53,28 @@ namespace Young_snakes.Controllers.Admin
             }
 
             var team = await _context.Teams
-                .Include(t => t.User)
+                .Include(t => t.User).Include(t=>t.Tournament)
                 .FirstOrDefaultAsync(m => m.IdTeam == id);
             if (team == null)
             {
                 return NotFound();
             }
 
+            var quantita = await _context.Persons.CountAsync(p => p.IdTeam == id);
+
+            
+            int raggiuntoMinimo = 0;
+            if (team.Tournament != null)
+            {
+                raggiuntoMinimo = (quantita >= team.Tournament.MinPlayers) ? 1 : 0;
+            }
+
+            ViewData["Quantita"] = quantita;
+            ViewData["RaggiuntoMinimo"] = raggiuntoMinimo;
+            ViewData["MinPlayers"] = team.Tournament?.MinPlayers ?? 0;
             return View(team);
         }
+
 
         // GET: AdminTeams/Create
         public IActionResult Create()

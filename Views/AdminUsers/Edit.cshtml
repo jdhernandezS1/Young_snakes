@@ -1,0 +1,93 @@
+@model Young_snakes.Models.Auth.ApplicationUser
+
+@{
+    ViewData["Title"] = "Modifica Utente";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                
+                <div class="bg-dark p-4 p-md-5 text-white">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px;">
+                            <i class="bi bi-person-gear fs-3 text-white"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h3 class="fw-bold mb-0">Gestione Account</h3>
+                            <span class="text-muted small">ID: @Model.Id</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 small"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="UserName" class="form-label small text-uppercase fw-bold text-muted">Username</label>
+                                <input asp-for="UserName" class="form-control bg-light border-0 shadow-none" />
+                                <span asp-validation-for="UserName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label small text-uppercase fw-bold text-muted">Email Address</label>
+                                <input asp-for="Email" class="form-control bg-light border-0 shadow-none" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label small text-uppercase fw-bold text-danger">Ruolo di Sistema</label>
+                                <select name="selectedRole" class="form-select bg-danger-subtle border-0 text-danger fw-bold shadow-none" asp-items="ViewBag.Roles">
+                                    <option value="">-- Utente Standard (Senza Ruolo) --</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <div class="p-3 rounded-4 bg-light d-flex align-items-center justify-content-between border">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-shield-shaded fs-3 me-3 text-secondary"></i>
+                                        <div>
+                                            <small class="d-block text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Team Collegato</small>
+                                            <span class="fw-bold">@(Model.Team?.TeamName ?? "Nessun Team assegnato")</span>
+                                        </div>
+                                    </div>
+                                    @if(Model.Team != null)
+                                    {
+                                        <a asp-controller="AdminTeams" asp-action="Details" asp-route-id="@Model.Team.IdTeam" class="btn btn-sm btn-white border shadow-sm rounded-pill px-3">Verifica</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-top d-flex justify-content-between align-items-center">
+                            <a asp-action="Index" class="text-muted text-decoration-none small"><i class="bi bi-chevron-left"></i> Annulla</a>
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm">
+                                Salva Modifiche
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilo para los botones tipo "White" */
+    .btn-white { background-color: #fff; color: #333; }
+    .btn-white:hover { background-color: #f8f9fa; }
+    
+    .form-control:focus, .form-select:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+        border: 1px solid #0d6efd !important;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

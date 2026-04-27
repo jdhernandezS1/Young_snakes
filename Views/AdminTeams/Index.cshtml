@@ -46,7 +46,7 @@
                     </td>
                     <td>
                         @{
-                            // Logica di conteggio tramite LINQ
+                            
                             var total = item.Persons.Count();
                             var players = item.Persons.Count(p => p.Role?.RoleName.ToLower() == "player");
                             var coaches = item.Persons.Count(p => p.Role?.RoleName.ToLower().Contains("coach") == true);

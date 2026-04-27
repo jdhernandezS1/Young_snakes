@@ -64,17 +64,17 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
-   var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-   string[] roles = { "SuperAdmin", "TeamUser" };
+    string[] roles = { "SuperAdmin", "TeamUser" };
 
-   foreach (var role in roles)
-   {
-       if (!await roleManager.RoleExistsAsync(role))
-           await roleManager.CreateAsync(new IdentityRole(role));
-   }
-   var services = scope.ServiceProvider;
-   await DataSeeder.SeedAsync(services);
-   // }
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+    var services = scope.ServiceProvider;
+    await DataSeeder.SeedAsync(services);
+    // }
 }
-    app.Run();
+app.Run();
