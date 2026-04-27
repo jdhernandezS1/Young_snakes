@@ -45,8 +45,21 @@
                                     <input asp-for="CategoryName" class="form-control bg-light border-0 shadow-none" placeholder="Es. U17" />
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="TournamentYear" class="form-label small text-muted text-uppercase fw-bold">Anno Edizione</label>
-                                    <input asp-for="TournamentYear" class="form-control bg-light border-0 shadow-none" value="@DateTime.Now.Year" />
+                                    <label asp-for="TournamentYear" class="form-label small text-muted text-uppercase fw-bold">Data del Torneo</label>
+                                    <div class="mb-3">
+                                        <label asp-for="TournamentYear" class="form-label small text-muted text-uppercase fw-bold">Data del Torneo</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0 text-muted">
+                                                <i class="bi bi-calendar-plus"></i>
+                                            </span>
+                                            <input asp-for="TournamentYear" 
+                                                type="date" 
+                                                class="form-control bg-light border-0 shadow-none" 
+                                                value="@DateTimeOffset.Now.ToString("yyyy-MM-dd")" />
+                                        </div>
+                                        <span asp-validation-for="TournamentYear" class="text-danger small"></span>
+                                    </div>
+                                    <span asp-validation-for="TournamentYear" class="text-danger small"></span>
                                 </div>
                                 <div class="p-3 rounded-4 bg-light d-flex align-items-center mt-4">
                                     <div class="form-check form-switch m-0">
@@ -71,7 +84,7 @@
                                 <div class="mt-4">
                                     <label asp-for="ExtraPlayerFee" class="form-label small text-muted text-uppercase fw-bold">Costo Extra Player</label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-0 text-muted">€</span>
+                                        <span class="input-group-text bg-light border-0 text-muted">CHF:</span>
                                         <input asp-for="ExtraPlayerFee" class="form-control bg-light border-0 shadow-none" />
                                     </div>
                                 </div>
