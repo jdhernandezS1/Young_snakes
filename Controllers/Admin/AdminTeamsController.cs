@@ -53,7 +53,7 @@ namespace Young_snakes.Controllers.Admin
             }
 
             var team = await _context.Teams
-                .Include(t => t.User).Include(t=>t.Tournament)
+                .Include(t => t.User).Include(t => t.Tournament)
                 .FirstOrDefaultAsync(m => m.IdTeam == id);
             if (team == null)
             {
@@ -62,7 +62,7 @@ namespace Young_snakes.Controllers.Admin
 
             var quantita = await _context.Persons.CountAsync(p => p.IdTeam == id);
 
-            
+
             int raggiuntoMinimo = 0;
             if (team.Tournament != null)
             {
@@ -103,7 +103,6 @@ namespace Young_snakes.Controllers.Admin
         {
             if (id == null) return NotFound();
 
-
             var team = await _context.Teams
                 .Include(t => t.Persons)
                     .ThenInclude(p => p.Role)
@@ -111,7 +110,12 @@ namespace Young_snakes.Controllers.Admin
 
             if (team == null) return NotFound();
 
-            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName", team.IdUser);
+            // Cargamos los SelectLists para que el formulario pueda mostrarlos
+            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName", team.IdUser);            
+            ViewData["IdTournament"] = new SelectList(_context.Tournaments, "IdTournament", "TournamentName", team.IdTournament);
+            ViewData["IdMezzo"] = new SelectList(_context.Mezzos, "IdMezzo", "Veicolo", team.IdMezzo);
+            ViewData["IdAccommodation"] = new SelectList(_context.Accommodations, "IdAccommodation", "AccommodationName", team.IdAccommodation);
+
             return View(team);
         }
 

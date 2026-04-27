@@ -1,65 +1,95 @@
 ﻿@model Young_snakes.Models.Tournament
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nuova Competizione";
 }
 
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-light m-0">Nuova <span class="fw-bold">Competizione</span></h2>
+                    <p class="text-muted small">Configura i parametri per un nuovo torneo nel sistema</p>
+                </div>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i> Lista Tornei
+                </a>
+            </div>
 
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mx-4 mt-4 border-0 rounded-3 small"></div>
 
-<h4>Torneo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TournamentName" class="control-label"></label>
-                <input asp-for="TournamentName" class="form-control" />
-                <span asp-validation-for="TournamentName" class="text-danger"></span>
+                    <div class="bg-primary p-4 p-md-5 text-white text-center text-md-start">
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-auto">
+                                <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center shadow-sm mx-auto" style="width: 60px; height: 60px;">
+                                    <i class="bi bi-trophy-fill fs-3 text-white"></i>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label asp-for="TournamentName" class="small text-uppercase fw-bold text-white-50 d-block mb-1">Nome Competizione</label>
+                                <input asp-for="TournamentName" class="form-control form-control-lg bg-white border-0 shadow-none" placeholder="Es. Easter Cup" />
+                                <span asp-validation-for="TournamentName" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5 bg-white text-dark">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h6 class="text-primary fw-bold text-uppercase mb-4 border-bottom pb-2">Dati Generali</h6>
+                                <div class="mb-3">
+                                    <label asp-for="CategoryName" class="form-label small text-muted text-uppercase fw-bold">Categoria</label>
+                                    <input asp-for="CategoryName" class="form-control bg-light border-0 shadow-none" placeholder="Es. U17" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="TournamentYear" class="form-label small text-muted text-uppercase fw-bold">Anno Edizione</label>
+                                    <input asp-for="TournamentYear" class="form-control bg-light border-0 shadow-none" value="@DateTime.Now.Year" />
+                                </div>
+                                <div class="p-3 rounded-4 bg-light d-flex align-items-center mt-4">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input shadow-none" type="checkbox" asp-for="IsOpen" id="createSwitch" role="switch" checked>
+                                        <label class="form-check-label fw-bold ms-2" for="createSwitch">Iscrizioni Aperte</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h6 class="text-primary fw-bold text-uppercase mb-4 border-bottom pb-2">Regole Rosa</h6>
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <label asp-for="MinPlayers" class="form-label small text-muted text-uppercase fw-bold">Min. Giocatori</label>
+                                        <input asp-for="MinPlayers" class="form-control bg-light border-0 text-center fw-bold shadow-none" />
+                                    </div>
+                                    <div class="col-6">
+                                        <label asp-for="MaxPlayers" class="form-label small text-muted text-uppercase fw-bold">Max. Giocatori</label>
+                                        <input asp-for="MaxPlayers" class="form-control bg-light border-0 text-center fw-bold shadow-none" />
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <label asp-for="ExtraPlayerFee" class="form-label small text-muted text-uppercase fw-bold">Costo Extra Player</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-0 text-muted">€</span>
+                                        <input asp-for="ExtraPlayerFee" class="form-control bg-light border-0 shadow-none" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-top d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm fw-bold py-2 text-uppercase">
+                                Crea Competizione
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MinPlayers" class="control-label"></label>
-                <input asp-for="MinPlayers" class="form-control" />
-                <span asp-validation-for="MinPlayers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxPlayers" class="control-label"></label>
-                <input asp-for="MaxPlayers" class="form-control" />
-                <span asp-validation-for="MaxPlayers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExtraPlayerFee" class="control-label"></label>
-                <input asp-for="ExtraPlayerFee" class="form-control" />
-                <span asp-validation-for="ExtraPlayerFee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TournamentYear" class="control-label"></label>
-                <input asp-for="TournamentYear" class="form-control" />
-                <span asp-validation-for="TournamentYear" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsOpen" /> Torneo Aperto
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

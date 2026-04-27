@@ -1,54 +1,103 @@
 ﻿@model Young_snakes.Models.Tournament
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Dettagli Torneo";
 }
 
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                <div>
+                    <h2 class="fw-light m-0">Scheda <span class="fw-bold">Torneo</span></h2>
+                    <p class="text-muted small mb-0">Riepilogo delle configurazioni e restrizioni</p>
+                </div>
+                <div class="btn-group shadow-sm">
+                    <a asp-action="Edit" asp-route-id="@Model?.IdTournament" class="btn btn-dark px-4">
+                        <i class="bi bi-pencil-square me-2"></i>Modifica
+                    </a>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-left me-2"></i>Indietro
+                    </a>
+                </div>
+            </div>
 
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-dark p-4 p-md-5 text-white position-relative">
+                    <div class="d-flex align-items-center position-relative" style="z-index: 2;">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg" style="width: 80px; height: 80px;">
+                            <i class="bi bi-trophy fs-2 text-white"></i>
+                        </div>
+                        <div class="ms-4">
+                            <h2 class="fw-bold mb-1">@Model.TournamentName</h2>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-primary text-uppercase px-3 py-2 rounded-pill">
+                                    @Model.CategoryName
+                                </span>
+                                <span class="badge bg-light text-dark text-uppercase px-3 py-2 rounded-pill">
+                                    Edizione @Model.TournamentYear
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="position-absolute end-0 top-50 translate-middle-y me-5 d-none d-md-block opacity-25">
+                        <i class="bi bi-shield-check" style="font-size: 7rem;"></i>
+                    </div>
+                </div>
 
-<div>
-    <h4>Torneo</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TournamentName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TournamentName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinPlayers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinPlayers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaxPlayers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaxPlayers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExtraPlayerFee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExtraPlayerFee)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TournamentYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TournamentYear)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdTournament">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                <div class="card-body p-4 p-md-5 bg-white">
+                    <div class="row g-5">
+                        <div class="col-md-6">
+                            <h6 class="text-primary fw-bold text-uppercase mb-4 border-bottom pb-2">
+                                <i class="bi bi-people me-2"></i>Parametri Rosa
+                            </h6>
+                            
+                            <div class="mb-4">
+                                <label class="small text-muted d-block text-uppercase fw-bold">Minimo Giocatori</label>
+                                <span class="fs-4 fw-bold text-dark">@Model.MinPlayers</span>
+                                <span class="text-muted ms-1 small text-uppercase">Membri</span>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="small text-muted d-block text-uppercase fw-bold">Massimo Giocatori</label>
+                                <span class="fs-4 fw-bold text-dark">@Model.MaxPlayers</span>
+                                <span class="text-muted ms-1 small text-uppercase">Membri</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h6 class="text-primary fw-bold text-uppercase mb-4 border-bottom pb-2">
+                                <i class="bi bi-cash-stack me-2"></i>Costi ed Extra
+                            </h6>
+                            
+                            <div class="bg-light rounded-4 p-4 mb-3 border-0">
+                                <label class="small text-muted d-block text-uppercase fw-bold mb-1">Tassa Giocatore Extra</label>
+                                <div class="d-flex align-items-center">
+                                    <span class="fs-2 fw-bold text-primary">€@Model.ExtraPlayerFee</span>
+                                    <span class="ms-2 text-muted small">/ persona</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-circle-fill @(Model.IsOpen ? "text-success" : "text-danger") me-2 small"></i>
+                                <span class="fw-bold text-uppercase small">
+                                    Stato Iscrizioni: @(Model.IsOpen ? "Aperte" : "Chiuse")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-top border-light d-flex justify-content-between align-items-center">
+                        <div class="text-muted small text-uppercase">
+                            Identificativo Sistema: <strong class="text-dark">#@Model.IdTournament</strong>
+                        </div>
+                        <a asp-controller="AdminTeams" asp-action="Index" asp-route-id="@Model.IdTournament" class="btn btn-link text-primary text-decoration-none fw-bold p-0">
+                            Visualizza Squadre Iscritte <i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

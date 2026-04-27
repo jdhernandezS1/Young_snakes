@@ -20,128 +20,175 @@
                     <form asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
                         <input type="hidden" asp-for="IdTeam" />
-                        <input type="hidden" asp-for="IdTournament" />
 
                         <div class="mb-3">
-                            <label asp-for="TeamName" class="form-label small text-uppercase text-muted">Nome
-                                Squadra</label>
-                                <input asp-for="TeamName" class="form-control form-control-sm border-0 bg-light" />
-                                <span asp-validation-for="TeamName" class="text-danger small"></span>
+                            <label asp-for="TeamName" class="form-label small text-uppercase text-muted fw-bold">Nome
+                            Squadra</label>
+                            <input asp-for="TeamName" class="form-control form-control-sm border-0 bg-light" />
+                            <span asp-validation-for="TeamName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="City" class="form-label small text-uppercase text-muted">Città</label>
+                                <input asp-for="City" class="form-control form-control-sm border-0 bg-light" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Country"
+                                        class="form-label small text-uppercase text-muted">Nazione</label>
+                                <input asp-for="Country" class="form-control form-control-sm border-0 bg-light" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ClubColors" class="form-label small text-uppercase text-muted">Colori
+                                Sociali</label>
+                                <input asp-for="ClubColors" class="form-control form-control-sm border-0 bg-light"
+                                        placeholder="es. Rosso/Nero" />
+                            </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="ArrivalDateBellinzona"
+                                            class="form-label small text-uppercase text-muted">Data Arrivo Bellinzona</label>
+                                    <input asp-for="ArrivalDateBellinzona" type="datetime-local"
+                                            class="form-control form-control-sm border-0 bg-light" />
+                                </div>
+                            </div>
+
+                            <hr class="my-3 opacity-25">
+
+                            <h6 class="small text-uppercase fw-bold text-primary mb-3">Logistica e Torneo</h6>
+
+                            <div class="mb-3">
+                                <label asp-for="IdTournament"
+                                        class="form-label small text-uppercase text-muted">Torneo</label>
+                                <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light"
+                                        asp-items="ViewBag.IdTournament"></select>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label asp-for="City" class="form-label small text-uppercase text-muted">Città</label>
-                                    <input asp-for="City" class="form-control form-control-sm border-0 bg-light" />
+                                    <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di
+                                        Trasporto</label>
+                                        <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light"
+                                                asp-items="ViewBag.IdMezzo">
+                                            <option value="">-- Seleziona Mezzo --</option>
+                                        </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label asp-for="Country"
-                                           class="form-label small text-uppercase text-muted">Nazione</label>
-                                    <input asp-for="Country" class="form-control form-control-sm border-0 bg-light" />
+                                    <label asp-for="IdAccommodation"
+                                            class="form-label small text-uppercase text-muted">Alloggio</label>
+                                    <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light"
+                                            asp-items="ViewBag.IdAccommodation">
+                                        <option value="">-- Seleziona Alloggio --</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label asp-for="ClubColors" class="form-label small text-uppercase text-muted">Colori
-                                    Sociali</label>
-                                    <input asp-for="ClubColors" class="form-control form-control-sm border-0 bg-light"
-                                           placeholder="es. Rosso/Nero" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile
-                                        (User)</label>
-                                        <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light"
-                                                asp-items="ViewBag.IdUser"></select>
-                                    </div>
-
-                                    <hr class="my-4 opacity-25">
-
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-dark btn-sm shadow-sm">Salva Modifiche</button>
-                                    </div>
-                                </form>
+                                <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile
+                                Account</label>
+                                <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light"
+                                        asp-items="ViewBag.IdUser"></select>
                             </div>
-                        </div>
+
+                            <hr class="my-3 opacity-25">
+
+                            <div class="mb-3">
+                                <label asp-for="TeamImageUrl" class="form-label small text-uppercase text-muted text-xs">URL
+                                Immagine Team</label>
+                                <input asp-for="TeamImageUrl"
+                                        class="form-control form-control-sm border-0 bg-light font-monospace small" />
+                            </div>
+                           
+
+                            <div class="d-grid mt-4">
+                                <button type="submit"
+                                    class="btn btn-dark btn-sm shadow-sm py-2 text-uppercase fw-bold">Salva
+                                Modifiche</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="card-title m-0">Gestione Membri Squadra</h5>
+                        <a asp-controller="AdminPeople" asp-action="Create" asp-route-idTeam="@Model.IdTeam"
+                                class="btn btn-primary btn-sm rounded-pill">
+                            <i class="bi bi-plus"></i> Aggiungi Membro
+                        </a>
                     </div>
 
-                    <div class="col-lg-8">
-                        <div class="card shadow-sm border-0 rounded-3">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="card-title m-0">Gestione Membri Squadra</h5>
-                                    <a asp-controller="AdminPeople" asp-action="Create" asp-route-idTeam="@Model.IdTeam"
-                                           class="btn btn-primary btn-sm rounded-pill">
-                                        <i class="bi bi-plus"></i> Aggiungi Membro
-                                    </a>
-                                </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="small text-uppercase text-muted border-0">Ruolo</th>
+                                    <th class="small text-uppercase text-muted border-0">Nominativo</th>
+                                    <th class="small text-uppercase text-muted border-0 text-end">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Persons != null && Model.Persons.Any())
+                                {
+                                    @foreach (var person in Model.Persons.OrderBy(p => p.IdRole))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span
+                                                    class="badge @(person.Role?.RoleName == "Player" ? "bg-info-subtle text-info" : "bg-dark-subtle text-dark") border">
+                                                    @person.Role?.RoleName
+                                                </span>
+                                            </td>
+                                            <td class="fw-semibold">@person.LastName, @person.FirstName</td>
+                                            <td class="text-end">
+                                                <div class="btn-group btn-group-sm shadow-sm">
+                                                    <a asp-controller="AdminPeople" asp-action="Edit"
+                                                            asp-route-id="@person.IdPerson"
+                                                            class="btn btn-white border shadow-none">
+                                                        <i class="bi bi-pencil-square text-primary"></i>
+                                                    </a>
 
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="small text-uppercase text-muted border-0">Ruolo</th>
-                                                <th class="small text-uppercase text-muted border-0">Nominativo</th>
-                                                <th class="small text-uppercase text-muted border-0 text-end">Azioni</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model.Persons != null && Model.Persons.Any())
-                                            {
-                                                @foreach (var person in Model.Persons.OrderBy(p => p.IdRole))
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <span
-                                                                class="badge @(person.Role?.RoleName == "Player" ? "bg-info-subtle text-info" : "bg-dark-subtle text-dark") border">
-                                                                @person.Role?.RoleName
-                                                            </span>
-                                                        </td>
-                                                        <td class="fw-semibold">@person.LastName, @person.FirstName</td>
-                                                        <td class="text-end">
-                                                            <div class="btn-group btn-group-sm shadow-sm">
-                                                                <a asp-controller="AdminPeople" asp-action="Edit"
-                                                                       asp-route-id="@person.IdPerson"
-                                                                       class="btn btn-white border shadow-none">
-                                                                    <i class="bi bi-pencil-square text-primary"></i>
-                                                                </a>
-                
-                                                                <a asp-controller="AdminPeople" asp-action="Details"
-                                                                       asp-route-id="@person.IdPerson"
-                                                                       class="btn btn-white border shadow-none">
-                                                                    <i class="bi bi-eye text-secondary"></i>
-                                                                </a>
-                
-                                                                <a asp-controller="AdminPeople" asp-action="Delete"
-                                                                       asp-route-id="@person.IdPerson"
-                                                                       class="btn btn-white border shadow-none">
-                                                                    <i class="bi bi-trash text-danger"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <tr>
-                                                    <td colspan="3" class="text-center text-muted py-4 italic">Nessun membro presente in
-                                                        plantilla.</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                                    <a asp-controller="AdminPeople" asp-action="Details"
+                                                            asp-route-id="@person.IdPerson"
+                                                            class="btn btn-white border shadow-none">
+                                                        <i class="bi bi-eye text-secondary"></i>
+                                                    </a>
+
+                                                    <a asp-controller="AdminPeople" asp-action="Delete"
+                                                            asp-route-id="@person.IdPerson"
+                                                            class="btn btn-white border shadow-none">
+                                                        <i class="bi bi-trash text-danger"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-4 italic">Nessun membro presente in
+                                        plantilla.</td>
+                                    </tr>
+                                    }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-                @section Scripts {
-                    @{
-                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                    }
-                }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

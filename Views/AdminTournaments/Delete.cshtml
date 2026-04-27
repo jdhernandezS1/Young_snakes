@@ -1,57 +1,51 @@
 ﻿@model Young_snakes.Models.Tournament
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Elimina Torneo";
 }
 
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+            </div>
+            
+            <h2 class="fw-bold mb-2 text-dark">Elimina Competizione</h2>
+            <p class="text-muted px-lg-5">Sei sicuro di voler eliminare definitivamente il torneo? Questa azione rimuoverà tutti i parametri associati.</p>
 
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-4 bg-light">
+                <div class="card-body p-4 text-start">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-white rounded-3 p-2 me-3 shadow-sm text-dark fw-bold">
+                             @Model.TournamentYear
+                        </div>
+                        <div>
+                            <h5 class="mb-0 fw-bold">@Model.TournamentName</h5>
+                            <span class="text-muted small">@Model.CategoryName</span>
+                        </div>
+                    </div>
 
-<h3>Sei sicuro di cancellare il torneo?</h3>
-<div>
-    <h4>Tournament</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TournamentName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TournamentName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MinPlayers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MinPlayers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaxPlayers)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaxPlayers)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExtraPlayerFee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExtraPlayerFee)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TournamentYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TournamentYear)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdTournament" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 border-end">
+                            <label class="small text-muted d-block text-uppercase fw-bold">Min/Max</label>
+                            <span class="fw-bold">@Model.MinPlayers / @Model.MaxPlayers</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="small text-muted d-block text-uppercase fw-bold">Extra Fee</label>
+                            <span class="fw-bold">€@Model.ExtraPlayerFee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="mt-5">
+                <input type="hidden" asp-for="IdTournament" />
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-danger px-5 rounded-pill shadow-sm fw-bold">Elimina Torneo</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-5 rounded-pill">Annulla</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

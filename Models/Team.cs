@@ -27,11 +27,11 @@ public class Team
     // RELACIONES
     [Required]
     public int? IdTournament { get; set; }
-    [ForeignKey("IdAccommodation")] 
+    [ForeignKey("IdTournament")] 
     public Tournament? Tournament { get; set; }
 
     public int? IdMezzo { get; set; }
-    [ForeignKey("IdAccommodation")] 
+    [ForeignKey("IdMezzo")] 
     public Mezzo? Mezzo { get; set; }
 
     [Required]

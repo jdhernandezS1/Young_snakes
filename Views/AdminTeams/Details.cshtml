@@ -58,9 +58,9 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="small text-muted text-uppercase fw-bold d-block">ID Torneo</label>
+                            <label class="small text-muted text-uppercase fw-bold d-block">Torneo</label>
                             <div class="p-2 bg-light rounded-3 mt-1">
-                                <i class="bi bi-trophy me-2"></i> #@Model.IdTournament
+                                <i class="bi bi-trophy me-2"></i> @Model.Tournament.TournamentName
                             </div>
                         </div>
                     </div>
@@ -95,37 +95,55 @@
                         <p class="text-muted small">Nessuna immagine disponibile</p>
                     </div>
                 }
-                <div class="card-footer bg-white border-0 text-center pb-3">
-                    <code class="text-muted small">Public ID: @Model.TeamImagePublicId</code>
+               
+            </div>
+
+            <div class="card border-0 shadow-lg rounded-4 bg-dark text-white overflow-hidden">
+    <div class="card-body p-4">
+        <div class="row align-items-center g-0">
+            
+            <div class="col-auto pe-4 d-none d-md-block">
+                <div class="bg-white bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+                    <i class="bi bi-people-fill fs-2 text-primary"></i>
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm rounded-4 bg-dark text-white">
-                <div class="card-body p-4">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <i class="bi bi-people-fill display-4 text-primary"></i>
-                        </div>
-                        
-                        <div class="d-flex align-items-center mt-3">
-                        @if ((int)ViewData["RaggiuntoMinimo"] == 1)
-                        {
-                            <div class="alert alert-success w-100 mb-0">
-                                <i class="bi bi-check-circle-fill me-2"></i>
-                                <strong>IDONEO:</strong> Hai raggiunto il minimo di @ViewData["MinPlayers"] giocatori (Attuali: @ViewData["Quantita"]).
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="alert alert-danger w-100 mb-0">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                <strong>INCOMPLETO:</strong> Mancano giocatori per raggiungere il minimo di @ViewData["MinPlayers"] (Attuali: @ViewData["Quantita"]).
-                            </div>
-                        }
-                    </div>
-                    </div>
+            <div class="col">
+                <div class="mb-2">
+                    <span class="text-uppercase fw-bold text-white-50" style="font-size: 0.75rem; letter-spacing: 0.05rem;">
+                        Stato della squadra
+                    </span>
                 </div>
-            </div>
+                
+                @if ((int)ViewData["RaggiuntoMinimo"] == 1)
+                {
+                    <div class="alert alert-success border-0 bg-success bg-opacity-10 text-success rounded-3 m-0 py-3 px-4 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+                            <div>
+                                <div class="fw-bold text-uppercase small mb-1">Idoneo</div>
+                                <div class="small opacity-90">
+                                    Hai raggiunto il minimo di <strong>@ViewData["MinPlayers"]</strong> giocatori. (Totale: @ViewData["Quantita"])
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger border-0 bg-danger bg-opacity-10 text-danger rounded-3 m-0 py-3 px-4 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                            <div>
+                                <div class="fw-bold text-uppercase small mb-1">Incompleto</div>
+                                <div class="small opacity-90">
+                                    Mancano giocatori per il minimo di <strong>@ViewData["MinPlayers"]</strong>. (Attuali: @ViewData["Quantita"])
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>                
         </div>
     </div>
 </div>
