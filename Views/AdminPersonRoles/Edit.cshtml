@@ -1,34 +1,35 @@
 ﻿@model Young_snakes.Models.PersonRole
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modifica Ruolo";
 }
 
-<h1>Edit</h1>
-
-<h4>PersonRole</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdRole" />
-            <div class="form-group">
-                <label asp-for="RoleName" class="control-label"></label>
-                <input asp-for="RoleName" class="form-control" />
-                <span asp-validation-for="RoleName" class="text-danger"></span>
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden text-dark">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="IdRole" />
+                    <div class="bg-dark p-4 p-md-5 text-white">
+                        <h4 class="fw-bold mb-4 border-bottom border-secondary pb-3">Aggiorna Ruolo</h4>
+                        <div class="mb-0">
+                            <label asp-for="RoleName" class="small text-uppercase fw-bold text-white-50 d-block mb-2">Nome Ruolo</label>
+                            <input asp-for="RoleName" class="form-control form-control-lg bg-white border-0 shadow-none fw-bold text-dark" />
+                            <span asp-validation-for="RoleName" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <div class="row g-2">
+                            <div class="col-8 text-dark">
+                                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-3">Salva Modifiche</button>
+                            </div>
+                            <div class="col-4">
+                                <a asp-action="Index" class="btn btn-light w-100 rounded-pill border py-3 fw-bold">Annulla</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

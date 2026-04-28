@@ -1,24 +1,30 @@
 ﻿@model Young_snakes.Models.PersonRole
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Elimina Ruolo";
 }
-<h3>Sei sicuro di cancellare questo?</h3>
-<div>
-    <h4>PersonRole</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RoleName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RoleName)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdRole" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center text-center">
+        <div class="col-lg-5">
+            <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-x fs-1"></i>
+            </div>
+            
+            <h2 class="fw-bold mb-3 text-dark">Rimuovere il Ruolo?</h2>
+            <p class="text-muted px-4 mb-5">Confermando, il ruolo <strong>@Model.RoleName</strong> verrà rimosso permanentemente dal database.</p>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="IdRole" />
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger btn-lg rounded-pill fw-bold py-3 text-uppercase fs-6 shadow-sm">
+                        Elimina Ruolo
+                    </button>
+                    <a asp-action="Index" class="btn btn-link text-secondary text-decoration-none fw-bold">
+                        Annulla e torna alla lista
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
