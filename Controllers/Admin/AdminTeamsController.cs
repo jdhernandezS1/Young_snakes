@@ -40,7 +40,7 @@ namespace Young_snakes.Controllers.Admin
 
             ViewBag.TournamentName = tournament?.TournamentName ?? "Tournament";
             ViewBag.TournamentId = id.Value;
-
+            ViewBag.MinPlayers = tournament?.MinPlayers ?? 0;
             return View(teams);
         }
 
