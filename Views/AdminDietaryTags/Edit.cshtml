@@ -1,38 +1,39 @@
 ﻿@model Young_snakes.Models.DietaryTag
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modifica";
 }
 
-
-<h4>Alergeni e Diete</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdTag" />
-            <div class="form-group">
-                <label asp-for="TagName" class="control-label">DIETA</label>
-                <input asp-for="TagName" class="form-control" />
-                <span asp-validation-for="TagName" class="text-danger"></span>
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="IdTag" />
+                    <div class="bg-dark p-4 p-md-5 text-white">
+                        <h4 class="fw-bold mb-4">Modifica Etichetta</h4>
+                        <div class="mb-3">
+                            <label class="small text-uppercase fw-bold text-white-50 d-block mb-1">Nome Dieta</label>
+                            <input asp-for="TagName" class="form-control form-control-lg bg-white border-0 shadow-none" />
+                        </div>
+                        <div class="mb-0">
+                            <label asp-for="TagType" class="small text-uppercase fw-bold text-white-50 d-block mb-1">Tipo di Restrizione</label>
+                            <select asp-for="TagType" class="form-select form-select-lg bg-white border-0 shadow-none text-dark">
+                                <option value="" disabled selected>-- Select Type --</option>
+                                <option value="Allergy">Allergy</option>
+                                <option value="Diet">Diet</option>
+                            </select>
+                            <span asp-validation-for="TagType" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-3">Salva Modifiche</button>
+                            <a asp-action="Index" class="btn btn-light w-100 rounded-pill fw-bold border py-3">Annulla</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="TagType" class="control-label">TIPO</label>
-                <input asp-for="TagType" class="form-control" />
-                <span asp-validation-for="TagType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Torna a la lista</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -1,41 +1,58 @@
 ﻿@model IEnumerable<Young_snakes.Models.DietaryTag>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Allergeni e Diete";
 }
 
-<h1>Alergeni e Diete</h1>
+<div class="container py-4 text-dark">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+        <div>
+            <h1 class="fw-light m-0 text-dark">Allergeni e <span class="fw-bold">Diete</span></h1>
+            <p class="text-muted small mb-0">Gestisci le restrizioni alimentari per i pasti</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+            <i class="bi bi-plus-lg me-2"></i>Nuova Etichetta
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                DIETA
-            </th>
-            <th>
-                TIPO
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TagName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TagType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdTag">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdTag">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdTag">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Nome Dieta / Allergene</th>
+                        <th class="py-3 border-0 small text-uppercase fw-bold text-muted text-center">Tipo</th>
+                        <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 py-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-warning bg-opacity-10 text-warning rounded-3 p-2 me-3 text-center" style="width: 40px;">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                    </div>
+                                    <span class="fw-bold text-dark">@item.TagName</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 px-3 py-2 rounded-pill fw-medium">
+                                    @item.TagType
+                                </span>
+                            </td>
+                            <td class="pe-4 py-3 text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-action="Edit" asp-route-id="@item.IdTag" class="btn btn-white border-0 text-primary"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.IdTag" class="btn btn-white border-0 text-secondary"><i class="bi bi-eye"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.IdTag" class="btn btn-white border-0 text-danger"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

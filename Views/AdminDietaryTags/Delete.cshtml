@@ -1,31 +1,26 @@
 ﻿@model Young_snakes.Models.DietaryTag
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Elimina";
 }
 
-<h3>Sei sicuro di cancellare questo?</h3>
-<div>
-    <h4>DietaryTag</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            DIETA
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TagName)
-        </dd>
-        <dt class = "col-sm-2">
-            TIPO
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TagType)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdTag" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Torna a la lista</a>
-    </form>
+<div class="container py-5 text-dark text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                <i class="bi bi-x-circle fs-1"></i>
+            </div>
+            
+            <h2 class="fw-bold mb-3">Conferma Eliminazione</h2>
+            <p class="text-muted mb-4">Sei sicuro di voler rimuovere l'etichetta <strong>@Model.TagName</strong>?</p>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="IdTag" />
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger btn-lg rounded-pill fw-bold py-3 text-uppercase fs-6">Elimina Definitivamente</button>
+                    <a asp-action="Index" class="btn btn-link text-secondary text-decoration-none">No, torna alla lista</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
