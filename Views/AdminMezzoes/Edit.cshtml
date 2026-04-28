@@ -1,34 +1,35 @@
 ﻿@model Young_snakes.Models.Mezzo
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modifica Mezzo";
 }
 
-<h1>Edit</h1>
-
-<h4>Mezzo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdMezzo" />
-            <div class="form-group">
-                <label asp-for="Veicolo" class="control-label"></label>
-                <input asp-for="Veicolo" class="form-control" />
-                <span asp-validation-for="Veicolo" class="text-danger"></span>
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="IdMezzo" />
+                    <div class="bg-dark p-4 p-md-5 text-white">
+                        <h4 class="fw-bold mb-4 border-bottom border-secondary pb-3">Modifica Veicolo</h4>
+                        <div class="mb-0">
+                            <label asp-for="Veicolo" class="small text-uppercase fw-bold text-white-50 d-block mb-2">Nome / Modello</label>
+                            <input asp-for="Veicolo" class="form-control form-control-lg bg-white border-0 shadow-none fw-bold" />
+                            <span asp-validation-for="Veicolo" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <div class="row g-2">
+                            <div class="col-8">
+                                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-3">Salva Modifiche</button>
+                            </div>
+                            <div class="col-4">
+                                <a asp-action="Index" class="btn btn-light w-100 rounded-pill border py-3">Annulla</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

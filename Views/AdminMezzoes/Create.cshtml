@@ -1,33 +1,41 @@
 ﻿@model Young_snakes.Models.Mezzo
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crea Mezzo";
 }
 
-<h1>Create</h1>
+<div class="container py-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-light m-0 text-dark">Aggiungi <span class="fw-bold">Veicolo</span></h2>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Lista Mezzi</a>
+            </div>
 
-<h4>Mezzo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Veicolo" class="control-label"></label>
-                <input asp-for="Veicolo" class="form-control" />
-                <span asp-validation-for="Veicolo" class="text-danger"></span>
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mx-4 mt-4 border-0 rounded-3 small"></div>
+                    
+                    <div class="bg-dark p-4 p-md-5 text-white">
+                        <div class="text-center mb-4">
+                            <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px;">
+                                <i class="bi bi-truck fs-3 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="mb-0">
+                            <label asp-for="Veicolo" class="small text-uppercase fw-bold text-white-50 d-block mb-2">Descrizione Veicolo</label>
+                            <input asp-for="Veicolo" class="form-control form-control-lg bg-white border-0 shadow-none fw-bold" placeholder="Es. Autobus 50 posti" />
+                            <span asp-validation-for="Veicolo" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 bg-white d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm py-3 text-uppercase">
+                            Registra Mezzo
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
