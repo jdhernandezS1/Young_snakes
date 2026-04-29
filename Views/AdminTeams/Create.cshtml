@@ -40,27 +40,42 @@
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="ArrivalDateBellinzona" class="form-label fw-semibold">Data di Arrivo</label>
-                                <input asp-for="ArrivalDateBellinzona" class="form-control bg-light border-0" />
+                                <input asp-for="ArrivalDateBellinzona" type="datetime-local" 
+                                class="form-control form-control-sm border-0 bg-light" /> 
                             </div>
 
                             <div class="col-12"><hr class="my-3 opacity-25"></div>
 
-                            <div class="col-md-6">
-                                <label asp-for="IdTournament" class="form-label fw-semibold text-primary">Torneo (ID)</label>
-                                <input asp-for="IdTournament" class="form-control bg-light border-0" />
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="IdUser" class="form-label fw-semibold text-primary">Responsabile</label>
-                                <select asp-for="IdUser" class="form-select bg-light border-0" asp-items="ViewBag.IdUser"></select>
+                            <div class="mb-3">
+                                <label asp-for="IdTournament"
+                                        class="form-label small text-uppercase text-muted">Torneo</label>
+                                <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light"
+                                        asp-items="ViewBag.IdTournament"></select>
                             </div>
 
-                            <div class="col-md-6">
-                                <label asp-for="IdMezzo" class="form-label fw-semibold">ID Mezzo Trasporto</label>
-                                <input asp-for="IdMezzo" class="form-control bg-light border-0" />
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di
+                                        Trasporto</label>
+                                        <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light"
+                                                asp-items="ViewBag.IdMezzo">
+                                            <option value="">-- Seleziona Mezzo --</option>
+                                        </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="IdAccommodation"
+                                            class="form-label small text-uppercase text-muted">Alloggio</label>
+                                    <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light"
+                                            asp-items="ViewBag.IdAccommodation">
+                                        <option value="">-- Seleziona Alloggio --</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label asp-for="IdAccommodation" class="form-label fw-semibold">ID Alloggio</label>
-                                <input asp-for="IdAccommodation" class="form-control bg-light border-0" />
+
+                            <div class="mb-3">
+                                <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile Account</label>
+                                <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light"
+                                        asp-items="ViewBag.IdUser"></select>
                             </div>
                         </div>
 

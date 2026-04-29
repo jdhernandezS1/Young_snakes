@@ -20,7 +20,7 @@ namespace Young_snakes.Controllers.Admin
             _context = context;
         }
 
-        // GET: AdminTeams/Index/5 (donde 5 es el IdTournament)
+        // GET: AdminTeams/Index/5  the tournament id
         public async Task<IActionResult> Index(int? id)
         {
             if (id == null)
@@ -79,20 +79,24 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminTeams/Create
         public IActionResult Create()
         {
-            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["IdUser"] = new SelectList(_context.Users, "Id", "UserName");            
+            ViewData["IdTournament"] = new SelectList(_context.Tournaments, "IdTournament", "TournamentName");
+            ViewData["IdMezzo"] = new SelectList(_context.Mezzos, "IdMezzo", "Veicolo");
+            ViewData["IdAccommodation"] = new SelectList(_context.Accommodations, "IdAccommodation", "AccommodationName");
             return View();
         }
 
         // POST: AdminTeams/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTeam,TeamName,City,Country,ClubColors,ArrivalDateBellinzona,TeamImageUrl,TeamImagePublicId,IdTournament,IdMezzo,IdUser,IdAccommodation")] Team team)
+        public async Task<IActionResult> Create(Team team)
         {
+            // return Json(team);
             if (ModelState.IsValid)
             {
                 _context.Add(team);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = team.IdTournament });
             }
             ViewData["IdUser"] = new SelectList(_context.Users, "Id", "Id", team.IdUser);
             return View(team);
