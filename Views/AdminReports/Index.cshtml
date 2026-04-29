@@ -1,0 +1,19 @@
+@model IEnumerable<Team>
+
+@{
+    ViewData["Title"] = "Gestione Espese " + ViewBag.TournamentName;
+}
+
+<div>
+
+
+    @foreach (var item in Model)
+    {
+        <p>
+            @item.TeamName - @item.City, @item.Country
+            <br />
+        </p>
+    }
+
+
+</div>

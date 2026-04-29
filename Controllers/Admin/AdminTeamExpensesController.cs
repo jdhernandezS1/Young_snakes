@@ -24,7 +24,11 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminTeamExpenses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TeamExpenses.ToListAsync());
+            var tournaments = await _context.Tournaments
+                .OrderBy(t => t.TournamentName)
+                .ToListAsync();
+
+            return View(tournaments);
         }
 
         // GET: AdminTeamExpenses/Details/5

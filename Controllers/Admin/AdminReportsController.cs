@@ -20,6 +20,141 @@ namespace Young_snakes.Controllers.Admin
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
+        // GET: AdminTeamExpenses
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> TournamentMealsReportPdf(int id)
+        {
+            var tournament = await _context.Tournaments
+                .Include(t => t.Teams)
+                    .ThenInclude(team => team.Persons)
+                        .ThenInclude(p => p.Meals)
+                            .ThenInclude(pm => pm.Meal)
+                .Include(t => t.Teams)
+                    .ThenInclude(team => team.Persons)
+                        .ThenInclude(p => p.DietaryTags)
+                            .ThenInclude(dt => dt.Tag)
+                .FirstOrDefaultAsync(t => t.IdTournament == id);
+
+            if (tournament == null) return NotFound("Torneo non trovato.");
+
+            string GetCode(string tag)
+            {
+                tag = tag.ToLower();
+                if (tag.Contains("gluten")) return "GF";
+                if (tag.Contains("latt")) return "LF";
+                if (tag.Contains("vegano")) return "VG";
+                if (tag.Contains("vegetar")) return "V";
+                if (tag.Contains("halal")) return "HAL";
+                return tag.Substring(0, Math.Min(3, tag.Length)).ToUpper();
+            }
+
+            var document = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Margin(1, Unit.Centimetre);
+                    page.DefaultTextStyle(x => x.FontSize(10));
+
+                    page.Header().Column(col =>
+                    {
+                        col.Item().Text("PIANO OPERATIVO PASTI").FontSize(18).Bold();
+                        col.Item().Text(tournament.TournamentName).SemiBold();
+                        col.Item().Text($"Data: {DateTime.Now:dd/MM/yyyy}");
+                        col.Item().LineHorizontal(1);
+                    });
+
+                    page.Content().Column(column =>
+                    {
+                        foreach (var team in tournament.Teams.OrderBy(t => t.TeamName))
+                        {
+                            var persons = team.Persons;
+
+                            var services = persons
+                                .SelectMany(p => p.Meals.Select(m => new { Person = p, Meal = m }))
+                                .Where(x => x.Meal.Meal != null)
+                                .GroupBy(x => new
+                                {
+                                    x.Meal.Meal.MealName,
+                                    Date = x.Meal.MealDate.Date
+                                })
+                                .OrderBy(g => g.Key.Date)
+                                .ThenBy(g => g.Key.MealName)
+                                .ToList();
+
+                            column.Item().PaddingTop(10).Border(1).Padding(10).Column(teamCol =>
+                            {
+                                teamCol.Item().Text(team.TeamName).FontSize(14).Bold();
+
+                                foreach (var service in services)
+                                {
+                                    var total = service.Count();
+
+                                    var tags = service
+                                        .SelectMany(x => x.Person.DietaryTags)
+                                        .Where(dt => dt.Tag != null)
+                                        .GroupBy(dt => new { dt.Tag.TagName, dt.Tag.TagType })
+                                        .Select(g => new
+                                        {
+                                            Name = g.Key.TagName,
+                                            Type = g.Key.TagType,
+                                            Count = g.Select(x => x.IdPerson).Distinct().Count()
+                                        })
+                                        .ToList();
+
+                                    var allergie = tags.Where(t => t.Type.ToLower().Contains("allerg")).OrderByDescending(t => t.Count);
+                                    var intolleranze = tags.Where(t => t.Type.ToLower().Contains("intoll")).OrderByDescending(t => t.Count);
+                                    var preferenze = tags.Except(allergie).Except(intolleranze).OrderByDescending(t => t.Count);
+
+                                    teamCol.Item().PaddingTop(8).Border(1).Padding(8).Column(serviceCol =>
+                                    {
+                                        serviceCol.Item().Row(r =>
+                                        {
+                                            r.RelativeItem().Text($"{service.Key.MealName} {service.Key.Date:dd/MM}").Bold();
+                                            r.ConstantItem(80).AlignRight().Text($"TOT: {total}").Bold();
+                                        });
+
+                                        void DrawGroup(string title, IEnumerable<dynamic> list)
+                                        {
+                                            if (!list.Any()) return;
+
+                                            serviceCol.Item().PaddingTop(3).Text(title).SemiBold();
+
+                                            serviceCol.Item().Row(row =>
+                                            {
+                                                foreach (var item in list)
+                                                {
+                                                    row.AutoItem().PaddingRight(10).Text(
+                                                        $"{item.Name.ToUpper()} ({GetCode(item.Name)}): {item.Count}");
+                                                }
+                                            });
+                                        }
+
+                                        DrawGroup("ALLERGIE (PRIORITÀ)", allergie);
+                                        DrawGroup("INTOLLERANZE", intolleranze);
+                                        DrawGroup("PREFERENZE", preferenze);
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+                    page.Footer().AlignCenter().Text(x =>
+                    {
+                        x.Span("Pagina ");
+                        x.CurrentPageNumber();
+                        x.Span($" | {tournament.TournamentName}");
+                    });
+                });
+            });
+
+            byte[] pdf = document.GeneratePdf();
+            return File(pdf, "application/pdf", $"Piano_Pasti_{id}.pdf");
+        }
+
         public async Task<IActionResult> TournamentRosterPdf(int id)
         {
             var tournament = await _context.Tournaments

@@ -1,51 +1,38 @@
-﻿@model IEnumerable<Young_snakes.Models.TeamExpense>
+﻿@model IEnumerable<Young_snakes.Models.Tournament>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gestione Tornei - Report Pasti";
 }
 
-<h1>Index</h1>
+<h1>Gestione Report Pasti Tornei</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    Selezionare un torneo per generare il report riepilogativo dei pasti e delle esigenze alimentari.
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTeam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpenseType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpenseDate)
-            </th>
-            <th></th>
+            <th>Nome Torneo</th>
+            <th>Categoria</th>
+            <th>Data Inizio</th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
+            <td>@item.TournamentName</td>
+            <td>@item.CategoryName</td>
+            <td>@item.TournamentYear</td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTeam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdExpense">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdExpense">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdExpense">Delete</a>
+                <a asp-controller="AdminReports" 
+                   asp-action="TournamentMealsReportPdf" 
+                   asp-route-id="@item.IdTournament"
+                   class="btn btn-primary">
+                    Genera Report Pasti
+                </a>
             </td>
         </tr>
 }
