@@ -24,7 +24,22 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminTournaments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tournaments.ToListAsync());
+            var tournaments = await _context.Tournaments
+                .Include(t => t.Teams)
+                    .ThenInclude(te => te.User)                     // Responsable del equipo
+                .Include(t => t.Teams)
+                    .ThenInclude(te => te.Accommodation)            // Lugar donde se alojan
+                .Include(t => t.Teams)
+                    .ThenInclude(te => te.Mezzo)                    // Medio de transporte
+                .Include(t => t.Teams)
+                    .ThenInclude(te => te.Sponsors)                 // Lista de sponsors
+                .Include(t => t.Teams)
+                    .ThenInclude(te => te.Persons)                  // Miembros del equipo
+                        .ThenInclude(p => p.Role)                   // Rol de cada miembro (Player, GK, etc.)
+                .OrderByDescending(t => t.TournamentYear)            // Opcional: ordenar por año
+                .ToListAsync();
+
+            return View(tournaments);
         }
 
         // GET: AdminTournaments/Details/5
