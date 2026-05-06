@@ -42,15 +42,15 @@ namespace Young_snakes.Controllers.Admin
 
             return View(person);
         }
-        // GET: AdminPeople/Create
-        public IActionResult Create()
+        // GET: AdminPeople/Create/5 (donde 5 es el IdTeam)
+        public IActionResult Create(int idTeam)
         {
-            return View();
+
+            ViewData["IdRole"] = new SelectList(_context.PersonRoles, "IdRole", "RoleName");
+            var person = new Person { IdTeam = idTeam };
+            return View(person);
         }
 
-        // POST: AdminPeople/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPerson,FirstName,LastName,BirthDate,Height,Phone,Email,Maglia,IdRole,IdTeam")] Person person)
@@ -59,10 +59,15 @@ namespace Young_snakes.Controllers.Admin
             {
                 _context.Add(person);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "AdminTeams", new { id = person.IdTeam });
             }
+
+
+            ViewData["IdRole"] = new SelectList(_context.Roles, "IdRole", "RoleName", person.IdRole);
             return View(person);
         }
+
+
 
         // GET: AdminPeople/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -76,10 +81,10 @@ namespace Young_snakes.Controllers.Admin
             if (person == null)
             {
                 return NotFound();
-            }                        
+            }
 
-            ViewData["IdRole"] = new SelectList(await _context.PersonRoles.ToListAsync(),"IdRole","RoleName");
-            
+            ViewData["IdRole"] = new SelectList(await _context.PersonRoles.ToListAsync(), "IdRole", "RoleName");
+
             return View(person);
         }
 
@@ -113,7 +118,7 @@ namespace Young_snakes.Controllers.Admin
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "AdminTeams", new { id = person.IdTeam });
             }
             return View(person);
         }
@@ -148,7 +153,7 @@ namespace Young_snakes.Controllers.Admin
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit), "AdminTeams", new { id = id });
         }
 
         private bool PersonExists(int id)
