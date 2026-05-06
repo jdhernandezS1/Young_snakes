@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Young_snakes.Data;
 using Young_snakes.Models;
+using Young_snakes.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Young_snakes.Controllers.Admin
@@ -24,7 +25,13 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminDietaryTags
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DietaryTags.ToListAsync());
+            var viewModel = new CateringManagementViewModel
+            {
+                DietaryTags = await _context.DietaryTags.ToListAsync(),
+                Meals = await _context.Meals.ToListAsync()
+            };
+
+            return View(viewModel);
         }
 
         // GET: AdminDietaryTags/Details/5
