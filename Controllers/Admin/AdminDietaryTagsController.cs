@@ -28,7 +28,9 @@ namespace Young_snakes.Controllers.Admin
             var viewModel = new CateringManagementViewModel
             {
                 DietaryTags = await _context.DietaryTags.ToListAsync(),
-                Meals = await _context.Meals.ToListAsync()
+                Meals = await _context.Meals.ToListAsync(),
+                Mezzos = await _context.Mezzos.ToListAsync(),
+                PersonRoles = await _context.PersonRoles.ToListAsync()
             };
 
             return View(viewModel);

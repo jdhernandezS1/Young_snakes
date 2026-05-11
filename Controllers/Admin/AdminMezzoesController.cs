@@ -24,7 +24,8 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminMezzoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Mezzos.ToListAsync());
+            return RedirectToAction("Index", "AdminDietaryTags");            
+            // return View(await _context.Mezzos.ToListAsync());
         }
 
         // GET: AdminMezzoes/Details/5
@@ -62,7 +63,7 @@ namespace Young_snakes.Controllers.Admin
             {
                 _context.Add(mezzo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "AdminDietaryTags");
             }
             return View(mezzo);
         }
@@ -113,7 +114,7 @@ namespace Young_snakes.Controllers.Admin
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "AdminDietaryTags");
             }
             return View(mezzo);
         }
@@ -148,7 +149,7 @@ namespace Young_snakes.Controllers.Admin
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), "AdminDietaryTags");
         }
 
         private bool MezzoExists(int id)

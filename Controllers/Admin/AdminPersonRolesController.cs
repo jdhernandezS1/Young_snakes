@@ -24,7 +24,8 @@ namespace Young_snakes.Controllers.Admin
         // GET: AdminPersonRoles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PersonRoles.ToListAsync());
+            return RedirectToAction("Index", "AdminDietaryTags");            
+            // return View(await _context.PersonRoles.ToListAsync());
         }
 
         // GET: AdminPersonRoles/Details/5

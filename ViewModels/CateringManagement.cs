@@ -4,5 +4,8 @@ namespace Young_snakes.Models.ViewModels
     {
         public IEnumerable<DietaryTag> DietaryTags { get; set; }
         public IEnumerable<Meal> Meals { get; set; }
+        public IEnumerable<Mezzo> Mezzos { get; set; }
+        public IEnumerable<PersonRole> PersonRoles { get; set; }
+
     }
 }
