@@ -30,6 +30,9 @@ public class Person
 
     public int? IdTeam { get; set; }
     
+    [Required]
+    public int Gender { get; set; } = 1; 
+
     [ForeignKey("IdTeam")] 
     public Team? Team { get; set; }
 

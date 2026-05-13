@@ -8,7 +8,7 @@
 <div class="container mt-4">
     <div class="card p-4 shadow-sm bg-dark text-white rounded-3">
         <h2>Edit Member</h2>
-        <hr class="bg-light"/>
+        <hr class="bg-light" />
         <form asp-action="Edit">
             <input type="hidden" asp-for="IdPerson" />
             <input type="hidden" asp-for="IdTeam" />
@@ -16,7 +16,7 @@
                 <div class="col-md-6 mb-3">
                     <label>Role</label>
                     <select asp-for="IdRole" id="roleSelect" class="form-control bg-secondary text-white border-0"
-                        asp-items="@(new SelectList(ViewBag.Roles, "IdRole", "RoleName"))">
+                            asp-items="@(new SelectList(ViewBag.Roles, "IdRole", "RoleName"))">
                     </select>
                 </div>
 
@@ -24,22 +24,34 @@
                     <label>First Name</label>
                     <input asp-for="FirstName" class="form-control bg-secondary text-white border-0" />
                 </div>
-                <div class="col-md-6 mb-3 player-fields"><label>Height (cm)</label><input asp-for="Height" class="form-control bg-secondary text-white border-0" /></div>
-                <div class="col-md-6 mb-3 player-fields"><label>Jersey #</label><input asp-for="Maglia" class="form-control bg-secondary text-white border-0" /></div>
+                <div class="col-md-6 mb-3 player-fields"><label>Height (cm)</label><input asp-for="Height"
+                                                                                              class="form-control bg-secondary text-white border-0" /></div>
+                    <div class="col-md-6 mb-3 player-fields"><label>Jersey #</label><input asp-for="Maglia"
+                                                                                               class="form-control bg-secondary text-white border-0" /></div>
                 
-                <div class="col-md-6 mb-3 staff-fields"><label>Phone</label><input asp-for="Phone" class="form-control bg-secondary text-white border-0" /></div>
-                <div class="col-md-6 mb-3 staff-fields"><label>Email</label><input asp-for="Email" class="form-control bg-secondary text-white border-0" /></div>
-            </div>
-            <button type="submit" class="btn btn-outline-light mt-2">Save Changes</button>
-        </form>
-    </div>
-</div>
+                        <div class="col-md-6 mb-3 staff-fields"><label>Phone</label><input asp-for="Phone"
+                                                                                               class="form-control bg-secondary text-white border-0" /></div>
+                            <div class="col-md-6 mb-3 staff-fields"><label>Email</label><input asp-for="Email"
+                                                                                                   class="form-control bg-secondary text-white border-0" /></div>
+                                <div class="col-md-6 mb-3 staff-fields">
+                                    <label asp-for="Gender">Gender</label>
+                                    <select asp-for="Gender" class="form-control bg-secondary text-white border-0">
+                                        <option value="1">Male</option>
+                                        <option value="0">Female</option>
+                                    </select>
+                                    <span asp-validation-for="Gender" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-outline-light mt-2">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
 
-@section Scripts {
-    <script src="~/js/person-fields.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            initPersonFields("@playerRoleId");
-        });
-    </script>
-}
+                @section Scripts {
+                    <script src="~/js/person-fields.js"></script>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                        initPersonFields("@playerRoleId");
+                        });
+                    </script>
+                }

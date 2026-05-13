@@ -95,6 +95,14 @@
                                         <input asp-for="Phone" class="form-control bg-light border-0" placeholder="+41 ..." />
                                     </div>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Gender" class="control-label">Sesso</label>
+                                    <select asp-for="Gender" class="form-select">
+                                        <option value="1">Uomo</option>
+                                        <option value="0">Donna</option>
+                                    </select>
+                                    <span asp-vsualidation-for="Gender" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
 
