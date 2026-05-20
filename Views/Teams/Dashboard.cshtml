@@ -74,6 +74,8 @@
                        class="btn btn-sm btn-dark">
                     + Add New Member
                 </a>
+                <a asp-controller="MealsOrder" asp-action="CreateForTeam" asp-route-id="@Model.IdTeam"
+                                   class="btn btn-sm btn-primary">Order Meals For the entire Team</a>
             </div>
 
             <table class="table table-hover align-middle">
@@ -133,8 +135,7 @@
                                        class="btn btn-sm btn-primary" title="Dietary Restrictions">
                                     Diet
                                 </a>
-                                <a asp-controller="MealsOrder" asp-action="Create" asp-route-id="@p.IdPerson"
-                                   class="btn btn-sm btn-primary">Order Meal</a>
+                                
                                     
                             </td>
                         </tr>

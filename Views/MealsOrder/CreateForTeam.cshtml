@@ -1,0 +1,58 @@
+@model Young_snakes.Models.ViewModels.TeamMealOrderViewModel
+
+@{
+    ViewData["Title"] = "Group Meal Order";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="bi bi-people-fill me-2"></i> Group Meal Order - Catering
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">
+                        Select a single menu option for the team <strong>@Model.TeamName</strong>. The system will automatically generate individual reports for the kitchen, including any specific dietary restrictions or allergies for each member.
+                    </p>
+                    
+                    <form asp-action="CreateForTeam">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                        
+                        <input type="hidden" asp-for="IdTeam" />
+                        <input type="hidden" asp-for="TeamName" />
+
+                        <div class="mb-3">
+                            <label asp-for="IdMeal" class="form-label fw-bold">Select Meal Option</label>
+                            <select asp-for="IdMeal" class="form-select" asp-items="ViewBag.IdMeal">
+                                <option value="">-- Choose a menu --</option>
+                            </select>
+                            <span asp-validation-for="IdMeal" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="MealDate" class="form-label fw-bold">Meal Date and Time</label>
+                            <input asp-for="MealDate" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="MealDate" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-controller="Teams" asp-action="Dashboard" asp-route-id="@Model.IdTeam" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                Confirm Team Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
