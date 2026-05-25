@@ -19,7 +19,7 @@
                         <option value="">-- Select Role --</option>
                     </select>
                 </div>
-                
+
                 <div class="col-md-6 mb-3">
                     <label>First Name</label>
                     <input asp-for="FirstName" class="form-control bg-secondary text-white border-0" />
@@ -37,7 +37,7 @@
                                                                                               class="form-control bg-secondary text-white border-0" /></div>
                     <div class="col-md-6 mb-3 player-fields"><label>Jersey #</label><input asp-for="Maglia"
                                                                                                class="form-control bg-secondary text-white border-0" /></div>
-                
+
                         <div class="col-md-6 mb-3 staff-fields">
                             <label asp-for="Gender">Gender</label>
                             <select asp-for="Gender" class="form-control bg-secondary text-white border-0">
@@ -50,6 +50,8 @@
                                                                                                class="form-control bg-secondary text-white border-0" /></div>
                         </div>
                         <button type="submit" class="btn btn-outline-light mt-2">Add Member</button>
+                        <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-light">Back</a>
+
                     </form>
                 </div>
             </div>

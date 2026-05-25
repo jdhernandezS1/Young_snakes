@@ -28,7 +28,7 @@
                                                                                               class="form-control bg-secondary text-white border-0" /></div>
                     <div class="col-md-6 mb-3 player-fields"><label>Jersey #</label><input asp-for="Maglia"
                                                                                                class="form-control bg-secondary text-white border-0" /></div>
-                
+
                         <div class="col-md-6 mb-3 staff-fields"><label>Phone</label><input asp-for="Phone"
                                                                                                class="form-control bg-secondary text-white border-0" /></div>
                             <div class="col-md-6 mb-3 staff-fields"><label>Email</label><input asp-for="Email"
@@ -42,6 +42,8 @@
                                     <span asp-validation-for="Gender" class="text-danger small"></span>
                                 </div>
                             </div>
+                            <a asp-controller="Teams" asp-action="Dashboard" class="btn btn-light">Back</a>
+
                             <button type="submit" class="btn btn-outline-light mt-2">Save Changes</button>
                         </form>
                     </div>
