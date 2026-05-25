@@ -7,7 +7,7 @@
 <div class="container-fluid mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="fw-light">Modifica Squadra: <span class="fw-bold">@Model.TeamName</span></h1>
-        <a asp-action="Index" asp-controller="AdminTournaments"  class="btn btn-outline-secondary btn-sm">
+        <a asp-action="Index" asp-controller="AdminTournaments" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left"></i> Torna alla lista
         </a>
     </div>
@@ -17,15 +17,34 @@
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-body p-4">
                     <h5 class="card-title mb-4">Informazioni Squadra</h5>
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                    
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        
+                        <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+                        
                         <input type="hidden" asp-for="IdTeam" />
+                        <input type="hidden" asp-for="TeamImageUrl" />
+                        <input type="hidden" asp-for="TeamImagePublicId" />
 
                         <div class="mb-3">
-                            <label asp-for="TeamName" class="form-label small text-uppercase text-muted fw-bold">Nome
-                            Squadra</label>
+                            <label asp-for="TeamName" class="form-label small text-uppercase text-muted fw-bold">Nome Squadra</label>
                             <input asp-for="TeamName" class="form-control form-control-sm border-0 bg-light" />
                             <span asp-validation-for="TeamName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-uppercase text-muted fw-bold d-block">Logo della Squadra (Formato Vettoriale)</label>
+                            
+                            @if (!string.IsNullOrEmpty(Model.TeamImageUrl))
+                            {
+                                <div class="mb-2 p-2 bg-light rounded text-center border" style="max-width: 120px;">
+                                    <img src="@Model.TeamImageUrl" alt="Logo attuale" class="img-fluid" style="max-height: 80px; object-fit: contain;" />
+                                    <small class="text-muted d-block text-xs mt-1">Logo Attuale</small>
+                                </div>
+                            }
+                            
+                            <input type="file" name="logoFile" class="form-control form-control-sm border-0 bg-light" accept=".svg, image/svg+xml" />
+                            <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">È accettato solo il formato vettoriale .svg</small>
                         </div>
 
                         <div class="row">
@@ -34,79 +53,54 @@
                                 <input asp-for="City" class="form-control form-control-sm border-0 bg-light" />
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Country"
-                                        class="form-label small text-uppercase text-muted">Nazione</label>
+                                <label asp-for="Country" class="form-label small text-uppercase text-muted">Nazione</label>
                                 <input asp-for="Country" class="form-control form-control-sm border-0 bg-light" />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label asp-for="ClubColors" class="form-label small text-uppercase text-muted">Colori
-                                Sociali</label>
-                                <input asp-for="ClubColors" class="form-control form-control-sm border-0 bg-light"
-                                        placeholder="es. Rosso/Nero" />
+                                <label asp-for="ClubColors" class="form-label small text-uppercase text-muted">Colori Sociali</label>
+                                <input asp-for="ClubColors" class="form-control form-control-sm border-0 bg-light" placeholder="es. Rosso/Nero" />
                             </div>
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="ArrivalDateBellinzona"
-                                            class="form-label small text-uppercase text-muted">Data Arrivo Bellinzona</label>
-                                    <input asp-for="ArrivalDateBellinzona" type="datetime-local"
-                                            class="form-control form-control-sm border-0 bg-light" />
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ArrivalDateBellinzona" class="form-label small text-uppercase text-muted">Data Arrivo Bellinzona</label>
+                                <input asp-for="ArrivalDateBellinzona" type="datetime-local" class="form-control form-control-sm border-0 bg-light" />
                             </div>
+                        </div>
 
-                            <hr class="my-3 opacity-25">
+                        <hr class="my-3 opacity-25">
 
-                            <h6 class="small text-uppercase fw-bold text-primary mb-3">Logistica e Torneo</h6>
+                        <h6 class="small text-uppercase fw-bold text-primary mb-3">Logistica e Torneo</h6>
 
-                            <div class="mb-3">
-                                <label asp-for="IdTournament"
-                                        class="form-label small text-uppercase text-muted">Torneo</label>
-                                <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light"
-                                        asp-items="ViewBag.IdTournament"></select>
+                        <div class="mb-3">
+                            <label asp-for="IdTournament" class="form-label small text-uppercase text-muted">Torneo</label>
+                            <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdTournament"></select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di Trasporto</label>
+                                <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdMezzo">
+                                    <option value="">-- Seleziona Mezzo --</option>
+                                </select>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di
-                                        Trasporto</label>
-                                        <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light"
-                                                asp-items="ViewBag.IdMezzo">
-                                            <option value="">-- Seleziona Mezzo --</option>
-                                        </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="IdAccommodation"
-                                            class="form-label small text-uppercase text-muted">Alloggio</label>
-                                    <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light"
-                                            asp-items="ViewBag.IdAccommodation">
-                                        <option value="">-- Seleziona Alloggio --</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdAccommodation" class="form-label small text-uppercase text-muted">Alloggio</label>
+                                <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdAccommodation">
+                                    <option value="">-- Seleziona Alloggio --</option>
+                                </select>
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile
-                                Account</label>
-                                <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light"
-                                        asp-items="ViewBag.IdUser"></select>
-                            </div>
+                        <div class="mb-3">
+                            <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile Account</label>
+                            <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdUser"></select>
+                        </div>
 
-                            <hr class="my-3 opacity-25">
-
-                            <div class="mb-3">
-                                <label asp-for="TeamImageUrl" class="form-label small text-uppercase text-muted text-xs">URL
-                                Immagine Team</label>
-                                <input asp-for="TeamImageUrl"
-                                        class="form-control form-control-sm border-0 bg-light font-monospace small" />
-                            </div>
-                           
-
-                            <div class="d-grid mt-4">
-                                <button type="submit"
-                                    class="btn btn-dark btn-sm shadow-sm py-2 text-uppercase fw-bold">Salva
-                                Modifiche</button>
-                            </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-dark btn-sm shadow-sm py-2 text-uppercase fw-bold">Salva Modifiche</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -117,8 +111,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="card-title m-0">Gestione Membri Squadra</h5>
-                        <a asp-controller="AdminPeople" asp-action="Create" asp-route-idTeam="@Model.IdTeam"
-                                class="btn btn-primary btn-sm rounded-pill">
+                        <a asp-controller="AdminPeople" asp-action="Create" asp-route-idTeam="@Model.IdTeam" class="btn btn-primary btn-sm rounded-pill">
                             <i class="bi bi-plus"></i> Aggiungi Membro
                         </a>
                     </div>
@@ -139,29 +132,20 @@
                                     {
                                         <tr>
                                             <td>
-                                                <span
-                                                    class="badge @(person.Role?.RoleName == "Player" ? "bg-info-subtle text-info" : "bg-dark-subtle text-dark") border">
+                                                <span class="badge @(person.Role?.RoleName == "Player" ? "bg-info-subtle text-info" : "bg-dark-subtle text-dark") border">
                                                     @person.Role?.RoleName
                                                 </span>
                                             </td>
                                             <td class="fw-semibold">@person.LastName, @person.FirstName</td>
                                             <td class="text-end">
                                                 <div class="btn-group btn-group-sm shadow-sm">
-                                                    <a asp-controller="AdminPeople" asp-action="Edit"
-                                                            asp-route-id="@person.IdPerson"
-                                                            class="btn btn-white border shadow-none">
+                                                    <a asp-controller="AdminPeople" asp-action="Edit" asp-route-id="@person.IdPerson" class="btn btn-white border shadow-none">
                                                         <i class="bi bi-pencil-square text-primary"></i>
                                                     </a>
-
-                                                    <a asp-controller="AdminPeople" asp-action="Details"
-                                                            asp-route-id="@person.IdPerson"
-                                                            class="btn btn-white border shadow-none">
+                                                    <a asp-controller="AdminPeople" asp-action="Details" asp-route-id="@person.IdPerson" class="btn btn-white border shadow-none">
                                                         <i class="bi bi-eye text-secondary"></i>
                                                     </a>
-
-                                                    <a asp-controller="AdminPeople" asp-action="Delete"
-                                                            asp-route-id="@person.IdPerson"
-                                                            class="btn btn-white border shadow-none">
+                                                    <a asp-controller="AdminPeople" asp-action="Delete" asp-route-id="@person.IdPerson" class="btn btn-white border shadow-none">
                                                         <i class="bi bi-trash text-danger"></i>
                                                     </a>
                                                 </div>
@@ -172,10 +156,9 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="3" class="text-center text-muted py-4 italic">Nessun membro presente in
-                                        plantilla.</td>
+                                        <td colspan="3" class="text-center text-muted py-4 italic">Nessun membro presente in plantilla.</td>
                                     </tr>
-                                    }
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -185,10 +168,6 @@
     </div>
 </div>
 
-
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

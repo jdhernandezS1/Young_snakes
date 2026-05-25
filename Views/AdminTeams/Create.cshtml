@@ -15,14 +15,21 @@
                         <p class="text-muted">Inserisci i dettagli per registrare il team nel torneo</p>
                     </div>
 
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
 
                         <div class="row g-3">
                             <div class="col-12">
                                 <label asp-for="TeamName" class="form-label fw-semibold">Nome della Squadra</label>
                                 <input asp-for="TeamName" class="form-control form-control-lg bg-light border-0" placeholder="Esempio: AC Milan" />
                                 <span asp-validation-for="TeamName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Logo della Squadra (Formato Vettoriale)</label>
+                                <input type="file" name="logoFile" class="form-control bg-light border-0" accept=".svg, image/svg+xml" />
+                                <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">È accettato solo il formato vettoriale .svg per garantire la massima qualità.</small>
                             </div>
 
                             <div class="col-md-6">
@@ -40,42 +47,36 @@
                             </div>
                             <div class="col-md-6">
                                 <label asp-for="ArrivalDateBellinzona" class="form-label fw-semibold">Data di Arrivo</label>
-                                <input asp-for="ArrivalDateBellinzona" type="datetime-local" 
-                                class="form-control form-control-sm border-0 bg-light" /> 
+                                <input asp-for="ArrivalDateBellinzona" type="datetime-local" class="form-control border-0 bg-light" /> 
                             </div>
 
                             <div class="col-12"><hr class="my-3 opacity-25"></div>
 
-                            <div class="mb-3">
-                                <label asp-for="IdTournament"
-                                        class="form-label small text-uppercase text-muted">Torneo</label>
-                                <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light"
-                                        asp-items="ViewBag.IdTournament"></select>
+                            <div class="col-12 mb-3">
+                                <label asp-for="IdTournament" class="form-label small text-uppercase text-muted">Torneo</label>
+                                <select asp-for="IdTournament" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdTournament">
+                                    <option value="">-- Seleziona Torneo --</option>
+                                </select>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di
-                                        Trasporto</label>
-                                        <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light"
-                                                asp-items="ViewBag.IdMezzo">
-                                            <option value="">-- Seleziona Mezzo --</option>
-                                        </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label asp-for="IdAccommodation"
-                                            class="form-label small text-uppercase text-muted">Alloggio</label>
-                                    <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light"
-                                            asp-items="ViewBag.IdAccommodation">
-                                        <option value="">-- Seleziona Alloggio --</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdMezzo" class="form-label small text-uppercase text-muted">Mezzo di Trasporto</label>
+                                <select asp-for="IdMezzo" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdMezzo">
+                                    <option value="">-- Seleziona Mezzo --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IdAccommodation" class="form-label small text-uppercase text-muted">Alloggio</label>
+                                <select asp-for="IdAccommodation" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdAccommodation">
+                                    <option value="">-- Seleziona Alloggio --</option>
+                                </select>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="col-12 mb-3">
                                 <label asp-for="IdUser" class="form-label small text-uppercase text-muted">Responsabile Account</label>
-                                <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light"
-                                        asp-items="ViewBag.IdUser"></select>
+                                <select asp-for="IdUser" class="form-select form-select-sm border-0 bg-light" asp-items="ViewBag.IdUser">
+                                    <option value="">-- Seleziona Utente Responsabile --</option>
+                                </select>
                             </div>
                         </div>
 
@@ -89,3 +90,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
