@@ -21,11 +21,9 @@ string my_api_key = Environment.GetEnvironmentVariable("API_KEY");
 string my_api_secret = Environment.GetEnvironmentVariable("API_SECRET");
 string my_cloud_name = Environment.GetEnvironmentVariable("CLOUD_NAME");
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(database));
-// ========================================== 
-// CLOUDINARY CONFIGURATION 
-
 builder.Services.AddScoped<IImageUploadService, CloudinaryUploadService>();
 
 Account account = new Account(

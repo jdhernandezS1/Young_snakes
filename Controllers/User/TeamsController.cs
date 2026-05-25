@@ -20,14 +20,14 @@ namespace Young_snakes.Controllers
     [Authorize(Roles = "TeamUser")]
     public class TeamsController : Controller
     {
+        // DEPENDENCIES AND SERVICES
         private readonly ApplicationDbContext _context;
-        private readonly Cloudinary _cloudinary;
+        private readonly IImageUploadService _uploadService;
 
-        // Inyección de dependencias para el contexto de BD y Cloudinary
-        public TeamsController(ApplicationDbContext context, Cloudinary cloudinary)
+        public TeamsController(ApplicationDbContext context, IImageUploadService uploadService)
         {
             _context = context;
-            _cloudinary = cloudinary;
+            _uploadService = uploadService;
         }
 
         private void LoadDropdowns()
@@ -63,19 +63,21 @@ namespace Young_snakes.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             team.IdUser = userId;
 
+            
             var hasTeam = _context.Teams.Any(t => t.IdUser == userId);
             if (hasTeam)
             {
                 return RedirectToAction(nameof(Dashboard));
             }
 
+            
             var tournament = await _context.Tournaments.FindAsync(team.IdTournament);
             if (tournament == null || !tournament.IsOpen)
             {
                 ModelState.AddModelError("IdTournament", "This tournament is closed for registration.");
             }
 
-            // VALIDACIÓN DEL FORMATO VECTORIAL (SVG)
+            
             if (logoFile != null)
             {
                 if (logoFile.ContentType != "image/svg+xml" && !logoFile.FileName.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
@@ -84,26 +86,25 @@ namespace Young_snakes.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    // Subida segura del archivo SVG a Cloudinary
-                    using var stream = logoFile.OpenReadStream();
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(logoFile.FileName, stream),
-                        Folder = "teams_logos"
-                    };
-
-                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
                     
+                    var uploadResult = await _uploadService.UploadVectorImageAsync(logoFile);
+
                     if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         team.TeamImageUrl = uploadResult.SecureUrl.ToString();
-                        team.TeamImagePublicId = uploadResult.PublicId;
+                        team.TeamImagePublicId = uploadResult.PublicId; 
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Error uploading logo to Cloudinary.");
+                        string errorMessage = uploadResult.Error?.Message ?? "Unknown API Error";
+                        ModelState.AddModelError("", $"Cloudinary Error: {errorMessage}");
                     }
                 }
+            }
+            else
+            {
+                
+                // ModelState.AddModelError("", "The team logo (.svg) is required.");
             }
 
             if (ModelState.IsValid)
@@ -141,13 +142,12 @@ namespace Young_snakes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Team team, IFormFile? logoFile)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);            
             var dbTeam = await _context.Teams.FirstOrDefaultAsync(t => t.IdTeam == team.IdTeam);
-            
             if (dbTeam == null) return NotFound();
             if (dbTeam.IdUser != userId) return Forbid();
 
-            // VALIDACIÓN DEL FORMATO VECTORIAL (SVG)
+            
             if (logoFile != null)
             {
                 if (logoFile.ContentType != "image/svg+xml" && !logoFile.FileName.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
@@ -155,23 +155,8 @@ namespace Young_snakes.Controllers
                     ModelState.AddModelError("", "Only vector graphics (.svg) are allowed for the team logo.");
                 }
                 else if (ModelState.IsValid)
-                {
-                    // Eliminación del logo anterior en Cloudinary si existía para optimizar espacio
-                    if (!string.IsNullOrEmpty(dbTeam.TeamImagePublicId))
-                    {
-                        await _cloudinary.DestroyAsync(new DeletionParams(dbTeam.TeamImagePublicId));
-                    }
-
-                    // Subida del nuevo archivo vectorial SVG
-                    using var stream = logoFile.OpenReadStream();
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(logoFile.FileName, stream),
-                        UniqueFilename = true,
-                        Folder = "teams_logos"
-                    };
-
-                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                {                    
+                    var uploadResult = await _uploadService.UploadVectorImageAsync(logoFile);
 
                     if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
                     {
@@ -180,21 +165,20 @@ namespace Young_snakes.Controllers
                     }
                     else
                     {
-                        
                         string errorMessage = uploadResult.Error?.Message ?? "Unknown API Error";
-                        ModelState.AddModelError("", $"Cloudinary Error: {errorMessage} (Status: {uploadResult.StatusCode})");
+                        ModelState.AddModelError("", $"Cloudinary Error: {errorMessage}");
                     }
                 }
             }
 
             if (ModelState.IsValid)
-            {
+            {                
                 dbTeam.TeamName = team.TeamName;
                 dbTeam.City = team.City;
                 dbTeam.Country = team.Country;
                 dbTeam.ClubColors = team.ClubColors;
                 dbTeam.ArrivalDateBellinzona = team.ArrivalDateBellinzona;
-                dbTeam.IdTournament = team.IdTournament; // Corregido el bug de dbTeam.IdTournament = dbTeam.IdTournament
+                dbTeam.IdTournament = team.IdTournament; 
                 dbTeam.IdMezzo = team.IdMezzo;
                 dbTeam.IdAccommodation = team.IdAccommodation;
 
@@ -248,10 +232,10 @@ namespace Young_snakes.Controllers
                     {
                         table.ColumnsDefinition(columns =>
                         {
-                            columns.RelativeColumn(4); 
-                            columns.RelativeColumn(3); 
-                            columns.RelativeColumn(2); 
-                            columns.RelativeColumn(1); 
+                            columns.RelativeColumn(4);
+                            columns.RelativeColumn(3);
+                            columns.RelativeColumn(2);
+                            columns.RelativeColumn(1);
                         });
 
                         table.Header(header =>
