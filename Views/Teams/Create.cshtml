@@ -5,23 +5,22 @@
 }
 
 <h1>Crea il tuo Team</h1>
-
 <hr />
 
-<form asp-action="Create" method="post">
+<!-- Añadido enctype para permitir subida de archivos -->
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     
+    <!-- Alertas de Validación del Servidor -->
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
     <div class="form-group">
         <label asp-for="TeamName" class="control-label">Nome Team</label>
         <input asp-for="TeamName" class="form-control" />
         <span asp-validation-for="TeamName" class="text-danger"></span>
     </div>
-    <div>
 
+    <input type="hidden" asp-for="IdUser" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
 
-        <input type="hidden" asp-for="IdUser" class="form-control"
-        value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
-
-    </div>
     <div class="form-group">
         <label asp-for="City" class="control-label">Città</label>
         <input asp-for="City" class="form-control" />
@@ -44,16 +43,20 @@
         <input asp-for="ArrivalDateBellinzona" type="date" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label asp-for="TeamImageUrl" class="control-label">URL Immagine</label>
-        <input asp-for="TeamImageUrl" class="form-control" />
+    <!-- Modificado: Campo de texto URL cambiado por Input File exclusivo para SVG -->
+    <div class="form-group mb-3">
+        <label class="control-label fw-bold">Logo del Team (Formato Vettoriale)</label>
+        <input type="file" name="logoFile" class="form-control" accept=".svg, image/svg+xml" required />
+        <small class="text-muted d-block">È accettato solo il formato SVG (.svg) per garantire la massima qualità di stampa.</small>
     </div>
 
     <div class="form-group">
+        <label class="control-label">Torneo</label>
         <select asp-for="IdTournament" class="form-control"
                 asp-items="@(new SelectList(ViewBag.Tournaments, "IdTournament", "TournamentName"))">
             <option value="">-- Seleziona Torneo --</option>
         </select>
+        <span asp-validation-for="IdTournament" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -71,13 +74,9 @@
     </div>
 
     <br />
-
     <button type="submit" class="btn btn-primary">Crea Team</button>
-
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -16,17 +16,26 @@ Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 var database = Environment.GetEnvironmentVariable("DATABASE");
-var cloud = Environment.GetEnvironmentVariable("CLOUDINARY_URL");
+string cloud = Environment.GetEnvironmentVariable("CLOUDINARY_URL");
+string my_api_key = Environment.GetEnvironmentVariable("API_KEY");
+string my_api_secret = Environment.GetEnvironmentVariable("API_SECRET");
+string my_cloud_name = Environment.GetEnvironmentVariable("CLOUD_NAME");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-// builder.Services.AddSingleton<CloudinaryService>();
-
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(database));
+// ========================================== 
+// CLOUDINARY CONFIGURATION 
 
-//DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-Cloudinary cloudinary = new Cloudinary(cloud);
-cloudinary.Api.Secure = true;
+builder.Services.AddScoped<IImageUploadService, CloudinaryUploadService>();
+
+Account account = new Account(
+    my_cloud_name,
+    my_api_key,
+    my_api_secret);
+
+Cloudinary cloudinaryInstance = new Cloudinary(account);
+
+cloudinaryInstance.Api.Secure = true;
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -38,6 +47,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Auth/AccessDenied";
 });
 
+// Registramos Cloudinary como un servicio único (Singleton) en la aplicación
+builder.Services.AddSingleton(cloudinaryInstance);
+// ==========================================
 
 var app = builder.Build();
 
