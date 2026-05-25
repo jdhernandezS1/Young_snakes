@@ -1,0 +1,74 @@
+@model IEnumerable<Young_snakes.Models.Accommodation>
+
+@{
+    ViewData["Title"] = "Gestione Alloggi";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-6 mb-0">Gestione <span class="fw-bold">Alloggi</span></h1>
+            <p class="text-muted mb-0">Configura le opzioni di alloggio e i prezzi per notte per le squadre.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Aggiungi Alloggio
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-uppercase small text-muted">
+                    <tr>
+                        <th class="ps-4">Nome Alloggio</th>
+                        <th>Tipo</th>
+                        <th class="text-center">Prezzo per Notte</th>
+                        <th class="text-end pe-4">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">
+                                    @item.AccommodationName
+                                </td>
+                                <td>
+                                    @item.AccommodationType
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-success text-white">
+                                        CHF @item.PricePerNight.ToString("F2")
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group bg-white">
+                                        <a asp-action="Edit" asp-route-id="@item.IdAccommodation" class="btn btn-outline-primary btn-sm" title="Modifica">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.IdAccommodation" class="btn btn-outline-secondary btn-sm" title="Dettagli">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.IdAccommodation" class="btn btn-outline-danger btn-sm" title="Elimina">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                <i class="bi bi-info-circle me-2"></i>Nessun alloggio registrato.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

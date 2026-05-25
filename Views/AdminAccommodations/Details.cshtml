@@ -1,0 +1,62 @@
+@model Young_snakes.Models.Accommodation
+
+@{
+    ViewData["Title"] = "Dettagli Alloggio";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white py-3">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Dettagli dell'Alloggio
+                    </h3>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light rounded p-2 me-3 text-center" style="width: 40px;">
+                            <i class="bi bi-house text-secondary"></i>
+                        </div>
+                        <div>
+                            <label class="small text-muted text-uppercase d-block">Nome Alloggio</label>
+                            <span class="fw-bold">@Model.AccommodationName</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light rounded p-2 me-3 text-center" style="width: 40px;">
+                            <i class="bi bi-building text-secondary"></i>
+                        </div>
+                        <div>
+                            <label class="small text-muted text-uppercase d-block">Tipo di Struttura</label>
+                            <span class="fw-semibold">@Model.AccommodationType</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded p-2 me-3 text-center" style="width: 40px;">
+                            <i class="bi bi-cash-coin text-secondary"></i>
+                        </div>
+                        <div>
+                            <label class="small text-muted text-uppercase d-block">Prezzo per Notte</label>
+                            <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-bold">
+                                CHF @Model.PricePerNight.ToString("F2")
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="border-top pt-3 d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            Torna alla lista
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@Model.IdAccommodation" class="btn btn-primary px-4">
+                            <i class="bi bi-pencil me-1"></i> Modifica
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

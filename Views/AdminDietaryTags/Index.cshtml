@@ -5,7 +5,7 @@
 }
 
 <div class="container py-4">
-    
+
     <div class="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
         <div>
             <h1 class="display-6 mb-0">Gestione <span class="fw-bold">Catering</span></h1>
@@ -14,8 +14,9 @@
         <div class="btn-group">
             <a href="#pasti-section" class="btn btn-outline-secondary btn-sm">Pasti</a>
             <a href="#diete-section" class="btn btn-outline-secondary btn-sm">Diete</a>
-            <a href="#Persone-section" class="btn btn-outline-secondary btn-sm">Persone</a>
+            <a href="#locazioni-section" class="btn btn-outline-secondary btn-sm">Locazioni</a>
             <a href="#mezzi-section" class="btn btn-outline-secondary btn-sm">Mezzi</a>
+            <a href="#Persone-section" class="btn btn-outline-secondary btn-sm">Persone</a>
         </div>
     </div>
 
@@ -23,226 +24,305 @@
     <section id="pasti-section" class="mb-5">
         <hr />
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <i class="bi bi-egg-fried fs-2 text-primary me-3"></i>
-                <h2 class="h3 mb-0">Menù Pasti</h2>
-            </div>
-            <a asp-controller="AdminMeals" asp-action="Create"
+            <div>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-egg-fried fs-2 text-primary me-3"></i>
+                    <h1 class="h1 mb-0">Menù Pasti</h1>
+                </div>
+                <p class="text-muted small mb-0"> Gestisci i pasti disponibili e le relative informazioni (prezzo,
+                    descrizione, ecc.) </p>
+                </div>
+                <a asp-controller="AdminMeals" asp-action="Create"
                    class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
-                <i class="bi bi-plus-lg"></i> Aggiungi Pasto
-            </a>
-        </div>
-
-        <div class="card shadow-sm">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="ps-4">Descrizione</th>
-                            <th class="text-center">Prezzo</th>
-                            <th class="text-end pe-4">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Meals)
-                        {
-                            <tr>
-                                <td class="ps-4 fw-bold">@item.MealName</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success text-white">
-                                        CHF @item.Price.ToString("F2")
-                                    </span>
-                                </td>
-                                <td class="text-end pe-4">
-                                    <div class="btn-group">
-                                        <a asp-controller="AdminMeals" asp-action="Edit" asp-route-id="@item.IdMeal"
-                                               class="btn btn-outline-primary btn-sm">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a asp-controller="AdminMeals" asp-action="Delete" asp-route-id="@item.IdMeal"
-                                               class="btn btn-outline-danger btn-sm">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                    <i class="bi bi-plus-lg"></i> Aggiungi Pasto
+                </a>
             </div>
-        </div>
-    </section>
+
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">Descrizione</th>
+                                <th class="text-center">Prezzo</th>
+                                <th class="text-end pe-4">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Meals)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">@item.MealName</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-success text-white">
+                                            CHF @item.Price.ToString("F2")
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            <a asp-controller="AdminMeals" asp-action="Edit" asp-route-id="@item.IdMeal"
+                                               class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a asp-controller="AdminMeals" asp-action="Delete" asp-route-id="@item.IdMeal"
+                                               class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
     
-    <section id="diete-section">
-        <hr />
+        <section id="diete-section">
+            <hr />
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <i class="bi bi-exclamation-triangle text-warning fs-2 me-3"></i>
-                <h2 class="h3 mb-0">Allergeni e Diete</h2>
-            </div>
-            <a asp-controller="AdminDietaryTags" asp-action="Create"
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clipboard-check fs-2 text-primary me-3"></i>
+                        <h1 class="fw-light m-0 text-dark">
+                            Allergeni e Diete
+                        </h1>
+                    </div>
+                    <p class="text-muted small mb-0"> Gestisci i veicoli disponibili per gli spostamenti </p>
+                </div>
+                <a asp-controller="AdminDietaryTags" asp-action="Create"
                    class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
-                <i class="bi bi-plus-lg"></i> Nuova Etichetta
-            </a>
-        </div>
+                    <i class="bi bi-plus-lg"></i> Nuova Etichetta
+                </a>
+            </div>
 
-        <div class="card shadow-sm">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="ps-4">Nome Tag</th>
-                            <th class="text-center">Tipo</th>
-                            <th class="text-end pe-4">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.DietaryTags)
-                        {
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
                             <tr>
-                                <td class="ps-4 fw-bold">@item.TagName</td>
-                                <td class="text-center">
-                                    <span class="badge bg-light text-dark border">
-                                        @item.TagType
-                                    </span>
-                                </td>
-                                <td class="text-end pe-4">
-                                    <div class="btn-group">
-                                        <a asp-controller="AdminDietaryTags" asp-action="Edit" asp-route-id="@item.IdTag"
+                                <th class="ps-4">Nome Tag</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-end pe-4">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.DietaryTags)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">@item.TagName</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-light text-dark border">
+                                            @item.TagType
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            <a asp-controller="AdminDietaryTags" asp-action="Edit" asp-route-id="@item.IdTag"
                                                class="btn btn-outline-primary btn-sm">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <a asp-controller="AdminDietaryTags" asp-action="Delete" asp-route-id="@item.IdTag"
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a asp-controller="AdminDietaryTags" asp-action="Delete" asp-route-id="@item.IdTag"
                                                class="btn btn-outline-danger btn-sm">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-    <section class="mb-5" id="mezzi-section">
-        <hr />
-        <div class="d-flex justify-content-between align-items-center mb-4 px-2">
-            <div>
-                <h1 class="fw-light m-0 text-dark">Flotta <span class="fw-bold">Trasporti</span></h1>
-                <p class="text-muted small mb-0">Gestisci i veicoli disponibili per gli spostamenti</p>
-            </div>
-            <a asp-controller="AdminMezzoes" asp-action="Create"
-                   class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
-                <i class="bi bi-plus-lg me-2"></i>Nuovo Mezzo
-            </a>
-        </div>
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Tipo di Veicolo</th>
-                            <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Mezzos)
-                        {
-                            <tr>
-                                <td class="ps-4 py-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-2 me-3 text-center"
-                                             style="width: 40px;">
-                                            <i class="bi bi-bus-front-fill"></i>
+                                                <i class="bi bi-trash"></i>
+                                            </a>
                                         </div>
-                                        <span class="fw-bold text-dark text-uppercase">@item.Veicolo</span>
-                                    </div>
-                                </td>
-                                <td class="pe-4 py-3 text-end">
-                                    <div class="btn-group btn-group-sm shadow-none">
-                                        <a asp-controller="AdminMezzoes" asp-action="Edit" asp-route-id="@item.IdMezzo"
-                                               class="btn btn-white border-0 text-primary" title="Modifica">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <a asp-controller="AdminMezzoes" asp-action="Details" asp-route-id="@item.IdMezzo"
-                                               class="btn btn-white border-0 text-secondary" title="Dettagli">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a asp-controller="AdminMezzoes" asp-action="Delete" asp-route-id="@item.IdMezzo"
-                                               class="btn btn-white border-0 text-danger" title="Elimina">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
-    <section id="Persone-section">
-        <hr />
-        <div class="d-flex justify-content-between align-items-center mb-4 px-2">
-            <div>
-                <h1 class="fw-light m-0 text-dark">Ruoli <span class="fw-bold">Persona</span></h1>
-                <p class="text-muted small mb-0">Definisci le mansioni per i partecipanti e lo staff</p>
-            </div>
-            <a asp-controller="AdminPersonRoles" asp-action="Create"
-                   class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
-                <i class="bi bi-plus-lg me-2"></i>Nuovo Ruolo
-            </a>
-        </div>
+        </section>
+        <section class="mb-5" id="locazioni-section">
+            <hr />
+            <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                <div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-building fs-2 text-primary me-3"></i>
+                        <h1 class="fw-light m-0 text-dark">Locazioni  </h1>
+                    </div>
+                    <p class="text-muted small mb-0">Gestisci le Locazioni disponibili</p>
+                </div>
 
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Denominazione Ruolo
-                            </th>
-                            <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.PersonRoles)
-                        {
-                            <tr>
-                                <td class="ps-4 py-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-dark bg-opacity-10 text-dark rounded-3 p-2 me-3 text-center"
-                                             style="width: 40px;">
-                                            <i class="bi bi-person-badge"></i>
-                                        </div>
-                                        <span class="fw-bold text-dark">@item.RoleName</span>
-                                    </div>
-                                </td>
-                                <td class="pe-4 py-3 text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="AdminPersonRoles" asp-action="Edit" asp-route-id="@item.IdRole"
-                                               class="btn btn-white border-0 text-primary" title="Modifica">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <a asp-controller="AdminPersonRoles" asp-action="Details"
-                                               asp-route-id="@item.IdRole" class="btn btn-white border-0 text-secondary"
-                                               title="Dettagli">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a asp-controller="AdminPersonRoles" asp-action="Delete" asp-route-id="@item.IdRole"
-                                               class="btn btn-white border-0 text-danger" title="Elimina">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <a asp-controller="AdminAccommodations" asp-action="Create"
+                   class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+                    <i class="bi bi-plus-lg me-2"></i>Nuova Locazione
+                </a>
             </div>
-        </div>
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Tipo di Veicolo</th>
+                                <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Accommodations)
+                            {
+                                <tr>
+                                    <td class="ps-4 py-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-2 me-3 text-center"
+                                                 style="width: 40px;">
+                                                <i class="bi bi-bus-front-fill"></i>
+                                            </div>
+                                            <span class="fw-bold text-dark text-uppercase">@item.AccommodationName</span>
+                                        </div>
+                                    </td>
+                                    <td class="pe-4 py-3 text-end">
+                                        <div class="btn-group btn-group-sm shadow-none">
+                                            <a asp-controller="AdminAccommodations" asp-action="Edit"
+                                               asp-route-id="@item.IdAccommodation" class="btn btn-white border-0 text-primary"
+                                               title="Modifica">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a asp-controller="AdminAccommodations" asp-action="Details"
+                                               asp-route-id="@item.IdAccommodation"
+                                               class="btn btn-white border-0 text-secondary" title="Dettagli">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a asp-controller="AdminAccommodations" asp-action="Delete"
+                                               asp-route-id="@item.IdAccommodation" class="btn btn-white border-0 text-danger"
+                                               title="Elimina">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="mb-5" id="mezzi-section">
+            <hr />
+            <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                <div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-truck fs-2 text-primary me-3"></i>
+                        <h1 class="fw-light m-0 text-dark">Flotta Trasporti</h1>
+                    </div>
+                    <p class="text-muted small mb-0">Gestisci i veicoli disponibili per gli spostamenti</p>
+                </div>
+                <a asp-controller="AdminAccommodations" asp-action="Create"
+                   class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+                    <i class="bi bi-plus-lg me-2"></i>Nuovo Mezzo </a>
+
+                </div>
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Tipo di Veicolo</th>
+                                    <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Mezzos)
+                                {
+                                    <tr>
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-2 me-3 text-center"
+                                                     style="width: 40px;">
+                                                    <i class="bi bi-bus-front-fill"></i>
+                                                </div>
+                                                <span class="fw-bold text-dark text-uppercase">@item.Veicolo</span>
+                                            </div>
+                                        </td>
+                                        <td class="pe-4 py-3 text-end">
+                                            <div class="btn-group btn-group-sm shadow-none">
+                                                <a asp-controller="AdminMezzoes" asp-action="Edit" asp-route-id="@item.IdMezzo"
+                                                   class="btn btn-white border-0 text-primary" title="Modifica">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a asp-controller="AdminMezzoes" asp-action="Details" asp-route-id="@item.IdMezzo"
+                                                   class="btn btn-white border-0 text-secondary" title="Dettagli">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a asp-controller="AdminMezzoes" asp-action="Delete" asp-route-id="@item.IdMezzo"
+                                                   class="btn btn-white border-0 text-danger" title="Elimina">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section id="Persone-section">
+                <hr />
+                <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                    <div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-badge fs-2 text-primary me-3"></i>
+                            <h1 class="fw-light m-0 text-dark">Ruoli Persona </h1>
+                        </div>
+                        <p class="text-muted small mb-0">Definisci le mansioni per i partecipanti e lo staff</p>
+                    </div>
+                    <a asp-controller="AdminPersonRoles" asp-action="Create"
+                       class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold">
+                        <i class="bi bi-plus-lg me-2"></i>Nuovo Ruolo
+                    </a>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 py-3 border-0 small text-uppercase fw-bold text-muted">Denominazione Ruolo
+                                    </th>
+                                    <th class="pe-4 py-3 border-0 small text-uppercase fw-bold text-muted text-end">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PersonRoles)
+                                {
+                                    <tr>
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-dark bg-opacity-10 text-dark rounded-3 p-2 me-3 text-center"
+                                                     style="width: 40px;">
+                                                    <i class="bi bi-person-badge"></i>
+                                                </div>
+                                                <span class="fw-bold text-dark">@item.RoleName</span>
+                                            </div>
+                                        </td>
+                                        <td class="pe-4 py-3 text-end">
+                                            <div class="btn-group btn-group-sm">
+                                                <a asp-controller="AdminPersonRoles" asp-action="Edit" asp-route-id="@item.IdRole"
+                                                   class="btn btn-white border-0 text-primary" title="Modifica">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a asp-controller="AdminPersonRoles" asp-action="Details"
+                                                   asp-route-id="@item.IdRole" class="btn btn-white border-0 text-secondary"
+                                                   title="Dettagli">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a asp-controller="AdminPersonRoles" asp-action="Delete" asp-route-id="@item.IdRole"
+                                                   class="btn btn-white border-0 text-danger" title="Elimina">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</section>
-</div>

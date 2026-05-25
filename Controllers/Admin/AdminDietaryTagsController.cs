@@ -30,7 +30,9 @@ namespace Young_snakes.Controllers.Admin
                 DietaryTags = await _context.DietaryTags.ToListAsync(),
                 Meals = await _context.Meals.ToListAsync(),
                 Mezzos = await _context.Mezzos.ToListAsync(),
-                PersonRoles = await _context.PersonRoles.ToListAsync()
+                PersonRoles = await _context.PersonRoles.ToListAsync(),
+                Accommodations = await _context.Accommodations.ToListAsync()
+                
             };
 
             return View(viewModel);

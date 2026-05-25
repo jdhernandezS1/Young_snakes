@@ -1,0 +1,58 @@
+@model Young_snakes.Models.Accommodation
+
+@{
+    ViewData["Title"] = "Nuovo Alloggio";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white py-3">
+                    <h3 class="card-title h5 mb-0">
+                        <i class="bi bi-house-add me-2"></i>Aggiungi Nuovo Alloggio
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="AccommodationName" class="form-label fw-bold">Nome Alloggio</label>
+                            <input asp-for="AccommodationName" class="form-control" placeholder="Es. Ostello Bellinzona" />
+                            <span asp-validation-for="AccommodationName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AccommodationType" class="form-label fw-bold">Tipo di Struttura</label>
+                            <input asp-for="AccommodationType" class="form-control" placeholder="Es. Hotel, Ostello, Palestra" />
+                            <span asp-validation-for="AccommodationType" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="PricePerNight" class="form-label fw-bold">Prezzo per Notte</label>
+                            <div class="input-group">
+                                <span class="input-group-text">CHF</span>
+                                <input asp-for="PricePerNight" type="number" step="0.01" class="form-control" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="PricePerNight" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                Annulla
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                Salva Alloggio
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
