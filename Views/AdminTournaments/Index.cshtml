@@ -3,14 +3,13 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold text-dark m-0">Gestione Tornei e Squadre</h2>
-        <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+        <a asp-action="Create" class="btn btn-primary">
             <i class="bi bi-plus-circle me-2"></i>Aggiungi Torneo
         </a>
     </div>
 
     @foreach (var tournament in Model)
     {
-        <!-- Obtenemos todos los nombres de roles únicos para este torneo para armar el header -->
         var todosLosRoles = tournament.Teams
             .SelectMany(t => t.Persons)
             .Where(p => p.Role != null)
@@ -19,7 +18,7 @@
             .OrderByDescending(r => r.ToLower().Contains("player") || r.ToLower().Contains("goalkeeper"))
             .ToList();
 
-        <div class="card border-0 shadow-sm rounded-4 mb-5 overflow-hidden">
+        <div class="card shadow-sm mb-5">
             <div class="card-header bg-dark py-3 px-4 d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="mb-0 fw-bold text-white">@tournament.TournamentName</h5>
@@ -32,7 +31,7 @@
                         <i class="bi bi-file-pdf me-1"></i>Report PDF
                     </a>
                     <a asp-action="Edit" asp-route-id="@tournament.IdTournament"
-                           class="btn btn-sm btn-outline-light ms-2 rounded-pill">
+                           class="btn btn-sm btn-outline-light ms-2">
                         <i class="bi bi-gear"></i>
                     </a>
                 </div>
@@ -40,16 +39,17 @@
 
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light text-muted small text-uppercase">
+                    <thead class="table-light text-muted small text-uppercase">
                         <tr>
-                            <th class="ps-4">Squadra & Dettagli</th>
+                            <th class="ps-4">Squadra</th>
+                            <th class="text-center">Logo Squadra</th>
+                            <th class="text-center">Logo Sponsor</th>
                             <th class="text-center">Logistica</th>
                             <th class="text-center">Stato Rosa</th>
                             @foreach (var roleName in todosLosRoles)
                             {
                                 <th class="text-center">@roleName</th>
                             }
-                            <th class="text-center">Extra (Fee)</th>
                             <th class="text-end pe-4">Azioni</th>
                         </tr>
                     </thead>
@@ -61,81 +61,96 @@
                                 p.Role?.RoleName.ToLower().Contains("goalkeeper") == true);
 
                             var estaCompleto = playersCount >= tournament.MinPlayers;
-                            var extraPlayers = playersCount > tournament.MaxPlayers ? playersCount - tournament.MaxPlayers : 0;
 
                             <tr>
-                                <!-- Nombre y Logo -->
-                                <td class="ps-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="me-3">
-                                            @if (!string.IsNullOrEmpty(team.TeamImageUrl))
-                                            {
-                                                <img src="@team.TeamImageUrl" class="rounded shadow-sm"
-                                                     style="width: 45px; height: 45px; object-fit: cover;" alt="Logo" />
-                                            }
-                                            else
-                                            {
-                                                <div class="bg-light rounded d-flex align-items-center justify-content-center border"
-                                                     style="width: 45px; height: 45px;">
-                                                    <i class="bi bi-shield-slash text-muted"></i>
-                                                </div>
-                                            }
-                                        </div>
-                                        <div>
-                                            <div class="fw-bold text-dark">@team.TeamName</div>
-                                            <div class="small text-muted" style="font-size: 0.75rem;">
-                                                <i class="bi bi-person me-1"></i>@team.User?.UserName
-                                            </div>
-                                        </div>
-                                    </div>
+                                <td class="ps-4 fw-bold text-dark">
+                                    @team.TeamName
                                 </td>
 
-                                <!-- Logística: Alojamiento y Transporte -->
+                                <td class="text-center">
+                                    @if (!string.IsNullOrEmpty(team.TeamImageUrl))
+                                    {
+                                        <span class="d-inline-flex align-items-center">
+                                            <span class="p-1 bg-success border rounded-circle me-2" style="width: 10px; height: 10px;"></span>
+                                            <small class="text-success fw-bold">OK</small>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="d-inline-flex align-items-center">
+                                            <span class="p-1 bg-danger border rounded-circle me-2" style="width: 10px; height: 10px;"></span>
+                                            <small class="text-danger fw-bold">No</small>
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="text-center">
+                                    @{
+                                        bool hasSponsors = team.Sponsors != null && team.Sponsors.Any();
+                                        bool allSponsorsHaveLogo = hasSponsors && team.Sponsors.All(s => !string.IsNullOrEmpty(s.LogoUrl));
+                                    }
+
+                                    @if (hasSponsors && allSponsorsHaveLogo)
+                                    {
+                                        <span class="d-inline-flex align-items-center">
+                                            <span class="p-1 bg-success border rounded-circle me-2" style="width: 10px; height: 10px;"></span>
+                                            <small class="text-success fw-bold">OK</small>
+                                        </span>
+                                    }
+                                    else if (hasSponsors && !allSponsorsHaveLogo)
+                                    {
+                                        <span class="d-inline-flex align-items-center">
+                                            <span class="p-1 bg-danger border rounded-circle me-2" style="width: 10px; height: 10px;"></span>
+                                            <small class="text-danger fw-bold">Incompleto</small>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="d-inline-flex align-items-center">
+                                            <span class="p-1 bg-secondary border rounded-circle me-2" style="width: 10px; height: 10px;"></span>
+                                            <small class="text-muted">Nessuno</small>
+                                        </span>
+                                    }
+                                </td>
+
                                 <td class="text-center">
                                     <div class="d-flex flex-column align-items-center gap-1">
                                         @if (team.Accommodation != null)
                                         {
-                                            <span class="badge bg-info-subtle text-info border border-info-subtle w-100"
-                                                  title="Alloggio">
+                                            <span class="badge bg-light text-dark border w-100">
                                                 <i class="bi bi-house-door me-1"></i> @team.Accommodation.AccommodationName
                                             </span>
                                         }
                                         @if (team.Mezzo != null)
                                         {
-                                            <span
-                                                class="badge bg-secondary-subtle text-secondary border border-secondary-subtle w-100"
-                                                title="Trasporto">
+                                            <span class="badge bg-light text-dark border w-100">
                                                 <i class="bi bi-bus-front me-1"></i> @team.Mezzo.Veicolo
                                             </span>
                                         }
-                                        @if (team.Sponsors.Any())
+                                        @if (hasSponsors)
                                         {
-                                            <span class="badge bg-warning-subtle text-dark border border-warning-subtle w-100">
+                                            <span class="badge bg-light text-dark border w-100">
                                                 <i class="bi bi-star-fill me-1"></i> @team.Sponsors.Count Sponsors
                                             </span>
                                         }
                                     </div>
                                 </td>
 
-                                <!-- Estado de la Rosa -->
                                 <td class="text-center">
                                     @if (estaCompleto)
                                     {
-                                        <span
-                                            class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3">
+                                        <span class="badge bg-success text-white px-3">
                                             <i class="bi bi-check-circle-fill"></i> OK
                                         </span>
                                     }
                                     else
                                     {
-                                        <span
-                                            class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3">
+                                        <span class="badge bg-danger text-white px-3">
                                             @playersCount / @tournament.MinPlayers
                                         </span>
                                     }
                                 </td>
 
-                                <!-- Cantidades dinámicas por Rol -->
                                 @foreach (var roleName in todosLosRoles)
                                 {
                                     var count = team.Persons.Count(p => p.Role?.RoleName == roleName);
@@ -146,33 +161,14 @@
                                     </td>
                                 }
 
-                                <!-- Extra Players Fee -->
-                                <td class="text-center">
-                                    @if (extraPlayers > 0)
-                                    {
-                                        <div class="text-danger fw-bold" style="font-size: 0.85rem;">
-                                            + @extraPlayers Ext
-                                        </div>
-                                        <div class="small text-muted" style="font-size: 0.7rem;">
-                                            CHF @(extraPlayers* tournament.ExtraPlayerFee)
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <span class="text-muted small">-</span>
-                                    }
-
-                                </td>
-
-                                <!-- Acciones -->
                                 <td class="text-end pe-4">
-                                    <div class="btn-group shadow-none border rounded-3 bg-white">
+                                    <div class="btn-group bg-white">
                                         <a asp-controller="AdminTeams" asp-action="Edit" asp-route-id="@team.IdTeam"
-                                               class="btn btn-link text-primary btn-sm border-end" title="Modifica">
+                                               class="btn btn-outline-primary btn-sm" title="Modifica">
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <a asp-controller="AdminReports" asp-action="TeamRosterPdf" asp-route-id="@team.IdTeam"
-                                               class="btn btn-link text-danger btn-sm" title="Scarica PDF">
+                                               class="btn btn-outline-danger btn-sm" title="Scarica PDF">
                                             <i class="bi bi-file-pdf"></i>
                                         </a>
                                     </div>
