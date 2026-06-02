@@ -1,8 +1,126 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Young_snakes.Models.Tournament>
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="container-fluid p-0">
+
     
-</div>
+    <section class="position-relative d-flex align-items-center text-white min-vh-75"
+             style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://youngsnakes.ch/wp-content/uploads/2023/09/YSU10-158.jpg') center/cover no-repeat fixed;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-xxl-9 col-xl-9 py-5 text-start">
+
+                    <span
+                        class="d-inline-block text-uppercase pt-2 mb-3 border-top border-3 border-danger fw-light tracking-wider"
+                        style="letter-spacing: 2px; font-size: 1.2rem;">
+                        International tournaments
+                    </span>
+                    <h1 class="display-3 fw-light lh-sm">
+                        <span><strong>YOUNG SNAKES</strong><br>by GDT Bellinzona</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="container mt-n5 position-relative text-center" style="z-index: 10;">
+        <div class="row justify-content-center">
+
+            <div class="col-11 col-lg-12 bg-white text-dark p-4 shadow-lg rounded-1" style="margin-top: -40px;">
+                <h2 class="fw-bold m-0 text-uppercase" style="letter-spacing: 1px;">
+                    YOUNG SNAKES <span class="text-danger">2026</span>
+                </h2>
+            </div>
+        </div>
+    </section>
+
+        
+    <section class="container bg-white shadow-lg p-4 p-md-5 mb-5 rounded-4 border">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-10">
+                <p class="fs-5 text-dark fw-light lh-base m-0">
+                    Young snakes tournaments are characterized by the <strong>PLEASURE</strong> of playing, the
+                    <strong>HIGH LEVEL</strong> of play, the special <strong>PERSONALIZED T-SHIRTS</strong> with name
+                    and number that each player will receive and wear during the games, the <strong>FESTIVAL
+                    ENVIRONMENT</strong> on and off the rink, and a special <strong>SUPPORTER PRIZE</strong> for the
+                    most original, loudest, and nicest audience!
+                </p>
+            </div>
+        </div>
+
+        <hr class="my-5 opacity-25">
+
+    
+        <div class="row g-5 text-center">
+
+            <div class="col-sm-12 col-md-6 border-end border-light">
+                <h6 class="text-muted small text-uppercase fw-bold mb-1" style="letter-spacing: 1px;">17° Memorial
+                    Claudia e Francesco</h6>
+                    <h3 class="fw-black text-dark display-6 mb-2">UNDER 10</h3>
+                    <h6 class="text-danger fw-bold text-uppercase mb-3 small" style="letter-spacing: 1px;">March 21 - 22,
+                        2026</h6>
+                        <p class="text-muted small mb-4">for those born in 2016 and younger</p>
+
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            <a href="#"
+                               class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Results</a>
+                            <a href="#"
+                               class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Ranking</a>
+                            <a href="#"
+                               class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Brochure</a>
+                            <a href="#" class="btn btn-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase shadow-sm">Photo
+                                Gallery</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <h6 class="text-muted small text-uppercase fw-bold mb-1" style="letter-spacing: 1px;">International
+                                Youth Trophy</h6>
+                                <h3 class="fw-black text-dark display-6 mb-2">UNDER 13</h3>
+                                <h6 class="text-danger fw-bold text-uppercase mb-3 small" style="letter-spacing: 1px;">March 28 - 29,
+                                    2026</h6>
+                                    <p class="text-muted small mb-4">for those born in 2013 and younger</p>
+
+                                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                                        <a href="#"
+                                           class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Results</a>
+                                        <a href="#"
+                                           class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Ranking</a>
+                                        <a href="#"
+                                           class="btn btn-outline-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase">Brochure</a>
+                                        <a href="#" class="btn btn-danger rounded-0 btn-sm px-3 py-2 fw-bold text-uppercase shadow-sm">Photo
+                                            Gallery</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+
+
+                        <script>
+                            function filterCategory(category) {
+                                const items = document.querySelectorAll('.grid-item');
+
+        
+                                const buttons = document.querySelectorAll('.text-center .btn');
+                                buttons.forEach(btn => {
+                                    btn.classList.replace('btn-danger', 'btn-light');
+                                    btn.classList.add('border', 'text-dark');
+                                });
+
+                                event.currentTarget.classList.remove('btn-light', 'border', 'text-dark');
+                                event.currentTarget.classList.add('btn-danger');
+
+                                items.forEach(item => {
+                                    if (category === 'all' || item.classList.contains(category)) {
+                                        item.classList.remove('d-none');
+                                    } else {
+                                        item.classList.add('d-none');
+                                    }
+                                });
+                            }
+                        </script>

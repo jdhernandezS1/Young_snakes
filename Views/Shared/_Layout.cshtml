@@ -119,11 +119,73 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Young_snakes - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="bg-dark text-light border-top border-secondary pt-5 pb-3 mt-5">
+    <div class="container">
+        <div class="row g-4">
+            
+            <div class="col-sm-12 col-md-6 col-lg-4 text-start">
+                <h5 class="text-uppercase fw-bold text-white mb-3 border-start border-3 border-danger ps-2">
+                    Young Snakes
+                </h5>
+                <p class="text-white small lh-base">
+                    Tornei giovanili internazionali organizzati da <strong>GDT Bellinzona</strong>. Promuoviamo i valori dello sport, del fair play e dell'alto livello competitivo sul ghiaccio.
+                </p>
+                <div class="d-flex gap-2 mt-3">
+                    <a href="https://www.facebook.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="mailto:info@youngsnakes.ch" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                        <i class="bi bi-envelope-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3 col-lg-2 text-start">
+                <h6 class="text-uppercase fw-bold text-white mb-3">Link Utili</h6>
+                <ul class="list-unstyled small">
+                    <li class="mb-2">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-white text-decoration-none text-white-hover">Home</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://youngsnakes.ch/en/" target="_blank" class="text-white text-decoration-none text-white-hover">Official Website</a>
+                    </li>                    
+                </ul>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-3 text-start">
+                <h6 class="text-uppercase fw-bold text-white mb-3">Location</h6>
+                <p class="text-white small m-0">
+                    <i class="bi bi-geo-alt-fill text-danger me-2"></i> Centro Sportivo Bellinzona<br>
+                    Via Francesco Chiesa 4<br>
+                    6500 Bellinzona, Svizzera
+                </p>
+                <div class="mt-3 bg-secondary bg-opacity-25 p-2 rounded border border-secondary border-opacity-50">
+                    <span class="text-white small fw-bold d-block"><i class="bi bi-info-circle me-1 text-danger"></i> Stato Pista</span>
+                    <small class="text-white" style="font-size: 0.75rem;">Ghiaccio al coperto operativo per i tornei.</small>
+                </div>
+            </div>
+
         </div>
-    </footer>
+
+        <hr class="my-4 border-secondary opacity-25">
+
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <span class="text-white small">
+                    &copy; 2026 - <strong>Young Snakes</strong>. Tutti i diritti riservati. Organizzato da GDT Bellinzona.
+                </span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <span class="text-white small" style="font-size: 0.75rem;">
+                    Sviluppato in conformità con ASP.NET Core MVC
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
